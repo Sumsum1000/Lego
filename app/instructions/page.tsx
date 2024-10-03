@@ -45,6 +45,9 @@ import { Euler } from "three";
 import { ModelGltf } from "../components/models3D/ModelGltf";
 import Pagination from "../components/pagination/Pagination";
 import { PaginagionType } from "../utils/Types";
+import { LevelAll } from "../components/levels/LevelsAll";
+import { useStore } from "zustand";
+import useLevelStore from "../components/store/Store";
 
 
 //--------------------------------------------------------
@@ -120,6 +123,9 @@ const Instructions = () => {
     level13, level14, level15, level16
   }
 
+  const levelStore = useLevelStore();
+  const currentStoreLevel = levelStore.currentLevel;
+
   // useEffect(() => {
   //   console.log('State updated - isLeftArrowClicked_:', isLeftArrowClicked_);
   // }, [isLeftArrowClicked_]);
@@ -151,6 +157,7 @@ useEffect(() => {
   return (
         // <h1>Instrucions</h1>
         <div className="h-screen bg-gray-900">
+          <h1 className="mt-28">{currentStoreLevel}</h1>
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}
@@ -197,8 +204,8 @@ useEffect(() => {
                 })
               } */}
               
-
-              {currentLevel === 1 && 
+                <LevelAll isLeftArrowClicked={true} isActive={true} shouldAnimate={true}/>
+              {/* {currentLevel === 1 && 
                 <Level1
                   isLeftArrowClicked={isLeftArrowClicked_} 
                   isActive={currentLevel !== 1 ? false : true} 
@@ -325,7 +332,7 @@ useEffect(() => {
                   level={'16'} 
                   shouldAnimate={shouldAnimate}
                 />
-              } 
+              }  */}
 
 
 
