@@ -46,9 +46,9 @@ import { ModelGltf } from "../components/models3D/ModelGltf";
 import Pagination from "../components/pagination/Pagination";
 import { PaginagionType } from "../utils/Types";
 import { LevelAll } from "../components/levels/LevelsAll";
-import { useStore } from "zustand";
 import {useLevelStore} from "../components/store/Store";
-
+import { useClickStore } from "../components/store/Store";
+ 
 
 //--------------------------------------------------------
 //const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
@@ -125,6 +125,14 @@ const Instructions = () => {
 
   const levelStore = useLevelStore();
   const currentStoreLevel = levelStore.currentLevel;
+
+  const clickStore = useClickStore();
+  const {setLeftClick, setRightClick} = clickStore
+const currentClick = clickStore.currentClick;
+
+useEffect(() => {
+  console.log('currentClick 3dModel', currentClick)
+}, [])
   
 
   // useEffect(() => {
@@ -138,10 +146,12 @@ const Instructions = () => {
   };
 
   const rightClickHandler = () => {
+    setLeftClick()
     setIsLeftArrowClicked_(prevState => false);
 } 
 
   const leftClickHandler = () => {
+    setRightClick()
       setIsLeftArrowClicked_(prevState => true);
   }
 
@@ -157,10 +167,15 @@ useEffect(() => {
   setShouldAnimate(true);
 }, []);
 
+useEffect(() => {
+  console.log('currentClick: ', currentClick)
+})
+
   return (
         // <h1>Instrucions</h1>
         <div className="h-screen bg-gray-900">
           <h1 className="mt-28">{currentStoreLevel}</h1>
+          <h1 className="mt-28">{currentClick.toString()}</h1>
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}

@@ -1,5 +1,5 @@
 import { PaginagionType } from '@/app/utils/Types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useStore } from 'zustand';
 import {useClickStore, useLevelStore} from '../store/Store';
@@ -13,31 +13,31 @@ interface PaginationProps {
 const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) => {
 
 
+
+
   const levelStore = useLevelStore()
   const levelUp = levelStore.setNextLevel
   const levelDown = levelStore.setPreviousLevel
 
   const clickStore = useClickStore()
-  const {setLeftClick, setRightClick, setNoneClick} = clickStore
+  const {setLeftClick, setRightClick} = clickStore
   const currentClick = clickStore.currentClick;
+  
+  useEffect(() => {
+    console.log('currentClick pagination', currentClick)
+  }, [])
 
   const handlePrevious = (): void => {
     // !isleftClicked
     //onPageChange(Math.max(currentPage - 1, 1));
-    setLeftClick()
-    setTimeout(() => {
-      setNoneClick();
-    }, 200)
+    setRightClick();
     levelDown();
   };
 
   const handleNext = (): void => {
     // isleftClicked
     //onPageChange(Math.min(currentPage + 1, totalPages));
-    setRightClick();
-    setTimeout(() => {
-      setNoneClick();
-    }, 200)
+    setLeftClick()
     levelUp();
   };
 

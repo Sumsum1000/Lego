@@ -15,7 +15,7 @@ export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive, isV
   return (
     <>
       {levelData.map((model, i) => {
-        console.log('model.startPosition: ', model.startPosition)
+        //console.log('model.startPosition: ', model.startPosition)
         const startPosition: Position = model.startPosition;
         const targetPosition: Position = model.targetPosition;
         const rotation: Rotation = [degreesToRadians(model.rotation[0]), degreesToRadians(model.rotation[1]), degreesToRadians(model.rotation[2])];

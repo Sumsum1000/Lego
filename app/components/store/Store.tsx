@@ -8,10 +8,10 @@ interface LevelStore {
 }
 
 type ClickStore = {
-    currentClick: 'leftClick' | 'none' | 'rightClick';
+    currentClick: boolean;
     setRightClick: () => void;
     setLeftClick: () => void;
-    setNoneClick: () => void;
+    //setNoneClick: () => void;
 }
 
 export const useLevelStore = create<LevelStore>((set) => ({
@@ -22,8 +22,8 @@ export const useLevelStore = create<LevelStore>((set) => ({
 }));
 
 export const useClickStore = create<ClickStore>((set) => ({
-    currentClick: 'none',
-    setRightClick: () => set(() => ({ currentClick: 'rightClick' })),
-    setLeftClick: () => set(() => ({ currentClick: 'leftClick' })),
-    setNoneClick: () => set(() => ({ currentClick: 'none' })),
+    currentClick: true,
+    setRightClick: () => set({ currentClick: false }),
+    setLeftClick: () => set({ currentClick: true }),
+    //setNoneClick: () => set(() => ({ currentClick: 'none' })),
 }))

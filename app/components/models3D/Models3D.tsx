@@ -31,8 +31,12 @@ const [isHover, setIsHover] = useState(false);
 const [isClicked, setIsClicked] = useState(false);
 const [gltfPosition, setGltfPosition] = useState();
 
-const {setLeftClick, setRightClick, setNoneClick} = clickStore
+const {setLeftClick, setRightClick} = clickStore
 const currentClick = clickStore.currentClick;
+
+useEffect(() => {
+  console.log('currentClick 3dModel', currentClick)
+}, [])
 
 const modelInitAnim = {x: model.startPosition[0], y: model.startPosition[1], z: model.startPosition[2], transition: {duration: 1, delay: model.delayIn}}
 const modelTargetAnim = {x: model.targetPosition[0], y: model.targetPosition[1], z: model.targetPosition[2], transition: {duration: 1, delay: model.delayOut}}
@@ -165,13 +169,13 @@ useEffect(() => {
 // }, [model.isLeftArrowClicked, model.isActive, variantsAnim]);
 
 useEffect(() => {
-  if(model.isActive && model.isLeftArrowClicked){
+  if(model.isActive && currentClick){
     setVariantsAnim({
         init: modelInitAnim,
         anim: modelTargetAnim
     });
   }
-  if(model.isActive && !model.isLeftArrowClicked){
+  if(model.isActive && !currentClick){
     setVariantsAnim({
         init: modelTargetAnim,
         anim: modelInitAnim
