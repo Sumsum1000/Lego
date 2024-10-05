@@ -11,7 +11,7 @@ export const Level3 = ({ isLeftArrowClicked, isActive, level}: LevelProps) => {
   return (
    
     <>
-    <LevelBlock
+    {/* <LevelBlock
         levelData={level1} // Dynamic for Level 3
         isLeftArrowClicked={isLeftArrowClicked} // Dynamic prop
         isActive={false} // Dynamic prop
@@ -22,7 +22,7 @@ export const Level3 = ({ isLeftArrowClicked, isActive, level}: LevelProps) => {
         isLeftArrowClicked={isLeftArrowClicked} // Dynamic prop
         isActive={false} // Dynamic prop
         level={level} // Ensure level is passed as a string
-      />
+      /> */}
       <LevelBlock
         levelData={level3} // Dynamic for Level 3
         isLeftArrowClicked={isLeftArrowClicked} // Dynamic prop

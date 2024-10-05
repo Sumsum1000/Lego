@@ -42,8 +42,6 @@ export type ModelProps = {
     name: string;
     level?: string;
     isActive: boolean;
-    // castShadow: boolean;
-    // receiveShadow: boolean;
     startPosition: Position;
     targetPosition: Position;
     rotation: Rotation;
@@ -83,15 +81,15 @@ export type LevelData = {
 };
 
 export type LevelBlockProps = {
-  isLeftArrowClicked: boolean;
+  isLeftArrowClicked:  boolean;
   level?: string;
   isActive: boolean;
+  isVisible: boolean;
   startPosition?: Vector3Type
 } & LevelData;
 
 export type LevelProps= {
-  isLeftArrowClicked: boolean;
-  isActive: boolean;
+  isLeftArrowClicked:  boolean;
   level?: string
   startPosition?: Vector3Type
   shouldAnimate: boolean

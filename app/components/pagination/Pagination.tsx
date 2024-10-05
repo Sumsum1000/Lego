@@ -2,7 +2,7 @@ import { PaginagionType } from '@/app/utils/Types';
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useStore } from 'zustand';
-import useLevelStore from '../store/Store';
+import {useClickStore, useLevelStore} from '../store/Store';
 
 interface PaginationProps {
   currentPage: number;
@@ -17,15 +17,27 @@ const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) =
   const levelUp = levelStore.setNextLevel
   const levelDown = levelStore.setPreviousLevel
 
+  const clickStore = useClickStore()
+  const {setLeftClick, setRightClick, setNoneClick} = clickStore
+  const currentClick = clickStore.currentClick;
+
   const handlePrevious = (): void => {
     // !isleftClicked
     //onPageChange(Math.max(currentPage - 1, 1));
+    setLeftClick()
+    setTimeout(() => {
+      setNoneClick();
+    }, 200)
     levelDown();
   };
 
   const handleNext = (): void => {
     // isleftClicked
     //onPageChange(Math.min(currentPage + 1, totalPages));
+    setRightClick();
+    setTimeout(() => {
+      setNoneClick();
+    }, 200)
     levelUp();
   };
 

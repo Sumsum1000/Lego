@@ -47,7 +47,7 @@ import Pagination from "../components/pagination/Pagination";
 import { PaginagionType } from "../utils/Types";
 import { LevelAll } from "../components/levels/LevelsAll";
 import { useStore } from "zustand";
-import useLevelStore from "../components/store/Store";
+import {useLevelStore} from "../components/store/Store";
 
 
 //--------------------------------------------------------
@@ -125,6 +125,7 @@ const Instructions = () => {
 
   const levelStore = useLevelStore();
   const currentStoreLevel = levelStore.currentLevel;
+  
 
   // useEffect(() => {
   //   console.log('State updated - isLeftArrowClicked_:', isLeftArrowClicked_);
@@ -149,6 +150,8 @@ const Instructions = () => {
   }
 
 
+
+
 useEffect(() => {
   // Set shouldAnimate to true after the initial mount
   setShouldAnimate(true);
@@ -169,7 +172,7 @@ useEffect(() => {
                   onClick={leftClickHandler}
               >{'<'}</button>
               <button 
-                 className={!isLeftArrowClicked_ ? "text-gray-500 text-7xl" : "text-black text-7xl"}
+                 className={!isLeftArrowClicked_  ? "text-gray-500 text-7xl" : "text-black text-7xl"}
                   onClick={rightClickHandler}
               >{'>'}</button>
 
@@ -204,7 +207,9 @@ useEffect(() => {
                 })
               } */}
               
-                <LevelAll isLeftArrowClicked={true} isActive={true} shouldAnimate={true}/>
+                <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/>
+
+
               {/* {currentLevel === 1 && 
                 <Level1
                   isLeftArrowClicked={isLeftArrowClicked_} 

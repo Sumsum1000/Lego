@@ -7,6 +7,7 @@ import { useAnimation } from 'framer-motion';
 import { ThreeEvent } from '@react-three/fiber';
 import {  ModelProps, } from '@/app/utils/Types';
 import * as THREE from 'three';
+import { useClickStore } from '../store/Store';
 
 
   // Type guard to check if an object is a Mesh
@@ -25,17 +26,20 @@ const [onAnim, setOnAnim] = useState(false)
 
 const diffuseMap = model.map ? useTexture(model.map) : null;
 
-
+const clickStore = useClickStore();
 const [isHover, setIsHover] = useState(false);
 const [isClicked, setIsClicked] = useState(false);
 const [gltfPosition, setGltfPosition] = useState();
+
+const {setLeftClick, setRightClick, setNoneClick} = clickStore
+const currentClick = clickStore.currentClick;
 
 const modelInitAnim = {x: model.startPosition[0], y: model.startPosition[1], z: model.startPosition[2], transition: {duration: 1, delay: model.delayIn}}
 const modelTargetAnim = {x: model.targetPosition[0], y: model.targetPosition[1], z: model.targetPosition[2], transition: {duration: 1, delay: model.delayOut}}
 
 const [variantsAnim, setVariantsAnim] = useState({
   init: { ...modelInitAnim , transition: {duration: 1, delay: model.delayIn}},
-  anim: {...modelTargetAnim , transition: {duration: 1, delay: model.delayOut}},
+  anim: {...modelInitAnim , transition: {duration: 1, delay: model.delayIn}},
 });
 
 
@@ -96,6 +100,32 @@ const handlePointerOut = (event: ThreeEvent<PointerEvent>) => {
   setIsHover(false);
 };
 
+// ------------------------------
+const delayAndAnimateForward = () => {
+  // fade in
+  // target point  = start point
+  setVariantsAnim({
+    init: modelInitAnim,
+    anim: modelInitAnim
+  });
+  // wait 1000ms
+   // target point = target point - animation forward
+  setTimeout(() => {
+    setVariantsAnim({
+      init: modelInitAnim,
+      anim: modelTargetAnim
+    });
+  }, 1000)
+ 
+}
+
+const delayAndAnimateBackward = () => {
+  setVariantsAnim({
+    init: modelTargetAnim,
+    anim: modelInitAnim
+  });
+}
+
 
 useEffect(() => {
     controls.start({ scale: 1 });
@@ -113,25 +143,40 @@ useEffect(() => {
   })
 }, [])
 
+// useEffect(() => {
+//   if (!model.isLeftArrowClicked && model.isActive) {
+//     setVariantsAnim({
+//         init: modelInitAnim,
+//         anim: modelTargetAnim
+//     });
+//   }
+//   if (model.isLeftArrowClicked && model.isActive) {
+//     setVariantsAnim({
+//         init: modelTargetAnim,
+//         anim: modelInitAnim
+//     });
+//   }
+//   if (!model.isActive) {
+//       setVariantsAnim({
+//           init: modelTargetAnim,
+//           anim: modelTargetAnim
+//       });
+//   } 
+// }, [model.isLeftArrowClicked, model.isActive, variantsAnim]);
+
 useEffect(() => {
-  if (!model.isLeftArrowClicked && model.isActive) {
+  if(model.isActive && model.isLeftArrowClicked){
     setVariantsAnim({
         init: modelInitAnim,
         anim: modelTargetAnim
     });
   }
-  if (model.isLeftArrowClicked && model.isActive) {
+  if(model.isActive && !model.isLeftArrowClicked){
     setVariantsAnim({
         init: modelTargetAnim,
         anim: modelInitAnim
     });
   }
-  if (!model.isActive) {
-      setVariantsAnim({
-          init: modelTargetAnim,
-          anim: modelTargetAnim
-      });
-  } 
 }, [model.isLeftArrowClicked, model.isActive, variantsAnim]);
 
 
@@ -142,14 +187,20 @@ return (
       <h4 onClick={backToStartPos} style={{ position: 'absolute', right: '260px', bottom: '200px'}}>x</h4>
     </Html> }
         <motion.group
+            // position={
+            //             !model.isActive ? 
+            //             [model.targetPosition[0], model.targetPosition[1], model.targetPosition[2]] : 
+            //             [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
+            //          }
             position={
-                        !model.isActive ? 
-                        [model.targetPosition[0], model.targetPosition[1], model.targetPosition[2]] : 
-                        [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
-                     }
+
+              [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
+           }
             transition={{ duration: 1, ease: "easeInOut" }}
             scale={[model.scale[0], model.scale[1], model.scale[2]]}
-            variants={onAnim ? variantsAnim : {}}
+            //variants={onAnim ? variantsAnim : {}}
+            variants={variantsAnim}
+            initial={'init'}
             animate={'anim'}
             onClick={onClick} 
         >

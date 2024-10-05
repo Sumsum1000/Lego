@@ -9,7 +9,7 @@ const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
 
 
-export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive }: LevelBlockProps) => {
+export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive, isVisible }: LevelBlockProps) => {
   const numOfElements = levelData.length;
 
   return (
@@ -25,7 +25,7 @@ export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive }: L
         const levelValue = level ?? "";
 
         return (
-          <group key={model.id}>
+          <group key={model.id} visible={isVisible}>
             <Model
               model={{
                 url: model.url,
