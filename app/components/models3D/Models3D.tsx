@@ -183,6 +183,11 @@ useEffect(() => {
   }
 }, [model.isLeftArrowClicked, model.isActive, variantsAnim]);
 
+// const handleAnimationComplete = () => {
+//   console.log("Animation finished!");
+//   // You can run any function here
+// };
+
 
 
 return (
@@ -207,6 +212,7 @@ return (
             initial={'init'}
             animate={'anim'}
             onClick={onClick} 
+            onAnimationComplete={model.onAnimationComplete}
         >
 
         <motion.primitive 

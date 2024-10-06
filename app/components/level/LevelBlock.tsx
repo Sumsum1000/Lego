@@ -3,6 +3,7 @@ import { Model } from '../models3D/Models3D';
 import { Position, Rotation, Scale } from '@/app/utils/Types';
 //import { LevelProps } from '@/app/utils/Types';
 import { LevelBlockProps } from '@/app/utils/Types';
+import { useClickStore } from '../store/Store';
 
 const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
@@ -11,6 +12,11 @@ const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
 export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive, isVisible }: LevelBlockProps) => {
   const numOfElements = levelData.length;
+  const clickStore = useClickStore();
+  const {currentClick, setLeftClick, setRightClick} = clickStore
+
+
+  const visibility = typeof isVisible === 'function' ? isVisible() : isVisible;
 
   return (
     <>
@@ -24,8 +30,10 @@ export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive, isV
         // ensure level is not undefind
         const levelValue = level ?? "";
 
+        const lastIndex = levelData.length - 1
+
         return (
-          <group key={model.id} visible={isVisible}>
+          <group key={model.id} visible={visibility} >
             <Model
               model={{
                 url: model.url,
@@ -42,6 +50,15 @@ export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive, isV
                 delayOut: !isActive ? i * 0.2 : i * 1,
                 color: model.color,
                 map: model.map,
+                onAnimationComplete: () => {
+                  if(i === lastIndex && !isLeftArrowClicked){
+                    setLeftClick
+                  }
+                  else if(i === lastIndex && isLeftArrowClicked){
+                    setRightClick
+                  }
+                }
+                // i === lastIndex && !isLeftArrowClicked ? setLeftClick : () => console.log('element')
               }}
             />
           </group>

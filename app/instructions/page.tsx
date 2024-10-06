@@ -4,23 +4,7 @@ import { FaChevronRight } from "react-icons/fa";
 import { Box, Environment, Html, OrbitControls, PerspectiveCamera, useGLTF, SoftShadows } from "@react-three/drei";
 import { Canvas, useLoader, useThree,  } from "@react-three/fiber";
 import { Suspense, useMemo, forwardRef, useState, useEffect } from 'react'
-import { Level1 } from "../components/levels/level1/page";
-import { Level2 } from "../components/levels/level2/page";
-import { Level3 } from "../components/levels/level3/page";
-import { Level4 } from "../components/levels/level4/page";
-import { Level5 } from "../components/levels/level5/page";
-import { Level6 } from "../components/levels/level6/page";
-import { Level7 } from "../components/levels/level7/page";
-import { Level8 } from "../components/levels/level8/page";
-import { Level9 } from "../components/levels/level9/page";
-import { Level10 } from "../components/levels/level10/page";
-import { Level11 } from "../components/levels/level11/page";
-import { Level12 } from "../components/levels/level12/page";
-import { Level13 } from "../components/levels/level13/page";
-import { Level14 } from "../components/levels/level14/page";
-import { Level15 } from "../components/levels/level15/page";
-import { Level16 } from "../components/levels/level16/page";
-import { level1 } from "../components/levelsData/Level1";
+import { level1 } from "../components/levelsData/level1";
 import { level2 } from "../components/levelsData/level2";
 import { level3 } from "../components/levelsData/level3";
 import { level4 } from "../components/levelsData/level4";
@@ -112,11 +96,11 @@ const Instructions = () => {
   const [isLeftArrowClicked_, setIsLeftArrowClicked_] = useState(true);
   const [currentLevel, setCurrentLevel] = useState(0);
 
-  const levels = [
-      Level1,  Level2, Level3, Level4, Level5, Level6, 
-      Level7, Level8, Level8, Level10, Level11, Level12, 
-      Level13, Level14, Level15, Level16, 
-  ]
+  // const levels = [
+  //     Level1,  Level2, Level3, Level4, Level5, Level6, 
+  //     Level7, Level8, Level8, Level10, Level11, Level12, 
+  //     Level13, Level14, Level15, Level16, 
+  // ]
   const levelData ={
     level1, level2, level3, level4, level5, level6,
     level7, level8, level9, level10, level11, level12,
@@ -128,7 +112,7 @@ const Instructions = () => {
 
   const clickStore = useClickStore();
   const {setLeftClick, setRightClick} = clickStore
-const currentClick = clickStore.currentClick;
+  const currentClick = clickStore.currentClick;
 
 useEffect(() => {
   console.log('currentClick 3dModel', currentClick)
@@ -146,12 +130,12 @@ useEffect(() => {
   };
 
   const rightClickHandler = () => {
-    setLeftClick()
+    //setLeftClick()
     setIsLeftArrowClicked_(prevState => false);
 } 
 
   const leftClickHandler = () => {
-    setRightClick()
+    //setRightClick()
       setIsLeftArrowClicked_(prevState => true);
   }
 

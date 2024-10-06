@@ -53,6 +53,7 @@ export type ModelProps = {
     color?: string;
     map?: string;
     material?: MeshStandardMaterial;
+    onAnimationComplete: () => void;
   }
 } & EventHandlers & MaterialProps ;
 
@@ -84,7 +85,7 @@ export type LevelBlockProps = {
   isLeftArrowClicked:  boolean;
   level?: string;
   isActive: boolean;
-  isVisible: boolean;
+  isVisible: boolean | (() => boolean) | undefined;
   startPosition?: Vector3Type
 } & LevelData;
 
