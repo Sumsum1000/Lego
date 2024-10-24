@@ -32,6 +32,7 @@ import { PaginagionType } from "../utils/Types";
 import { LevelAll } from "../components/levels/LevelsAll";
 import {useLevelStore} from "../components/store/Store";
 import { useClickStore } from "../components/store/Store";
+import { useDirectionFlowStore } from "../components/store/Store";
  
 
 //--------------------------------------------------------
@@ -91,6 +92,7 @@ const Instructions = () => {
 
   
   //const [currentPage, setCurrentPage] = useState(1);
+
   const totalPages = 17;
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [isLeftArrowClicked_, setIsLeftArrowClicked_] = useState(true);
@@ -111,17 +113,12 @@ const Instructions = () => {
   const currentStoreLevel = levelStore.currentLevel;
 
   const clickStore = useClickStore();
-  const {setLeftClick, setRightClick} = clickStore
-  const currentClick = clickStore.currentClick;
+  const {isLeftButton} = clickStore;
 
-useEffect(() => {
-  console.log('currentClick 3dModel', currentClick)
-}, [])
+  const directionFlowStore = useDirectionFlowStore();
+  const directionFlow = directionFlowStore.directionFlow;
+  const {setDirectionFlow} = directionFlowStore;
   
-
-  // useEffect(() => {
-  //   console.log('State updated - isLeftArrowClicked_:', isLeftArrowClicked_);
-  // }, [isLeftArrowClicked_]);
 
   const handlePageChange: PaginagionType['onPageChange'] = (page) => {
     console.log("Changing to page:", page);
@@ -131,11 +128,13 @@ useEffect(() => {
 
   const rightClickHandler = () => {
     //setLeftClick()
+    setDirectionFlow('forward');
     setIsLeftArrowClicked_(prevState => false);
 } 
 
   const leftClickHandler = () => {
     //setRightClick()
+    setDirectionFlow('backward')
       setIsLeftArrowClicked_(prevState => true);
   }
 
@@ -144,22 +143,12 @@ useEffect(() => {
   }
 
 
-
-
-useEffect(() => {
-  // Set shouldAnimate to true after the initial mount
-  setShouldAnimate(true);
-}, []);
-
-useEffect(() => {
-  console.log('currentClick: ', currentClick)
-})
-
   return (
         // <h1>Instrucions</h1>
         <div className="h-screen bg-gray-900">
           <h1 className="mt-28">{currentStoreLevel}</h1>
-          <h1 className="mt-28">{currentClick.toString()}</h1>
+          <h1 className="mt-4">{directionFlow}</h1>
+          <h1 className="mt-28">{isLeftButton.toString()}</h1>
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}
@@ -187,158 +176,9 @@ useEffect(() => {
             
             <Perf className='top-left'/>
             <Suspense fallback={null}>
-
-              {/* {
-                levels.map((_, i) => {
-                  const levelKey = `level${i + 1}` as keyof typeof levelData; 
-
-                  return (
-                    currentLevel > i && (
-                      <LevelBlock
-                        key={i}
-                        levelData={levelData[levelKey]} 
-                        isLeftArrowClicked={isLeftArrowClicked_}
-                        isActive={currentLevel === (i + 1)}
-                        level={(i + 1).toString()}
-                      />
-                    )
-                  );
-                })
-              } */}
               
-                <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/>
-
-
-              {/* {currentLevel === 1 && 
-                <Level1
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 1 ? false : true} 
-                  level={'1'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 2 && 
-                <Level2
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 2 ? false : true} 
-                  level={'2'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-                    {currentLevel === 3 && 
-                <Level3
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 3 ? false : true} 
-                  level={'3'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-                    {currentLevel === 4 && 
-                <Level4
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 4 ? false : true} 
-                  level={'4'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-                    {currentLevel === 5 && 
-                <Level5
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 5 ? false : true} 
-                  level={'5'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 6 && 
-                <Level6
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 6 ? false : true} 
-                  level={'6'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 7 && 
-                <Level7
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 7 ? false : true} 
-                  level={'7'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 8 && 
-                <Level8
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 8 ? false : true} 
-                  level={'8'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 9 && 
-                <Level9
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 9 ? false : true} 
-                  level={'9'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 10 && 
-                <Level10
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 10 ? false : true} 
-                  level={'10'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 11 && 
-                <Level11
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 11 ? false : true} 
-                  level={'11'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 12 && 
-                <Level12
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 12 ? false : true} 
-                  level={'12'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 13 && 
-                <Level13
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 13 ? false : true} 
-                  level={'13'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 14 && 
-                <Level14
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 14 ? false : true} 
-                  level={'14'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 15 && 
-                <Level15
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 15 ? false : true} 
-                  level={'15'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              } 
-              {currentLevel === 16 && 
-                <Level16
-                  isLeftArrowClicked={isLeftArrowClicked_} 
-                  isActive={currentLevel !== 16 ? false : true} 
-                  level={'16'} 
-                  shouldAnimate={shouldAnimate}
-                />
-              }  */}
-
-
+                {/* <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/> */}
+                <LevelAll />
 
               {/* <TestElement model="/3dModels/Level16/Cpockpit.glb"/> */}
             </Suspense>
@@ -352,119 +192,3 @@ useEffect(() => {
 }
 
 export default Instructions;
-
-
-
-
-
-
-{/* <ul className="flex gap-8 text-3xl right-9">
-<li className={currentLevel == 1 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(1)}>1</li>
-<li className={currentLevel == 2 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(2)}>2</li>
-<li className={currentLevel == 3 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(3)}>3</li>
-<li className={currentLevel == 4 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(4)}>4</li>
-<li className={currentLevel == 5 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(5)}>5</li>
-<li className={currentLevel == 6 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(6)}>6</li>
-<li className={currentLevel == 7 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(7)}>7</li>
-<li className={currentLevel == 8 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(8)}>8</li>
-<li className={currentLevel == 9 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(9)}>9</li>
-<li className={currentLevel == 10 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(10)}>10</li>
-<li className={currentLevel == 11 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(11)}>11</li>
-<li className={currentLevel == 12 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(12)}>12</li>
-<li className={currentLevel == 13 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(13)}>13</li>
-<li className={currentLevel == 14 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(14)}>14</li>
-<li className={currentLevel == 15 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(15)}>15</li>
-<li className={currentLevel == 16 ? "text-black" : "text-white"} onClick={() => updateCurrentLevel(16)}>16</li>
-</ul> */}
-
-
-
-
-            {/* <EffectComposer>
-                <ToneMapping
-                    blendFunction={BlendFunction.ADD} // blend mode
-                    adaptive={true} // toggle adaptive luminance map usage
-                    resolution={256} // texture resolution of the luminance map
-                    middleGrey={0.6} // middle grey factor
-                    maxLuminance={16.0} // maximum luminance
-                    averageLuminance={1.0} // average luminance
-                    adaptationRate={1.0} // luminance adaptation rate
-                />
-
-            </EffectComposer>     */}
-
-
-// {currentLevel > 4 && 
-//   <Level5
-//     isLeftArrowClicked={isLeftArrowClicked_} 
-//     isActive={currentLevel !== 5 ? false : true} 
-//     level={'5'} 
-//     shouldAnimate={shouldAnimate}
-//   />
-// } 
-
-
-
-
-
-
-{/* <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-<div>
-  <nav aria-label="Pagination" className="isolate inline-flex -space-x-px rounded-md shadow-sm">
-    <a
-      href="#"
-      className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-    >
-      <span className="sr-only">Previous</span>
-      <FaChevronLeft aria-hidden="true" className="h-5 w-5" />
-    </a>
-      <a
-      href="#"
-      aria-current="page"
-      className="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-    >
-      1
-    </a>
-    <a
-      href="#"
-      className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-    >
-      2
-    </a>
-    <a
-      href="#"
-      className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-    >
-      3
-    </a>
-    <span className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-      ...
-    </span>
-    <a
-      href="#"
-      className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-    >
-      8
-    </a>
-    <a
-      href="#"
-      className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-    >
-      9
-    </a>
-    <a
-      href="#"
-      className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-    >
-      10
-    </a>
-    <a
-      href="#"
-      className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-    >
-      <span className="sr-only">Next</span>
-      <FaChevronRight aria-hidden="true" className="h-5 w-5" />
-    </a>
-  </nav>
-</div>
-</div> */}

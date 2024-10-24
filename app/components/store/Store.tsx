@@ -8,10 +8,15 @@ interface LevelStore {
 }
 
 type ClickStore = {
-    currentClick: boolean;
+    isLeftButton: boolean;
     setRightClick: () => void;
     setLeftClick: () => void;
     //setNoneClick: () => void;
+}
+
+type DirectionFlowStore = {
+  directionFlow: 'forward' | 'backward';
+  setDirectionFlow: (state: 'forward' | 'backward') => void;
 }
 
 export const useLevelStore = create<LevelStore>((set) => ({
@@ -21,9 +26,24 @@ export const useLevelStore = create<LevelStore>((set) => ({
   setPreviousLevel: () => set((state) => ({ currentLevel: state.currentLevel - 1 })), // Correctly updates currentLevel
 }));
 
+// export const useClickStore = create<ClickStore>((set) => ({
+//     currentClick: true,
+//     setRightClick: () => set({ currentClick: false }),
+//     setLeftClick: () => set({ currentClick: true }),
+//     //setNoneClick: () => set(() => ({ currentClick: 'none' })),
+// }))
+
 export const useClickStore = create<ClickStore>((set) => ({
-    currentClick: true,
-    setRightClick: () => set({ currentClick: false }),
-    setLeftClick: () => set({ currentClick: true }),
-    //setNoneClick: () => set(() => ({ currentClick: 'none' })),
+  isLeftButton: true,
+  setRightClick: () => set({ isLeftButton: false }),
+  setLeftClick: () => set({ isLeftButton: true }),
 }))
+
+export const useDirectionFlowStore = create<DirectionFlowStore>((set) => ({
+  directionFlow: 'forward',
+  setDirectionFlow: (state: 'forward' | 'backward') => set({ directionFlow: state }),
+}));
+
+ //const [isLeftArrowClicked_, setIsLeftArrowClicked_] = useState(true);
+
+

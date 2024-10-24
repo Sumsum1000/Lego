@@ -47,7 +47,7 @@ export type ModelProps = {
     rotation: Rotation;
     scale: Scale;
     transitionScale: Transition;
-    isLeftArrowClicked: boolean;
+    isForwardAnim: boolean;
     delayIn: number;
     delayOut: number;
     color?: string;
@@ -82,7 +82,7 @@ export type LevelData = {
 };
 
 export type LevelBlockProps = {
-  isLeftArrowClicked:  boolean;
+  isForwardAnim:  boolean;
   level?: string;
   isActive: boolean;
   isVisible: boolean | (() => boolean) | undefined;
@@ -90,10 +90,10 @@ export type LevelBlockProps = {
 } & LevelData;
 
 export type LevelProps= {
-  isLeftArrowClicked:  boolean;
+  //isLeftArrowClicked:  boolean;
   level?: string
   startPosition?: Vector3Type
-  shouldAnimate: boolean
+  //shouldAnimate: boolean
 };
 
 export type PaginagionType = {

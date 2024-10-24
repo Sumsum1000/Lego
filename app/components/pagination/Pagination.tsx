@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useStore } from 'zustand';
 import {useClickStore, useLevelStore} from '../store/Store';
+import { useDirectionFlowStore } from '../store/Store';
 
 interface PaginationProps {
   currentPage: number;
@@ -20,16 +21,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) =
   const levelDown = levelStore.setPreviousLevel
 
   const clickStore = useClickStore()
-  const {setLeftClick, setRightClick} = clickStore
-  const currentClick = clickStore.currentClick;
-  
-  useEffect(() => {
-    console.log('currentClick pagination', currentClick)
-  }, [])
+  const {isLeftButton ,setLeftClick, setRightClick} = clickStore
+
+  const directionFlowStore = useDirectionFlowStore();
+  const directionFlow = directionFlowStore.directionFlow;
+  const {setDirectionFlow} = directionFlowStore;
 
   const handlePrevious = (): void => {
     // !isleftClicked
     //onPageChange(Math.max(currentPage - 1, 1));
+    setDirectionFlow('backward');
     setRightClick();
     levelDown();
   };
@@ -37,6 +38,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) =
   const handleNext = (): void => {
     // isleftClicked
     //onPageChange(Math.min(currentPage + 1, totalPages));
+    setDirectionFlow('forward');
     setLeftClick()
     levelUp();
   };

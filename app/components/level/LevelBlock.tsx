@@ -10,13 +10,15 @@ const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
 
 
-export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive, isVisible }: LevelBlockProps) => {
+export const LevelBlock = ({ isForwardAnim, levelData, level, isActive, isVisible }: LevelBlockProps) => {
   const numOfElements = levelData.length;
   const clickStore = useClickStore();
-  const {currentClick, setLeftClick, setRightClick} = clickStore
+  const {isLeftButton, setLeftClick, setRightClick} = clickStore
 
 
   const visibility = typeof isVisible === 'function' ? isVisible() : isVisible;
+
+
 
   return (
     <>
@@ -33,7 +35,7 @@ export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive, isV
         const lastIndex = levelData.length - 1
 
         return (
-          <group key={model.id} visible={visibility} >
+          <group key={model.id} visible={typeof isVisible === 'function' ? isVisible() : isVisible} >
             <Model
               model={{
                 url: model.url,
@@ -45,20 +47,19 @@ export const LevelBlock = ({ isLeftArrowClicked, levelData, level, isActive, isV
                 rotation: rotation ,
                 scale: scale, //as [number, number, number],
                 transitionScale: { duration: 0.4, delay: 0.15 * i, type: 'spring', stiffness: 80 },
-                isLeftArrowClicked: isLeftArrowClicked,
+                isForwardAnim: isForwardAnim,
                 delayIn: (numOfElements - 1 - i) * 1,
                 delayOut: !isActive ? i * 0.2 : i * 1,
                 color: model.color,
                 map: model.map,
                 onAnimationComplete: () => {
-                  if(i === lastIndex && !isLeftArrowClicked){
+                  if(i === lastIndex && !isForwardAnim){
                     setLeftClick
                   }
-                  else if(i === lastIndex && isLeftArrowClicked){
+                  else if(i === lastIndex && isForwardAnim){
                     setRightClick
                   }
                 }
-                // i === lastIndex && !isLeftArrowClicked ? setLeftClick : () => console.log('element')
               }}
             />
           </group>

@@ -8,6 +8,7 @@ import { ThreeEvent } from '@react-three/fiber';
 import {  ModelProps, } from '@/app/utils/Types';
 import * as THREE from 'three';
 import { useClickStore } from '../store/Store';
+import { useDirectionFlowStore } from '../store/Store';
 
 
   // Type guard to check if an object is a Mesh
@@ -26,24 +27,45 @@ const [onAnim, setOnAnim] = useState(false)
 
 const diffuseMap = model.map ? useTexture(model.map) : null;
 
-const clickStore = useClickStore();
 const [isHover, setIsHover] = useState(false);
 const [isClicked, setIsClicked] = useState(false);
 const [gltfPosition, setGltfPosition] = useState();
 
-const {setLeftClick, setRightClick} = clickStore
-const currentClick = clickStore.currentClick;
+const clickStore = useClickStore();
+const {isLeftButton ,setLeftClick, setRightClick} = clickStore
 
-useEffect(() => {
-  console.log('currentClick 3dModel', currentClick)
-}, [])
 
-const modelInitAnim = {x: model.startPosition[0], y: model.startPosition[1], z: model.startPosition[2], transition: {duration: 1, delay: model.delayIn}}
-const modelTargetAnim = {x: model.targetPosition[0], y: model.targetPosition[1], z: model.targetPosition[2], transition: {duration: 1, delay: model.delayOut}}
+const modelInitAnim = {
+  x: model.startPosition[0], 
+  y: model.startPosition[1], 
+  z: model.startPosition[2], 
+  opacity: 1,
+  transition: {
+    duration: 1, 
+    delay: model.delayIn
+  }
+}
+const modelTargetAnim = {
+  x: model.targetPosition[0], 
+  y: model.targetPosition[1], 
+  z: model.targetPosition[2], 
+  opacity: 1,
+  transition: {
+    duration: 1, delay: model.delayOut}
+}
 
 const [variantsAnim, setVariantsAnim] = useState({
-  init: { ...modelInitAnim , transition: {duration: 1, delay: model.delayIn}},
-  anim: {...modelInitAnim , transition: {duration: 1, delay: model.delayIn}},
+  init: {
+    ...modelInitAnim , 
+    transition: {
+      duration: 1, delay: model.delayIn
+    }
+  },
+  anim: {
+    ...modelInitAnim , transition: {
+      duration: 1, delay: model.delayIn
+    }
+  },
 });
 
 
@@ -168,25 +190,68 @@ useEffect(() => {
 //   } 
 // }, [model.isLeftArrowClicked, model.isActive, variantsAnim]);
 
+// useEffect(() => {
+//   console.log('directionFlow:' ,directionFlow)
+// }, [directionFlow])
+
+// useEffect(() => {
+//   if(model.isActive && currentClick){
+//     setVariantsAnim({
+//         init: modelInitAnim,
+//         anim: modelTargetAnim
+//     });
+//   }
+//   if(model.isActive && !currentClick){
+//     setVariantsAnim({
+//         init: modelTargetAnim,
+//         anim: modelInitAnim
+//     });
+//   }
+// }, [model.isLeftArrowClicked, model.isActive]);
+
+// useEffect(() => {
+//   console.log('directionFlow:' ,directionFlow)
+// }, [directionFlow])
+
+// useEffect(() => {
+//   if(model.isActive && isLeftButton){
+//     setVariantsAnim({
+//         init: modelInitAnim,
+//         anim: modelTargetAnim
+//     });
+//   }
+//   if(model.isActive && !isLeftButton){
+//     setVariantsAnim({
+//         init: modelTargetAnim,
+//         anim: modelInitAnim
+//     });
+//   }
+// }, [model.isForwardAnim, model.isActive]);
+
+
 useEffect(() => {
-  if(model.isActive && currentClick){
-    setVariantsAnim({
+  if (model.isActive) {
+    if (isLeftButton) {
+      // When directionFlow changes to 'forward', always set this state
+      setVariantsAnim({
         init: modelInitAnim,
         anim: modelTargetAnim
-    });
-  }
-  if(model.isActive && !currentClick){
-    setVariantsAnim({
-        init: modelTargetAnim,
+      });
+    } else if (!isLeftButton) {
+      // When directionFlow is 'backward', set both states to the same value
+      // This effectively prevents visible animation
+      setVariantsAnim({
+        init: modelInitAnim,
         anim: modelInitAnim
-    });
+      });
+    }
   }
-}, [model.isLeftArrowClicked, model.isActive, variantsAnim]);
+}, [model.isActive, isLeftButton]);
 
-// const handleAnimationComplete = () => {
-//   console.log("Animation finished!");
-//   // You can run any function here
-// };
+const handleAnimationComplete = () => {
+  console.log("Animation finished!");
+  // You can run any function here
+};
 
 
 
@@ -195,33 +260,34 @@ return (
     {isClicked && <Html>
       <h4 onClick={backToStartPos} style={{ position: 'absolute', right: '260px', bottom: '200px'}}>x</h4>
     </Html> }
-        <motion.group
-            // position={
-            //             !model.isActive ? 
-            //             [model.targetPosition[0], model.targetPosition[1], model.targetPosition[2]] : 
-            //             [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
-            //          }
-            position={
+            <motion.group
+                // position={
+                //             !model.isActive ? 
+                //             [model.targetPosition[0], model.targetPosition[1], model.targetPosition[2]] : 
+                //             [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
+                //          }
+                position={
 
-              [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
-           }
-            transition={{ duration: 1, ease: "easeInOut" }}
-            scale={[model.scale[0], model.scale[1], model.scale[2]]}
-            //variants={onAnim ? variantsAnim : {}}
-            variants={variantsAnim}
-            initial={'init'}
-            animate={'anim'}
-            onClick={onClick} 
-            onAnimationComplete={model.onAnimationComplete}
-        >
+                  [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
+              }
+                transition={{ duration: 1, ease: "easeInOut" }}
+                scale={[model.scale[0], model.scale[1], model.scale[2]]}
+                //variants={onAnim ? variantsAnim : {}}
+                variants={variantsAnim}
+                initial={'init'}
+                animate={'anim'}
+                exit={'anim'}
+                onClick={onClick} 
+                onAnimationComplete={model.onAnimationComplete}
+            >
 
-        <motion.primitive 
-              object={clonedScene}  
-              onPointerEnter={handlePointerOver}
-              onPointerLeave={handlePointerOut}
-        />
-      {isHover && <Html position={[0, -0.3, 0]}>{model.name}</Html>}
-        </motion.group>
+            <motion.primitive 
+                  object={clonedScene}  
+                  onPointerEnter={handlePointerOver}
+                  onPointerLeave={handlePointerOut}
+            />
+              {isHover && <Html position={[0, -0.3, 0]}>{model.name}</Html>}
+            </motion.group>
   </>
 )};
 
