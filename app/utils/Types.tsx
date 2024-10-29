@@ -40,7 +40,7 @@ export type ModelProps = {
   model: {
     url: string;
     name: string;
-    level?: string;
+    level: number;
     isActive: boolean;
     startPosition: Position;
     targetPosition: Position;
@@ -53,6 +53,7 @@ export type ModelProps = {
     color?: string;
     map?: string;
     material?: MeshStandardMaterial;
+    shouldReset?: boolean;
     onAnimationComplete: () => void;
   }
 } & EventHandlers & MaterialProps ;
@@ -83,7 +84,7 @@ export type LevelData = {
 
 export type LevelBlockProps = {
   isForwardAnim:  boolean;
-  level?: string;
+  level_: number;
   isActive: boolean;
   isVisible: boolean | (() => boolean) | undefined;
   startPosition?: Vector3Type

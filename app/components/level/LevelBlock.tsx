@@ -4,16 +4,21 @@ import { Position, Rotation, Scale } from '@/app/utils/Types';
 //import { LevelProps } from '@/app/utils/Types';
 import { LevelBlockProps } from '@/app/utils/Types';
 import { useClickStore } from '../store/Store';
+import { useLevelStore } from '../store/Store';
 
 const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
 
 
 
-export const LevelBlock = ({ isForwardAnim, levelData, level, isActive, isVisible }: LevelBlockProps) => {
+export const LevelBlock = ({ isForwardAnim, levelData, level_, isActive, isVisible }: LevelBlockProps) => {
   const numOfElements = levelData.length;
   const clickStore = useClickStore();
   const {isLeftButton, setLeftClick, setRightClick} = clickStore
+
+  const levelStore = useLevelStore();
+  const {level, setAnimationStatus} = levelStore;
+  const { currentLevel, tempLevel, isEndAnimation} = level;
 
 
   const visibility = typeof isVisible === 'function' ? isVisible() : isVisible;
@@ -30,7 +35,7 @@ export const LevelBlock = ({ isForwardAnim, levelData, level, isActive, isVisibl
         const scale: Scale = model.scale;
 
         // ensure level is not undefind
-        const levelValue = level ?? "";
+        const levelValue = level_ ?? "";
 
         const lastIndex = levelData.length - 1
 
@@ -40,7 +45,7 @@ export const LevelBlock = ({ isForwardAnim, levelData, level, isActive, isVisibl
               model={{
                 url: model.url,
                 name: model.name,
-                level: levelValue,
+                level: level_,
                 isActive: isActive,
                 startPosition: startPosition ,
                 targetPosition: targetPosition ,
@@ -54,11 +59,13 @@ export const LevelBlock = ({ isForwardAnim, levelData, level, isActive, isVisibl
                 map: model.map,
                 onAnimationComplete: () => {
                   if(i === lastIndex && !isForwardAnim){
-                    setLeftClick
+                    console.log('End animation')
+                    setAnimationStatus(true);
+                    //setLeftClick
                   }
-                  else if(i === lastIndex && isForwardAnim){
-                    setRightClick
-                  }
+                  // else if(i === lastIndex && isForwardAnim){
+                  //   console.log('Backward anim!!!')
+                  // }
                 }
               }}
             />

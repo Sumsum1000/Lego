@@ -34,11 +34,14 @@ const [gltfPosition, setGltfPosition] = useState();
 
 const [animDirection, setAnimDirection] = useState<'forward' | 'backward'>('forward')
 const clickStore = useClickStore();
-const {isLeftButton, setRightClick, setLeftClick} = clickStore;
+const {isLeftButton} = clickStore;
 
 const levelStore = useLevelStore();
 const {level} = levelStore;
 const { currentLevel, tempLevel, isEndAnimation} = level;
+
+//const clickStore = useClickStore();
+//const {isLeftButton ,setLeftClick, setRightClick} = clickStore
 
 
 const modelInitAnim = {
@@ -60,12 +63,12 @@ const modelTargetAnim = {
     duration: 1, delay: model.delayOut}
 }
 const modelTestAnim = {
-  x: model.startPosition[0], 
-  y: model.startPosition[1], 
-  z: model.startPosition[2],
+  x: 0, 
+  y: 0, 
+  z: 0, 
   opacity: 1,
   transition: {
-    duration: 0, delay: 0.3}
+    duration: 1, delay: 0.3}
 }
 
 const [variantsAnim, setVariantsAnim] = useState({
@@ -159,46 +162,90 @@ useEffect(() => {
   })
 }, [])
 
+// useEffect(() => {
+//   if (!isLeftButton && model.isActive) {
+//     setVariantsAnim({
+//         init: modelInitAnim,
+//         anim: modelTargetAnim
+//     });
+//   }
+//   if (isLeftButton && model.isActive) {
+//     setVariantsAnim({
+//         init: modelTargetAnim,
+//         anim: modelInitAnim
+//     });
+//   }
+//   if (!model.isActive) {
+//       setVariantsAnim({
+//           init: modelTargetAnim,
+//           anim: modelTargetAnim
+//       });
+//   } 
+// }, [isLeftButton, model.isActive, variantsAnim]);
 
-// for first level animation on start
+// useEffect(() => {
+//   console.log('directionFlow:' ,directionFlow)
+// }, [directionFlow])
+
+// useEffect(() => {
+//   if(model.isActive && currentClick){
+//     setVariantsAnim({
+//         init: modelInitAnim,
+//         anim: modelTargetAnim
+//     });
+//   }
+//   if(model.isActive && !currentClick){
+//     setVariantsAnim({
+//         init: modelTargetAnim,
+//         anim: modelInitAnim
+//     });
+//   }
+// }, [model.isLeftArrowClicked, model.isActive]);
+
+// useEffect(() => {
+//   console.log('directionFlow:' ,directionFlow)
+// }, [directionFlow])
+
 useEffect(() => {
-  setRightClick()
-  const timeOut = setTimeout(() => {
-    setLeftClick()
-  }, 100)
 
-  return(() => {
-    clearTimeout(timeOut);
-  })
-}, [])
+  const nextLevel = currentLevel + 1;
+  const previousLevel = currentLevel - 1
 
-
-useEffect(() => {
-  let timeoutDelay1: NodeJS.Timeout | undefined;
-
-  if (model.isActive && !isLeftButton) {
-    // Set a delayed animation variant update
-    timeoutDelay1 = setTimeout(() => {
-      setVariantsAnim({
-        init: modelInitAnim,
-        anim: modelTargetAnim,
-      });
-    }, 2000);
-  } 
-
-  if (!model.isActive && model.level - 1 === currentLevel && isLeftButton) {
+  if(model.level === nextLevel && !model.isActive && isLeftButton){
     setVariantsAnim({
-      init: modelTargetAnim,
-      anim: modelTestAnim,
+        init: modelInitAnim,
+        anim: modelTestAnim
     });
   }
+  else if(model.isActive && isLeftButton ){
+    setVariantsAnim({
+        init: modelInitAnim,
+        anim: modelTargetAnim
+    });
+  }
+  else if(model.isActive && isLeftButton && model.level === currentLevel){
+    setVariantsAnim({
+        init: modelTargetAnim,
+        anim: modelInitAnim
+    });
+  }
+  else if(model.isActive && !isLeftButton && model.level === currentLevel){
+    setVariantsAnim({
+        init: modelInitAnim,
+        anim: modelTargetAnim
+    });
+  }
+}, [model.isForwardAnim, model.isActive, level]);
 
-  // Cleanup function to clear timeout on effect cleanup
-  return () => {
-    if (timeoutDelay1) clearTimeout(timeoutDelay1);
-  };
+// useEffect(() => {
+//   if(currentLevel > tempLevel){
+//     setAnimDirection('forward');
+//   }
+//   else{
+//     setAnimDirection('backward');
+//   }
+// }, [isLeftButton]);
 
-}, [isLeftButton, model.isActive, currentLevel]);
 
 
 

@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 
 interface LevelStore {
-  currentLevel: number;
+  level: {currentLevel: number, tempLevel: number, modelLevel: number, isEndAnimation: boolean};
   setCurrentLevel: (level: number) => void;
-  setNextLevel: () => void; // This doesn't need to take a level argument if it's just incrementing
+  setNextLevel: () => void; 
   setPreviousLevel: () => void;
+  setAnimationStatus: (status: boolean) => void;
+  setModelLevel: (level: number) => void;
 }
 
 type ClickStore = {
@@ -20,10 +22,39 @@ type DirectionFlowStore = {
 }
 
 export const useLevelStore = create<LevelStore>((set) => ({
-  currentLevel: 1,
-  setCurrentLevel: (level: number) => set(() => ({ currentLevel: level })),
-  setNextLevel: () => set((state) => ({ currentLevel: state.currentLevel + 1 })), // Correctly updates currentLevel
-  setPreviousLevel: () => set((state) => ({ currentLevel: state.currentLevel - 1 })), // Correctly updates currentLevel
+  level: { currentLevel: 1, tempLevel: 1, modelLevel: 1, isEndAnimation: false },
+// Correctly updates currentLevel
+  setNextLevel: () => set((state) => ({
+    level: { 
+      ...state.level,
+      currentLevel: state.level.currentLevel + 1, 
+      tempLevel: state.level.currentLevel,
+    }
+  })), // Correctly updates currentLevel
+  setPreviousLevel: () => set((state) => ({
+    level: { 
+      ...state.level,
+      currentLevel: state.level.currentLevel - 1, 
+      tempLevel: state.level.currentLevel,
+    }
+  })), // Correctly updates currentLevel
+  setCurrentLevel: (newLevel: number) => set((state) => ({
+    level: { 
+      ...state.level,
+      currentLevel: newLevel, 
+      tempLevel: state.level.tempLevel ,
+    }
+  })),
+  setAnimationStatus: (status: boolean) => set((state) => ({
+    level:{
+      ...state.level, status
+    }
+  })),
+  setModelLevel: (modelLevel: number) => set((state) => ({
+    level:{
+      ...state.level, modelLevel
+    }
+  }))
 }));
 
 // export const useClickStore = create<ClickStore>((set) => ({
@@ -35,8 +66,8 @@ export const useLevelStore = create<LevelStore>((set) => ({
 
 export const useClickStore = create<ClickStore>((set) => ({
   isLeftButton: true,
-  setRightClick: () => set({ isLeftButton: false }),
-  setLeftClick: () => set({ isLeftButton: true }),
+  setRightClick: () => set({ isLeftButton: true }),
+  setLeftClick: () => set({ isLeftButton: false }),
 }))
 
 export const useDirectionFlowStore = create<DirectionFlowStore>((set) => ({

@@ -21,6 +21,7 @@ export const level2 = [
     receiveShadow: true,
     color: 'white',
     map: 'Group_1.jpg',
+    shouldReset: false
   },
   {
     id: crypto.randomUUID(),
@@ -36,6 +37,7 @@ export const level2 = [
     receiveShadow: true,
     color: 'white',
     map: 'Group_1.jpg',
+    shouldReset: false
   },
   {
     id: crypto.randomUUID(),
@@ -51,6 +53,7 @@ export const level2 = [
     receiveShadow: true,
     color: 'white',
     map: 'Group_1.jpg',
+    shouldReset: false
   },
 
 ]

@@ -96,7 +96,6 @@ const Instructions = () => {
   const totalPages = 17;
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [isLeftArrowClicked_, setIsLeftArrowClicked_] = useState(true);
-  const [currentLevel, setCurrentLevel] = useState(0);
 
   // const levels = [
   //     Level1,  Level2, Level3, Level4, Level5, Level6, 
@@ -110,44 +109,48 @@ const Instructions = () => {
   }
 
   const levelStore = useLevelStore();
-  const currentStoreLevel = levelStore.currentLevel;
+  const {level, setCurrentLevel, setNextLevel, setAnimationStatus} = levelStore;
+  const { currentLevel, tempLevel, isEndAnimation, } = level;
 
-  const clickStore = useClickStore();
-  const {isLeftButton} = clickStore;
 
-  const directionFlowStore = useDirectionFlowStore();
-  const directionFlow = directionFlowStore.directionFlow;
-  const {setDirectionFlow} = directionFlowStore;
+const clickStore = useClickStore();
+const {isLeftButton ,setLeftClick, setRightClick} = clickStore
+
+  // const directionFlowStore = useDirectionFlowStore();
+  // const directionFlow = directionFlowStore.directionFlow;
+  // const {setDirectionFlow} = directionFlowStore;
   
 
   const handlePageChange: PaginagionType['onPageChange'] = (page) => {
     console.log("Changing to page:", page);
+    setAnimationStatus(false);
     setCurrentLevel(page);
-    setIsLeftArrowClicked_(true);
+    //setIsLeftArrowClicked_(true);
   };
 
   const rightClickHandler = () => {
-    //setLeftClick()
-    setDirectionFlow('forward');
-    setIsLeftArrowClicked_(prevState => false);
+    setLeftClick()
+    //setDirectionFlow('forward');
+    //setIsLeftArrowClicked_(prevState => false);
 } 
 
   const leftClickHandler = () => {
-    //setRightClick()
-    setDirectionFlow('backward')
-      setIsLeftArrowClicked_(prevState => true);
+    setRightClick()
+    //setDirectionFlow('backward')
+      //setIsLeftArrowClicked_(prevState => true);
   }
 
   const startLegoHandler = () => {
-    setCurrentLevel((prevLevel) => 1);
+    //setCurrentLevel((state) => 1);
+    setNextLevel();
   }
+
 
 
   return (
         // <h1>Instrucions</h1>
         <div className="h-screen bg-gray-900">
-          <h1 className="mt-28">{currentStoreLevel}</h1>
-          <h1 className="mt-4">{directionFlow}</h1>
+          <h1 className="mt-28">{currentLevel}</h1>
           <h1 className="mt-28">{isLeftButton.toString()}</h1>
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
