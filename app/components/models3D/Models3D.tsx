@@ -46,7 +46,7 @@ const modelInitAnim = {
   y: model.startPosition[1],
   z: model.startPosition[2],
   opacity: 1,
-  scale: 1, // Static scale
+  scale: 0, // Static scale
   transition: { duration: 1, delay: model.delayIn, times: [0, 0.5, 1] }
 };
 
@@ -236,7 +236,7 @@ useEffect(() => {
   if (!model.isActive && model.level - 1 === currentLevel && isLeftButton) {
     setVariantsAnim({
       init: modelTargetAnim,
-      anim: modelTestAnim,
+      anim: fadeOutAnim,
     });
   }
 
