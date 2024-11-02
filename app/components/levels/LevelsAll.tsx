@@ -21,15 +21,15 @@ import { level14 } from '../levelsData/level14';
 import { level15 } from '../levelsData/level15';
 import { level16 } from '../levelsData/level16';
 
-const levels = [
-  level1, level2, level3, 
-];
-
 // const levels = [
-//   level1, level2, level3, level4, level5, level6,
-//   level7, level8, level9, level10, level11, level12,
-//   level13, level14, level15, level16
+//   level1, level2, level3, 
 // ];
+
+const levels = [
+  level1, level2, level3, level4, level5, level6,
+  level7, level8, level9, level10, level11, level12,
+  level13, level14, level15, level16
+];
 
 
 
@@ -45,15 +45,7 @@ export const LevelAll = () => {
   const {isLeftButton} = clickStore;
   
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-        setMuyLevel(currentLevel)
-    },1500)
 
-    return(() => {
-      clearTimeout(timeout);  
-    })
-  }, [currentLevel])
 
 
   // const test = (currentLevel: number, componentLevel: number) => {
@@ -81,45 +73,16 @@ export const LevelAll = () => {
               isForwardAnim={isLeftButton} 
               isActive={(currentLevel === i+1) ? true : false} 
               level_={i+1} 
-              isVisible={currentLevel >= i+1 ? true : false}
-              //isVisible={true}
+              //isVisible={currentLevel >= i+1 ? true : false}
+              //isVisible={currentLevel >= i+1 ? true : false}
+              isVisible={true}
             />
           ))
         }
 
 
-        {/* <LevelBlock
-          levelData={level1}
-          isForwardAnim={isLeftButton} 
-          isActive={(currentLevel === 1) ? true : false} 
-          level_={1} 
-          isVisible={currentLevel >= 1 ? true : false}
-          //isVisible={true}
-        />
-        <LevelBlock
-          levelData={level2}
-          isForwardAnim={isLeftButton}
-          isActive={currentLevel === 2 ? true : false} 
-          level_={2} 
-          isVisible={(currentLevel >= 2) ? true : false}
-          //isVisible={true}
-        />
-        <LevelBlock
-          levelData={level3}
-          isForwardAnim={isLeftButton} 
-          isActive={currentLevel === 3 ? true : false} 
-          level_={3} 
-          isVisible={(currentLevel >= 3) ? true : false}
-          //isVisible={true}
-        />
-        <LevelBlock
-          levelData={level4}
-          isForwardAnim={isLeftButton} 
-          isActive={currentLevel === 4 ? true : false} 
-          level_={4} 
-          isVisible={(currentLevel >= 4) ? true : false}
-          //isVisible={true}
-        /> */}
     </>
   )
 }
+
+
