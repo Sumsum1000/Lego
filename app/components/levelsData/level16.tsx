@@ -21,7 +21,7 @@ export const level16 = [
   },
   {
     id: crypto.randomUUID(),
-    url: '/3dModels/Level1/Cpockpit.glb',
+    url: '/3dModels/Level1/Cockpit.glb',
     name: '#5', //main body
     rotation: [0, 180, 0] as Vector3Type, 
     scale: [1, 1, 1] as Vector3Type,

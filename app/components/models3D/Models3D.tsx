@@ -34,7 +34,7 @@ const [gltfPosition, setGltfPosition] = useState();
 
 const [animDirection, setAnimDirection] = useState<'forward' | 'backward'>('forward')
 const clickStore = useClickStore();
-const {isLeftButton, setRightClick, setLeftClick} = clickStore;
+const {isLeftButton, canClick, setRightClick, setLeftClick} = clickStore;
 
 const levelStore = useLevelStore();
 const {level} = levelStore;
@@ -46,38 +46,52 @@ const modelInitAnim = {
   y: model.startPosition[1], 
   z: model.startPosition[2], 
   opacity: 1,
+  scale: [1, 1],
   transition: {
     duration: 1, 
-    delay: model.delayIn
+    delay: model.delayIn,
+    time: [0.3, 1]
   }
 }
+
 const modelTargetAnim = {
   x: model.targetPosition[0], 
   y: model.targetPosition[1], 
   z: model.targetPosition[2], 
   opacity: 1,
+  scale: [1, 1],
   transition: {
-    duration: 1, delay: model.delayOut}
+    duration: 1, 
+    delay: model.delayOut},
+    time: [0.8, 1]
 }
+
 const modelTestAnim = {
   x: model.startPosition[0], 
   y: model.startPosition[1], 
-  z: model.startPosition[2],
+  z: model.startPosition[2], 
   opacity: 1,
+  scale: [1, 1, 1, 0.2],
   transition: {
-    duration: 0, delay: 0.3}
+    duration: 1.5, 
+    delay: 0.3,
+    time: [0, 0.5, 1]
+  }
 }
+
 
 const [variantsAnim, setVariantsAnim] = useState({
   init: {
     ...modelInitAnim , 
     transition: {
-      duration: 1, delay: model.delayIn
+      duration: 1, 
+      delay: model.delayIn
     }
   },
   anim: {
     ...modelInitAnim , transition: {
-      duration: 1, delay: model.delayIn
+      duration: 1, 
+      delay: model.delayIn
     }
   },
 });
@@ -143,9 +157,9 @@ const handlePointerOut = (event: ThreeEvent<PointerEvent>) => {
 // ------------------------------
 
 
-useEffect(() => {
-    controls.start({ scale: 1 });
-}, [controls]);
+// useEffect(() => {
+//     controls.start({ scale: 1 });
+// }, [controls]);
 
 
 useEffect(() => {
@@ -172,6 +186,23 @@ useEffect(() => {
   })
 }, [])
 
+useEffect(() => {
+  let timeoutDelay2: NodeJS.Timeout | undefined;
+
+    if(model.isActive && canClick){
+      timeoutDelay2 = setTimeout(() => {
+        setVariantsAnim({
+          init: modelInitAnim,
+          anim: modelTestAnim,
+        });
+      }, 200);
+    }
+
+    return () => {
+      if (timeoutDelay2) clearTimeout(timeoutDelay2);
+    };
+
+}, [canClick])
 
 useEffect(() => {
   let timeoutDelay1: NodeJS.Timeout | undefined;
@@ -189,16 +220,22 @@ useEffect(() => {
   if (!model.isActive && model.level - 1 === currentLevel && isLeftButton) {
     setVariantsAnim({
       init: modelTargetAnim,
-      anim: modelTestAnim,
+      anim: modelInitAnim,
     });
   }
+  // if(model.isActive && canClick){
+  //   setVariantsAnim({
+  //     init: modelTestAnim,
+  //     anim: modelTestAnim,
+  //   });
+  // }
 
   // Cleanup function to clear timeout on effect cleanup
   return () => {
     if (timeoutDelay1) clearTimeout(timeoutDelay1);
   };
 
-}, [isLeftButton, model.isActive, currentLevel]);
+}, [isLeftButton, model.isActive, currentLevel, canClick]);
 
 
 

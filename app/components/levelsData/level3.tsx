@@ -26,6 +26,7 @@ export const level3 = [
     name: '#6', // short 2x2 - hinge
     rotation: [-90, 0, 0] as Vector3Type, 
     scale: [1.02, 1, 1.02] as Vector3Type, 
+    //scale: [1.02, 1, 1.02] as Vector3Type, 
     startPosition: [3, startY, 0] as Vector3Type, 
     //targetPosition: [-4.02, 1.05, 2.77] as Vector3Type, 
     targetPosition: [2.772, 1.055, -3.987] as Vector3Type, 

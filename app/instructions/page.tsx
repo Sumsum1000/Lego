@@ -114,7 +114,7 @@ const Instructions = () => {
 
 
 const clickStore = useClickStore();
-const {isLeftButton ,setLeftClick, setRightClick} = clickStore
+const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = clickStore
 
   // const directionFlowStore = useDirectionFlowStore();
   // const directionFlow = directionFlowStore.directionFlow;
@@ -125,17 +125,22 @@ const {isLeftButton ,setLeftClick, setRightClick} = clickStore
     console.log("Changing to page:", page);
     setAnimationStatus(false);
     setCurrentLevel(page);
+    
+    // setCanClick(false)
+    // setTimeout(() => {
+    //   setCanClick(true)
+    // }, 100)
     //setIsLeftArrowClicked_(true);
   };
 
   const rightClickHandler = () => {
-    setLeftClick()
+    //setLeftClick()
     //setDirectionFlow('forward');
     //setIsLeftArrowClicked_(prevState => false);
 } 
 
   const leftClickHandler = () => {
-    setRightClick()
+    //setRightClick()
     //setDirectionFlow('backward')
       //setIsLeftArrowClicked_(prevState => true);
   }
@@ -143,6 +148,10 @@ const {isLeftButton ,setLeftClick, setRightClick} = clickStore
   const startLegoHandler = () => {
     //setCurrentLevel((state) => 1);
     setNextLevel();
+  }
+
+  const testClick = () => {
+    setCanClick(true)
   }
 
 
@@ -158,6 +167,10 @@ const {isLeftButton ,setLeftClick, setRightClick} = clickStore
           >Tap to start Lego</button>}
           <h1 className="absolute text-6xl">{currentLevel}</h1>
           <div className="w-48  h-48 absolute right-1/3 top-12 z-10">
+          <button 
+                  className={isLeftArrowClicked_ ? "text-gray-500 text-7xl" : "text-black text-7xl"}
+                  onClick={testClick}
+              >{'TEST'}</button>
               <button 
                   className={isLeftArrowClicked_ ? "text-gray-500 text-7xl" : "text-black text-7xl"}
                   onClick={leftClickHandler}
