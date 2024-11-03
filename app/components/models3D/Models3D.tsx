@@ -195,23 +195,23 @@ useEffect(() => {
   })
 }, [])
 
-useEffect(() => {
-  let timeoutDelay2: NodeJS.Timeout | undefined;
+// useEffect(() => {
+//   let timeoutDelay2: NodeJS.Timeout | undefined;
 
-    if(model.isActive && canClick){
-      timeoutDelay2 = setTimeout(() => {
-        setVariantsAnim({
-          init: modelInitAnim,
-          anim: fadeOutAnim,
-        });
-      }, 200);
-    }
+//     if( model.isActive && canClick){
+//       timeoutDelay2 = setTimeout(() => {
+//         setVariantsAnim({
+//           init: modelInitAnim,
+//           anim: fadeOutAnim,
+//         });
+//       }, 200);
+//     }
 
-    return () => {
-      if (timeoutDelay2) clearTimeout(timeoutDelay2);
-    };
+//     return () => {
+//       if (timeoutDelay2) clearTimeout(timeoutDelay2);
+//     };
 
-}, [canClick])
+// }, [canClick])
 
 useEffect(() => {
   let timeoutDelay1: NodeJS.Timeout | undefined;
