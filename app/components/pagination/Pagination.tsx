@@ -52,7 +52,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) =
     }
     setTimeout(() => {
       setCanClick(true);
-    }, 1000)  
+    }, 700)  
   };
 
   const renderPageNumbers = (): JSX.Element[] => {

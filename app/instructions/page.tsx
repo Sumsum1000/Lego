@@ -115,10 +115,6 @@ const Instructions = () => {
 
 const clickStore = useClickStore();
 const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = clickStore
-
-  // const directionFlowStore = useDirectionFlowStore();
-  // const directionFlow = directionFlowStore.directionFlow;
-  // const {setDirectionFlow} = directionFlowStore;
   
 
   const handlePageChange: PaginagionType['onPageChange'] = (page) => {
@@ -158,21 +154,14 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
 
   return (
         // <h1>Instrucions</h1>
-        <div className="h-screen bg-gray-900">
-          <h1 className="mt-28">{currentLevel}</h1>
-          <h1 className="mt-28">{isLeftButton.toString()}</h1>
+        <div className="h-screen bg-gray-500">
+          {/* <h1 className="mt-28">{isLeftButton.toString()}</h1> */}
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}
           >Tap to start Lego</button>}
-          <h1 className="absolute text-6xl">{currentLevel}</h1>
+          {/* <h1 className="absolute text-6xl">{currentLevel}</h1> */}
           <div className="w-48  h-48 absolute right-1/3 top-12 z-10">
-          <button 
-                  className={isLeftArrowClicked_ ? "text-gray-500 text-7xl" : "text-black text-7xl"}
-                  onClick={testClick}
-              >{'TEST'}</button>
-
-
         <Pagination 
             currentPage={currentLevel}
             totalPages={totalPages}
@@ -180,9 +169,10 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
         />
 
           </div>
-        <Canvas className="relative" shadows >
+        <Canvas className="h-screen relative" shadows >
             
-            <Perf className='top-left'/>
+            /
+            {/* <Perf className='top-left'/> */}
             <Suspense fallback={null}>
               
                 {/* <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/> */}

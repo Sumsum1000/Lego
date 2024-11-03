@@ -26,7 +26,7 @@ import { level16 } from '../levelsData/level16';
 const levels = [
   level1, level2, level3, level4, level5, level6,
   level7, level8, level9, level10, level11, level12,
-  level13, level14, level15, level16
+  level13, level14, level15, 
 ];
 
 export const LevelAll = () => {
@@ -38,33 +38,34 @@ export const LevelAll = () => {
   const { isLeftButton } = clickStore;
 
   // Array of visibility states for each level block
-  const [visibleLevels, setVisibleLevels] = useState<boolean[]>(Array(levels.length).fill(false));
+  const [visibleLevels, setVisibleLevels] = useState<boolean[]>(Array(levels.length).fill(true));
 
-  useEffect(() => {
-    // Create a new visibility array to manage individual level visibility
-    const newVisibleLevels = [...visibleLevels];
+  //---------------------------------------------------------------------- disable visibility
+  // useEffect(() => {
+  //   // Create a new visibility array to manage individual level visibility
+  //   const newVisibleLevels = [...visibleLevels];
 
-    // Iterate over each level and set visibility based on currentLevel with delay
-    levels.forEach((_, i) => {
-      if (currentLevel >= i + 1) {
-        newVisibleLevels[i] = true; // Immediately set to true if currentLevel is high enough
-      } else {
-        setTimeout(() => {
-          newVisibleLevels[i] = false; // Delayed setting to false if currentLevel drops below
-          setVisibleLevels([...newVisibleLevels]);
-        }, 4000); // 200ms delay
-      }
-    });
+  //   // Iterate over each level and set visibility based on currentLevel with delay
+  //   levels.forEach((_, i) => {
+  //     if (currentLevel >= i + 1) {
+  //       newVisibleLevels[i] = true; // Immediately set to true if currentLevel is high enough
+  //     } else {
+  //       setTimeout(() => {
+  //         newVisibleLevels[i] = false; // Delayed setting to false if currentLevel drops below
+  //         setVisibleLevels([...newVisibleLevels]);
+  //       }, 4000); // 200ms delay
+  //     }
+  //   });
 
-    // Update state with modified visibility array
-    setVisibleLevels(newVisibleLevels);
+  //   // Update state with modified visibility array
+  //   setVisibleLevels(newVisibleLevels);
 
-    // Cleanup function to prevent memory leaks
-    return () => {
-      // Clear all timeouts on cleanup
-      newVisibleLevels.forEach((_, index) => clearTimeout(index));
-    };
-  }, [currentLevel]);
+  //   // Cleanup function to prevent memory leaks
+  //   return () => {
+  //     // Clear all timeouts on cleanup
+  //     newVisibleLevels.forEach((_, index) => clearTimeout(index));
+  //   };
+  // }, [currentLevel]);
 
   return (
     <>

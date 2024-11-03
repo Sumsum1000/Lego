@@ -171,16 +171,16 @@ const handlePointerOut = (event: ThreeEvent<PointerEvent>) => {
 // }, [controls]);
 
 
-useEffect(() => {
-  setOnAnim(false)
-  const timeOut = setTimeout(() => {
-    setOnAnim(true)
-  }, 100)
+// useEffect(() => {
+//   setOnAnim(false)
+//   const timeOut = setTimeout(() => {
+//     setOnAnim(true)
+//   }, 100)
 
-  return(() => {
-    clearTimeout(timeOut)
-  })
-}, [])
+//   return(() => {
+//     clearTimeout(timeOut)
+//   })
+// }, [])
 
 
 // for first level animation on start
@@ -195,23 +195,7 @@ useEffect(() => {
   })
 }, [])
 
-// useEffect(() => {
-//   let timeoutDelay2: NodeJS.Timeout | undefined;
 
-//     if( model.isActive && canClick){
-//       timeoutDelay2 = setTimeout(() => {
-//         setVariantsAnim({
-//           init: modelInitAnim,
-//           anim: fadeOutAnim,
-//         });
-//       }, 200);
-//     }
-
-//     return () => {
-//       if (timeoutDelay2) clearTimeout(timeoutDelay2);
-//     };
-
-// }, [canClick])
 
 useEffect(() => {
   let timeoutDelay1: NodeJS.Timeout | undefined;
@@ -226,6 +210,11 @@ useEffect(() => {
   //   }, 2000);
   // } 
 
+  // ---------------------------------------------------------------------------------------------------
+  // if jumping 2 levels or more: backward - init start, anim start, forward: init target, anim target, 
+  // control visible timeout
+  // ---------------------------------------------------------------------------------------------------
+
   if (model.isActive && !isLeftButton) {
       setVariantsAnim({
         init: modelInitAnim,
@@ -239,6 +228,14 @@ useEffect(() => {
       anim: fadeOutAnim,
     });
   }
+
+  if (!model.isActive && model.level <  currentLevel && !isLeftButton) {
+    setVariantsAnim({
+      init: modelTargetAnim,
+      anim: modelTargetAnim,
+    });
+  }
+
 
   // Cleanup function to clear timeout on effect cleanup
   return () => {
