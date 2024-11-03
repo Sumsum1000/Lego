@@ -171,14 +171,6 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
                   className={isLeftArrowClicked_ ? "text-gray-500 text-7xl" : "text-black text-7xl"}
                   onClick={testClick}
               >{'TEST'}</button>
-              <button 
-                  className={isLeftArrowClicked_ ? "text-gray-500 text-7xl" : "text-black text-7xl"}
-                  onClick={leftClickHandler}
-              >{'<'}</button>
-              <button 
-                 className={!isLeftArrowClicked_  ? "text-gray-500 text-7xl" : "text-black text-7xl"}
-                  onClick={rightClickHandler}
-              >{'>'}</button>
 
 
         <Pagination 
