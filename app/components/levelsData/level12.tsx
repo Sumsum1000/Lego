@@ -38,7 +38,7 @@ export const level12 = [
     id: crypto.randomUUID(),
     url: '/3dModels/Level1/Lego_20R_6278445.glb',
     name: '#5', // short 2x2 - hinge
-    rotation: [0, 0, 0] as Vector3Type, 
+    rotation: [0, -90, 0] as Vector3Type, 
     scale: [-1, 1, 1] as Vector3Type, 
     startPosition: [3, startY, 0] as Vector3Type, 
     targetPosition: [7.954, 0.738, -6.408] as Vector3Type, 
@@ -52,7 +52,7 @@ export const level12 = [
     id: crypto.randomUUID(),
     url: '/3dModels/Level1/Lego_20L_6278445.glb',
     name: '#5', // short 2x2 - hinge
-    rotation: [0, 0, 0] as Vector3Type, 
+    rotation: [0, 90, 0] as Vector3Type, 
     scale: [-1, 1, 1] as Vector3Type, 
     startPosition: [-3, startY, 0] as Vector3Type, 
     targetPosition: [-7.954, 0.738, -6.408] as Vector3Type, 

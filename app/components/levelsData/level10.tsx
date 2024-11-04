@@ -9,7 +9,7 @@ export const level10 = [
     url: '/3dModels/Level1/Lego_16L_4160390.glb',
     name: '#5', //main body
     rotation: [0, 0, 0] as Vector3Type, 
-    scale: [1, 1, -1] as Vector3Type, 
+    scale: [1, 1, 1] as Vector3Type, 
     startPosition: [2, startY, 0] as Vector3Type, 
     targetPosition: [3.559, 1.057, -5.539] as Vector3Type, 
     centerPosition: centerPosition as Vector3Type, 
@@ -23,7 +23,7 @@ export const level10 = [
     url: '/3dModels/Level1/Lego_16R_4160390.glb',
     name: '#5', //main body
     rotation: [0, 0, 0] as Vector3Type, 
-    scale: [1, 1, -1] as Vector3Type, 
+    scale: [1, 1, 1] as Vector3Type, 
     startPosition: [-2, startY, 0] as Vector3Type, 
     targetPosition: [-3.559, 1.057, -5.539] as Vector3Type, 
     centerPosition: centerPosition as Vector3Type, 
