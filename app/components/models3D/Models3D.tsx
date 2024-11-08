@@ -121,10 +121,20 @@ useEffect(() => {
        }     
 }, [])
 
-const newMaterial = new THREE.MeshBasicMaterial({
+// const newMaterial = new THREE.MeshBasicMaterial({
+//   toneMapped: false,
+//   color: model.color || 'white',
+//   map: diffuseMap,
+//   //metalness: 0
+// })
+
+const newMaterial = new THREE.MeshStandardMaterial({
+  //toneMapped: false,
   color: model.color || 'white',
   map: diffuseMap,
-  //metalness: 0
+  metalness: 0,
+  roughness: 0.3,
+  emissiveMap: diffuseMap
 })
 
 

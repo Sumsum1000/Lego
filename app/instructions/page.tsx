@@ -33,6 +33,8 @@ import { LevelAll } from "../components/levels/LevelsAll";
 import {useLevelStore} from "../components/store/Store";
 import { useClickStore } from "../components/store/Store";
 import { useDirectionFlowStore } from "../components/store/Store";
+import { Bloom, DepthOfField, EffectComposer, Noise, Vignette, ToneMapping } from '@react-three/postprocessing'
+import { BlendFunction } from "postprocessing";
  
 
 //--------------------------------------------------------
@@ -154,7 +156,7 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
 
   return (
         // <h1>Instrucions</h1>
-        <div className="h-screen bg-gray-500">
+        <div className="h-screen bg-slate-500">
           {/* <h1 className="mt-28">{isLeftButton.toString()}</h1> */}
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
@@ -172,7 +174,7 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
         <Canvas className="h-screen relative" shadows >
             
             /
-            {/* <Perf className='top-left'/> */}
+            <Perf className='top-left'/>
             <Suspense fallback={null}>
               
                 {/* <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/> */}
@@ -183,7 +185,19 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
 
             <OrbitControls />
             <PerspectiveCamera makeDefault position={[0.5, 28, -31]}/>
-             {/* <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} /> */}
+             <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} />
+      {/* <EffectComposer >
+
+        <ToneMapping 
+           blendFunction={BlendFunction.COLOR_DODGE} // blend mode
+           adaptive={true} // toggle adaptive luminance map usage
+           resolution={256} // texture resolution of the luminance map
+           middleGrey={0.6} // middle grey factor
+           maxLuminance={16.0} // maximum luminance
+           averageLuminance={1.0} // average luminance
+           adaptationRate={1.0} // luminance adaptation rate
+        />
+      </EffectComposer> */}
         </Canvas>
         </div>
   )
