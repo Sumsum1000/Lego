@@ -21,7 +21,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) =
   const levelDown = levelStore.setPreviousLevel
 
   const clickStore = useClickStore()
-  const {isLeftButton ,setLeftClick, setRightClick} = clickStore
+  const {isLeftButton ,canClick, setCanClick, setLeftClick, setRightClick} = clickStore
 
   const directionFlowStore = useDirectionFlowStore();
   const directionFlow = directionFlowStore.directionFlow;
@@ -30,17 +30,29 @@ const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) =
   const handlePrevious = (): void => {
     // !isleftClicked
     //onPageChange(Math.max(currentPage - 1, 1));
-    setDirectionFlow('backward');
-    setRightClick();
-    levelDown();
+    if(canClick){
+      setCanClick(false);
+      setDirectionFlow('backward');
+      setRightClick();
+      levelDown();           
+    }
+    setTimeout(() => {
+      setCanClick(true);
+    }, 1000)  
   };
 
   const handleNext = (): void => {
     // isleftClicked
     //onPageChange(Math.min(currentPage + 1, totalPages));
-    setDirectionFlow('forward');
-    setLeftClick()
-    levelUp();
+    if(canClick){
+      setCanClick(false);
+      setDirectionFlow('forward');
+      setLeftClick()
+      levelUp();
+    }
+    setTimeout(() => {
+      setCanClick(true);
+    }, 700)  
   };
 
   const renderPageNumbers = (): JSX.Element[] => {

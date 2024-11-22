@@ -10,7 +10,7 @@ export const level11 = [
     url: '/3dModels/Level1/Lego_18R_300921.glb',
     name: '#5', // short 2x2 - hinge
     rotation: [0, 0, 0] as Vector3Type, 
-    scale: [1, 1, 1] as Vector3Type, 
+    scale: [-1, 1, 1] as Vector3Type, 
     startPosition: [5, startY, 0] as Vector3Type, 
     targetPosition: [1.982, 1.063, -7.203] as Vector3Type, 
     centerPosition: centerPosition as Vector3Type, 
@@ -24,7 +24,7 @@ export const level11 = [
     url: '/3dModels/Level1/Lego_18L_300921.glb',
     name: '#5', // short 2x2 - hinge
     rotation: [0, 0, 0] as Vector3Type, 
-    scale: [1, 1, 1] as Vector3Type, 
+    scale: [-1, 1, 1] as Vector3Type, 
     startPosition: [-5, startY, 0] as Vector3Type, 
     targetPosition: [-1.974, 1.061, -7.183] as Vector3Type, 
     centerPosition: centerPosition as Vector3Type, 

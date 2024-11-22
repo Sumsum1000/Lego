@@ -20,8 +20,6 @@ import { level13 } from "../components/levelsData/level13";
 import { level14 } from "../components/levelsData/level14";
 import { level15 } from "../components/levelsData/level15";
 import { level16 } from "../components/levelsData/level16";
-import { LevelBlock } from "../components/level/LevelBlock";
-import { useRef } from "react";
 import * as THREE from 'three';
 import { Perf } from "r3f-perf";
 import { useControls } from "leva";
@@ -33,6 +31,8 @@ import { LevelAll } from "../components/levels/LevelsAll";
 import {useLevelStore} from "../components/store/Store";
 import { useClickStore } from "../components/store/Store";
 import { useDirectionFlowStore } from "../components/store/Store";
+import { Bloom, DepthOfField, EffectComposer, Noise, Vignette, ToneMapping } from '@react-three/postprocessing'
+import { BlendFunction } from "postprocessing";
  
 
 //--------------------------------------------------------
@@ -115,10 +115,6 @@ const Instructions = () => {
 
 const clickStore = useClickStore();
 const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = clickStore
-
-  // const directionFlowStore = useDirectionFlowStore();
-  // const directionFlow = directionFlowStore.directionFlow;
-  // const {setDirectionFlow} = directionFlowStore;
   
 
   const handlePageChange: PaginagionType['onPageChange'] = (page) => {
@@ -158,29 +154,14 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
 
   return (
         // <h1>Instrucions</h1>
-        <div className="h-screen bg-gray-900">
-          <h1 className="mt-28">{currentLevel}</h1>
-          <h1 className="mt-28">{isLeftButton.toString()}</h1>
+        <div className="h-screen bg-slate-500">
+          {/* <h1 className="mt-28">{isLeftButton.toString()}</h1> */}
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}
           >Tap to start Lego</button>}
-          <h1 className="absolute text-6xl">{currentLevel}</h1>
+          {/* <h1 className="absolute text-6xl">{currentLevel}</h1> */}
           <div className="w-48  h-48 absolute right-1/3 top-12 z-10">
-          <button 
-                  className={isLeftArrowClicked_ ? "text-gray-500 text-7xl" : "text-black text-7xl"}
-                  onClick={testClick}
-              >{'TEST'}</button>
-              <button 
-                  className={isLeftArrowClicked_ ? "text-gray-500 text-7xl" : "text-black text-7xl"}
-                  onClick={leftClickHandler}
-              >{'<'}</button>
-              <button 
-                 className={!isLeftArrowClicked_  ? "text-gray-500 text-7xl" : "text-black text-7xl"}
-                  onClick={rightClickHandler}
-              >{'>'}</button>
-
-
         <Pagination 
             currentPage={currentLevel}
             totalPages={totalPages}
@@ -188,8 +169,9 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
         />
 
           </div>
-        <Canvas className="relative" shadows >
+        <Canvas className="h-screen relative" shadows >
             
+
             <Perf className='top-left'/>
             <Suspense fallback={null}>
               
@@ -201,7 +183,19 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
 
             <OrbitControls />
             <PerspectiveCamera makeDefault position={[0.5, 28, -31]}/>
-             {/* <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} /> */}
+             <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} />
+      {/* <EffectComposer >
+
+        <ToneMapping 
+           blendFunction={BlendFunction.COLOR_DODGE} // blend mode
+           adaptive={true} // toggle adaptive luminance map usage
+           resolution={256} // texture resolution of the luminance map
+           middleGrey={0.6} // middle grey factor
+           maxLuminance={16.0} // maximum luminance
+           averageLuminance={1.0} // average luminance
+           adaptationRate={1.0} // luminance adaptation rate
+        />
+      </EffectComposer> */}
         </Canvas>
         </div>
   )

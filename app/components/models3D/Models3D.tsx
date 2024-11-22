@@ -43,41 +43,50 @@ const { currentLevel, tempLevel, isEndAnimation} = level;
 
 const modelInitAnim = {
   x: model.startPosition[0], 
-  y: model.startPosition[1], 
-  z: model.startPosition[2], 
+  y: model.startPosition[1],
+  z: model.startPosition[2],
   opacity: 1,
-  scale: [1, 1],
-  transition: {
-    duration: 1, 
-    delay: model.delayIn,
-    time: [0.3, 1]
-  }
-}
+  scale: 0, // Static scale
+  transition: { duration: 1, delay: model.delayIn, times: [0, 0.5, 1] }
+};
 
 const modelTargetAnim = {
   x: model.targetPosition[0], 
-  y: model.targetPosition[1], 
-  z: model.targetPosition[2], 
+  y: model.targetPosition[1],
+  z: model.targetPosition[2],
   opacity: 1,
-  scale: [1, 1],
-  transition: {
-    duration: 1, 
-    delay: model.delayOut},
-    time: [0.8, 1]
-}
+  scale: 1, // Static scale again
+  transition: { duration: 1, delay: model.delayOut, times: [0, 1] }
+};
 
 const modelTestAnim = {
   x: model.startPosition[0], 
   y: model.startPosition[1], 
   z: model.startPosition[2], 
   opacity: 1,
-  scale: [1, 1, 1, 0.2],
+  scale: 0,
   transition: {
     duration: 1.5, 
-    delay: 0.3,
-    time: [0, 0.5, 1]
+    delay: model.delayIn,
+    //time: [0, 0.5, 1]
   }
 }
+
+
+
+const fadeOutAnim = {
+  x: model.startPosition[0], 
+  y: model.startPosition[1], 
+  z: model.startPosition[2], 
+  opacity: 1,
+  scale: 0,
+  transition: {
+    duration: 1, 
+    delay: model.delayIn,
+    //time: [0, 0.5, 1]
+  }
+}
+
 
 
 const [variantsAnim, setVariantsAnim] = useState({
@@ -112,10 +121,20 @@ useEffect(() => {
        }     
 }, [])
 
-const newMaterial = new THREE.MeshBasicMaterial({
+// const newMaterial = new THREE.MeshBasicMaterial({
+//   toneMapped: false,
+//   color: model.color || 'white',
+//   map: diffuseMap,
+//   //metalness: 0
+// })
+
+const newMaterial = new THREE.MeshStandardMaterial({
+  //toneMapped: false,
   color: model.color || 'white',
   map: diffuseMap,
-  //metalness: 0
+  metalness: 0,
+  roughness: 0.3,
+  emissiveMap: diffuseMap
 })
 
 
@@ -162,16 +181,16 @@ const handlePointerOut = (event: ThreeEvent<PointerEvent>) => {
 // }, [controls]);
 
 
-useEffect(() => {
-  setOnAnim(false)
-  const timeOut = setTimeout(() => {
-    setOnAnim(true)
-  }, 100)
+// useEffect(() => {
+//   setOnAnim(false)
+//   const timeOut = setTimeout(() => {
+//     setOnAnim(true)
+//   }, 100)
 
-  return(() => {
-    clearTimeout(timeOut)
-  })
-}, [])
+//   return(() => {
+//     clearTimeout(timeOut)
+//   })
+// }, [])
 
 
 // for first level animation on start
@@ -186,49 +205,47 @@ useEffect(() => {
   })
 }, [])
 
-useEffect(() => {
-  let timeoutDelay2: NodeJS.Timeout | undefined;
 
-    if(model.isActive && canClick){
-      timeoutDelay2 = setTimeout(() => {
-        setVariantsAnim({
-          init: modelInitAnim,
-          anim: modelTestAnim,
-        });
-      }, 200);
-    }
-
-    return () => {
-      if (timeoutDelay2) clearTimeout(timeoutDelay2);
-    };
-
-}, [canClick])
 
 useEffect(() => {
   let timeoutDelay1: NodeJS.Timeout | undefined;
 
+  // if (model.isActive && !isLeftButton) {
+  //   // Set a delayed animation variant update
+  //   timeoutDelay1 = setTimeout(() => {
+  //     setVariantsAnim({
+  //       init: modelInitAnim,
+  //       anim: modelTargetAnim,
+  //     });
+  //   }, 2000);
+  // } 
+
+  // ---------------------------------------------------------------------------------------------------
+  // if jumping 2 levels or more: backward - init start, anim start, forward: init target, anim target, 
+  // control visible timeout
+  // ---------------------------------------------------------------------------------------------------
+
   if (model.isActive && !isLeftButton) {
-    // Set a delayed animation variant update
-    timeoutDelay1 = setTimeout(() => {
       setVariantsAnim({
         init: modelInitAnim,
         anim: modelTargetAnim,
       });
-    }, 2000);
   } 
 
   if (!model.isActive && model.level - 1 === currentLevel && isLeftButton) {
     setVariantsAnim({
       init: modelTargetAnim,
-      anim: modelInitAnim,
+      anim: fadeOutAnim,
     });
   }
-  // if(model.isActive && canClick){
-  //   setVariantsAnim({
-  //     init: modelTestAnim,
-  //     anim: modelTestAnim,
-  //   });
-  // }
+
+  if (!model.isActive && model.level <  currentLevel && !isLeftButton) {
+    setVariantsAnim({
+      init: modelTargetAnim,
+      anim: modelTargetAnim,
+    });
+  }
+
 
   // Cleanup function to clear timeout on effect cleanup
   return () => {
