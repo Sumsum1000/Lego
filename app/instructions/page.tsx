@@ -20,8 +20,6 @@ import { level13 } from "../components/levelsData/level13";
 import { level14 } from "../components/levelsData/level14";
 import { level15 } from "../components/levelsData/level15";
 import { level16 } from "../components/levelsData/level16";
-import { LevelBlock } from "../components/level/LevelBlock";
-import { useRef } from "react";
 import * as THREE from 'three';
 import { Perf } from "r3f-perf";
 import { useControls } from "leva";
@@ -173,7 +171,7 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
           </div>
         <Canvas className="h-screen relative" shadows >
             
-            /
+
             <Perf className='top-left'/>
             <Suspense fallback={null}>
               
