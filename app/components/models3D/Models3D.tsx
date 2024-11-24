@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { useGLTF, Html, useTexture } from '@react-three/drei';
 import { Object3D, Vector3, Euler, Mesh } from 'three';
-import { motion } from 'framer-motion-3d';
+import { motion, } from 'framer-motion-3d';
 import { useAnimation } from 'framer-motion';
 import { ThreeEvent } from '@react-three/fiber';
 import {  ModelProps, } from '@/app/utils/Types';
@@ -128,13 +128,13 @@ useEffect(() => {
 //   //metalness: 0
 // })
 
-const newMaterial = new THREE.MeshStandardMaterial({
+const newMaterial = new THREE.MeshPhysicalMaterial({
   //toneMapped: false,
   color: model.color || 'white',
   map: diffuseMap,
-  metalness: 0,
+  //metalness: 0,
   roughness: 0.3,
-  emissiveMap: diffuseMap
+  //emissiveMap: diffuseMap
 })
 
 

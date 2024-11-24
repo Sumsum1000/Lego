@@ -8,7 +8,7 @@ import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { InstancedMesh } from "three";
 import * as THREE from 'three';
 import { Perf } from "r3f-perf";
-
+import { useClickStore } from "./store/Store";
 
 
 
@@ -35,7 +35,6 @@ const vectors = vectorsCreator();
 
 
 export function ParticlesIntro() {
-  
 
   return (
     <main className="h-screen w-screen bg-gray-600 flex justify-center">

@@ -154,7 +154,7 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
 
   return (
         // <h1>Instrucions</h1>
-        <div className="h-screen bg-slate-500">
+        <div className="h-screen  bg-gray-800">
           {/* <h1 className="mt-28">{isLeftButton.toString()}</h1> */}
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
@@ -180,10 +180,16 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
 
               {/* <TestElement model="/3dModels/Level16/Cpockpit.glb"/> */}
             </Suspense>
-
             <OrbitControls />
             <PerspectiveCamera makeDefault position={[0.5, 28, -31]}/>
-             <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} />
+             {/* <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} /> */}
+             <Environment files={'poly_haven_studio_1k.hdr'} background={false} />
+             {/* <pointLight position={[0, 8.5, 4]} intensity={40}/>
+             <pointLight position={[0, 7, -1]} intensity={50}/> */}
+             {/* <pointLight position={[1, 3, -12]} intensity={90}/>
+             <pointLight position={[11, 1, -3]} intensity={90}/>
+             <pointLight position={[-11, 1, -3]} intensity={90}/>
+             <pointLight position={[0, -5, 0]} intensity={90}/> */}
       {/* <EffectComposer >
 
         <ToneMapping 

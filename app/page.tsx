@@ -5,11 +5,14 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Logo from "./components/Logo/Logo";
 import ParticlesIntro from "./components/ParticlesIntro";
+import { Suspense } from "react";
 export default function Home() {
   return (
     <div className="h-screen w-screen bg-gray-800 flex justify-center">
        <Logo />
-       <ParticlesIntro />
+       <Suspense fallback={<p>Wait for it... its falling</p>}>
+          <ParticlesIntro />
+       </Suspense>
     </div>
   );
 }
