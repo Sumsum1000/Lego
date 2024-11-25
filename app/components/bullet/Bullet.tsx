@@ -56,7 +56,7 @@ const Bullet = () => {
       rotation={[MathUtils.degToRad(90), 0, 0]}
       animate={controls}
     >
-      <cylinderGeometry args={[0.15, 0.15, 1, 20]} />
+      <cylinderGeometry args={[0.15, 0.1, 1, 20]} />
       <meshBasicMaterial color={'red'} />
     </motion.mesh>
     </>
