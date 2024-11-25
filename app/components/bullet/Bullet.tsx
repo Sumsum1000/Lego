@@ -17,8 +17,7 @@ const Bullet = () => {
       z: -30,
       transition: {
         z: {
-          duration: 1,
-          ease: easeIn,
+          duration: 0.3,
         },
       },
     });
@@ -40,7 +39,7 @@ const Bullet = () => {
           meshRef.current.material.dispose(); // Dispose single material
         }
       }
-    }, 1000);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, []);
@@ -57,7 +56,7 @@ const Bullet = () => {
       rotation={[MathUtils.degToRad(90), 0, 0]}
       animate={controls}
     >
-      <cylinderGeometry args={[0.1, 0.1, 1, 12]} />
+      <cylinderGeometry args={[0.15, 0.15, 1, 20]} />
       <meshBasicMaterial color={'red'} />
     </motion.mesh>
     </>

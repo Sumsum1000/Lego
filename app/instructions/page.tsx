@@ -35,6 +35,7 @@ import { Bloom, DepthOfField, EffectComposer, Noise, Vignette, ToneMapping } fro
 import { BlendFunction } from "postprocessing";
 import Bullet from "../components/bullet/Bullet";
 import { MathUtils } from 'three'; 
+import { p } from "framer-motion/m";
  
 
 //--------------------------------------------------------
@@ -97,7 +98,7 @@ const Instructions = () => {
   const totalPages = 17;
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [isLeftArrowClicked_, setIsLeftArrowClicked_] = useState(true);
-  const [bullets, setBullets] = useState([]);
+  const [bullets, setBullets] = useState<string[]>([]);
 
   const levelData ={
     level1, level2, level3, level4, level5, level6,
@@ -110,9 +111,8 @@ const Instructions = () => {
   const { currentLevel, tempLevel, isEndAnimation, } = level;
 
 
-const clickStore = useClickStore();
-const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = clickStore
-  
+  const clickStore = useClickStore();
+  const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = clickStore
 
   const handlePageChange: PaginagionType['onPageChange'] = (page) => {
     console.log("Changing to page:", page);
@@ -147,12 +147,22 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
     setCanClick(true)
   }
 
+  const fireHandler= () => {
+    console.log('Shoot')
+    setBullets(prevBullets => [...prevBullets, '*'])
+  }
+
 
 
   return (
         // <h1>Instrucions</h1>
         <div className="h-screen  bg-gray-800">
           {/* <h1 className="mt-28">{isLeftButton.toString()}</h1> */}
+          <button 
+            className="z-10 absolute right-0 top-0 p-6 bg-yellow-500" 
+            onClick={fireHandler}
+          >Fire</button>
+
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}
@@ -174,8 +184,10 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
               
                 {/* <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/> */}
                 <LevelAll />
-                <Bullet />
-
+                {/* <Bullet /> */}
+                {bullets.map(bullet => (
+                  <Bullet />
+                ))}
               {/* <TestElement model="/3dModels/Level16/Cpockpit.glb"/> */}
             </Suspense>
             {/* <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/> */}
