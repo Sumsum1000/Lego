@@ -33,10 +33,11 @@ import { useClickStore } from "../components/store/Store";
 import { useDirectionFlowStore } from "../components/store/Store";
 import { Bloom, DepthOfField, EffectComposer, Noise, Vignette, ToneMapping } from '@react-three/postprocessing'
 import { BlendFunction } from "postprocessing";
+import Bullet from "../components/bullet/Bullet";
+import { MathUtils } from 'three'; 
  
 
 //--------------------------------------------------------
-//const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
 type ModelType = {
   model: string
@@ -63,9 +64,9 @@ const TestElement = ({model}: ModelType) => {
         position-y={position.y} 
         position-z={position.z}
         rotation={new Euler(
-          degreesToRadians(rotation.x),
-          degreesToRadians(rotation.y),
-          degreesToRadians(rotation.z)
+          MathUtils.degToRad(rotation.x),
+          MathUtils.degToRad(rotation.y),
+          MathUtils.degToRad(rotation.z)
         )}
         scale-x={scale.x}
         scale-y={scale.y}
@@ -78,7 +79,7 @@ const TestElement = ({model}: ModelType) => {
 }
 
 
-const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
+//const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
 type BtnType = {
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -96,12 +97,8 @@ const Instructions = () => {
   const totalPages = 17;
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [isLeftArrowClicked_, setIsLeftArrowClicked_] = useState(true);
+  const [bullets, setBullets] = useState([]);
 
-  // const levels = [
-  //     Level1,  Level2, Level3, Level4, Level5, Level6, 
-  //     Level7, Level8, Level8, Level10, Level11, Level12, 
-  //     Level13, Level14, Level15, Level16, 
-  // ]
   const levelData ={
     level1, level2, level3, level4, level5, level6,
     level7, level8, level9, level10, level11, level12,
@@ -171,16 +168,18 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
           </div>
         <Canvas className="h-screen relative" shadows >
             
-
+            
             <Perf className='top-left'/>
             <Suspense fallback={null}>
               
                 {/* <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/> */}
                 <LevelAll />
+                <Bullet />
 
               {/* <TestElement model="/3dModels/Level16/Cpockpit.glb"/> */}
             </Suspense>
-            <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/>
+            {/* <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/> */}
+            <OrbitControls />
             <PerspectiveCamera makeDefault position={[0.5, 5, -31]} />
              {/* <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} /> */}
              <Environment files={'poly_haven_studio_1k.hdr'} background={false} />

@@ -7,6 +7,7 @@ import Logo from "./components/Logo/Logo";
 import ParticlesIntro from "./components/ParticlesIntro";
 import { Suspense } from "react";
 import {motion, useAnimation} from 'framer-motion';
+import Bullet from "./components/bullet/Bullet";
 
 
 export default function Home() {
