@@ -180,8 +180,8 @@ const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = click
 
               {/* <TestElement model="/3dModels/Level16/Cpockpit.glb"/> */}
             </Suspense>
-            <OrbitControls />
-            <PerspectiveCamera makeDefault position={[0.5, 28, -31]}/>
+            <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/>
+            <PerspectiveCamera makeDefault position={[0.5, 5, -31]} />
              {/* <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} /> */}
              <Environment files={'poly_haven_studio_1k.hdr'} background={false} />
              {/* <pointLight position={[0, 8.5, 4]} intensity={40}/>
