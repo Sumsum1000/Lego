@@ -14,7 +14,6 @@
   margin: 0;
   padding: 0;
   overflow: hidden; /* Optional: Hides overflow */
-  background-color: red;
 }
 
 @media (prefers-color-scheme: dark) {

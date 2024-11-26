@@ -105,7 +105,9 @@ export type PaginagionType = {
 }
 
 
-
+export type BulletType = {
+  position: [number, number, number];
+}
 
 
 

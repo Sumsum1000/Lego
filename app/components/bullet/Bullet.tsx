@@ -4,10 +4,10 @@ import { MathUtils } from 'three';
 import { easeIn, useAnimation } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
 import * as THREE from 'three';
+import { BulletType } from '@/app/utils/Types';
 
-const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
-const Bullet = () => {
+const Bullet = ({position}: BulletType) => {
   const meshRef = useRef<any>(null);
   const controls = useAnimation();
 
@@ -52,7 +52,7 @@ const Bullet = () => {
     </mesh> */}
     <motion.mesh
       ref={meshRef}
-      position={[1.2, 0.2, -14]}
+      position={position}
       rotation={[MathUtils.degToRad(90), 0, 0]}
       animate={controls}
     >

@@ -36,7 +36,7 @@ import { BlendFunction } from "postprocessing";
 import Bullet from "../components/bullet/Bullet";
 import { MathUtils } from 'three'; 
 import { p } from "framer-motion/m";
- 
+import { BulletType } from "../utils/Types";
 
 //--------------------------------------------------------
 
@@ -106,6 +106,11 @@ const Instructions = () => {
     level13, level14, level15, level16
   }
 
+  const bulletsPosition: BulletType[] = [
+    { position: [1.2, 0.2, -14] },
+    { position: [-1.2, 0.2, -14] }
+  ];
+
   const levelStore = useLevelStore();
   const {level, setCurrentLevel, setNextLevel, setAnimationStatus} = levelStore;
   const { currentLevel, tempLevel, isEndAnimation, } = level;
@@ -119,24 +124,7 @@ const Instructions = () => {
     setAnimationStatus(false);
     setCurrentLevel(page);
     
-    // setCanClick(false)
-    // setTimeout(() => {
-    //   setCanClick(true)
-    // }, 100)
-    //setIsLeftArrowClicked_(true);
   };
-
-  const rightClickHandler = () => {
-    //setLeftClick()
-    //setDirectionFlow('forward');
-    //setIsLeftArrowClicked_(prevState => false);
-} 
-
-  const leftClickHandler = () => {
-    //setRightClick()
-    //setDirectionFlow('backward')
-      //setIsLeftArrowClicked_(prevState => true);
-  }
 
   const startLegoHandler = () => {
     //setCurrentLevel((state) => 1);
@@ -152,7 +140,7 @@ const Instructions = () => {
     setBullets(prevBullets => [...prevBullets, '*'])
   }
 
-
+// position={[1.2, 0.2, -14]}
 
   return (
         // <h1>Instrucions</h1>
@@ -186,7 +174,10 @@ const Instructions = () => {
                 <LevelAll />
                 {/* <Bullet /> */}
                 {bullets.map(bullet => (
-                  <Bullet />
+                  <>
+                      <Bullet position={bulletsPosition[0].position}/>
+                      <Bullet position={bulletsPosition[1].position}/>
+                  </>
                 ))}
               {/* <TestElement model="/3dModels/Level16/Cpockpit.glb"/> */}
             </Suspense>
