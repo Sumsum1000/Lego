@@ -37,6 +37,7 @@ import Bullet from "../components/bullet/Bullet";
 import { MathUtils } from 'three'; 
 import { p } from "framer-motion/m";
 import { BulletType } from "../utils/Types";
+import EngineFire from "../components/engineFire/EngineFire";
 
 //--------------------------------------------------------
 
@@ -173,6 +174,7 @@ const Instructions = () => {
                 {/* <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/> */}
                 <LevelAll />
                 {/* <Bullet /> */}
+                <EngineFire />
                 {bullets.map(bullet => (
                   <>
                       <Bullet position={bulletsPosition[0].position}/>

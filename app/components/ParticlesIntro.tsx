@@ -5,7 +5,7 @@ import { useEffect, useRef, useMemo, Suspense, useState,  } from "react";
 import { Box, OrbitControls, Torus, useGLTF, Instances, Environment, PerspectiveCamera, useTexture, Sphere } from "@react-three/drei";
 import { Canvas, useLoader, useFrame, useThree } from "@react-three/fiber";
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
-import { InstancedMesh } from "three";
+//import { InstancedMesh } from "three";
 import * as THREE from 'three';
 import { Perf } from "r3f-perf";
 import { useClickStore } from "./store/Store";
@@ -113,24 +113,10 @@ export function ParticlesIntro() {
         {/* <Environment preset="lobby" background={false}/> */}
         {/* <PerspectiveCamera fov={120} makeDefault position={[0, 0, -20]}/> */}
         <mesh position={[2, 3, -9]}>
-          <pointLight 
-            color={'#6fc0d9'}
-            intensity={120} 
-            // castShadow 
-            // shadow-mapSize={[1024, 1024]}
-            // shadow-bias={-0.0001}
-            />
+          <pointLight color={'#6fc0d9'} intensity={120} />
           {/* <sphereGeometry args={[0.3, 12, 12]}/> */}
         </mesh>
         <ambientLight intensity={0.5}/>
-        {/* <mesh position={[-2, 2, -1]}>
-          <pointLight 
-            intensity={0} 
-            castShadow  
-            shadow-mapSize={[1024, 1024]}
-            shadow-bias={-0.0001}/>
-          <sphereGeometry args={[0.3, 12, 12]}/>
-        </mesh> */}
         <PerspectiveCamera 
           makeDefault 
           position={[0, 1.75, -4]} 
@@ -146,7 +132,7 @@ export function ParticlesIntro() {
 
 
 
-function Model({ color = 'white', roughness = 0, ...props }) {
+export function Model({ color = 'white', roughness = 0, ...props }) {
 
   const diffuseMap = useTexture('/RedPiece.jpg')
   const ref = useRef()
