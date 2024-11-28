@@ -100,6 +100,7 @@ const Instructions = () => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [isLeftArrowClicked_, setIsLeftArrowClicked_] = useState(true);
   const [bullets, setBullets] = useState<string[]>([]);
+  const [engine, setEngine] = useState(false);
 
   const levelData ={
     level1, level2, level3, level4, level5, level6,
@@ -141,16 +142,24 @@ const Instructions = () => {
     setBullets(prevBullets => [...prevBullets, '*'])
   }
 
-// position={[1.2, 0.2, -14]}
+  const engineHandler = () => {
+    console.log('engine on')
+    setEngine(prev => !prev)
+  }
+
 
   return (
-        // <h1>Instrucions</h1>
         <div className="h-screen  bg-gray-800">
-          {/* <h1 className="mt-28">{isLeftButton.toString()}</h1> */}
+        <div className="z-10 absolute right-0 flex flex-col space-y-2">
           <button 
-            className="z-10 absolute right-0 top-0 p-6 bg-yellow-500" 
+            className="right-0 top-0 p-6 bg-yellow-500" 
             onClick={fireHandler}
           >Fire</button>
+          <button 
+            className="right-0 top-0 p-6 bg-yellow-500" 
+            onClick={engineHandler}
+          >Engine</button>
+        </div>
 
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
@@ -173,8 +182,8 @@ const Instructions = () => {
               
                 {/* <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/> */}
                 <LevelAll />
-                {/* <Bullet /> */}
-                <EngineFire />
+               {engine && <EngineFire ringsPosition={[6.35, 2.05, -3.5]} conePosition={[6.35, 2.05, -0.7]}/>}
+               {engine && <EngineFire ringsPosition={[-6.35, 2.05, -3.5]} conePosition={[-6.35, 2.05, -0.7]}/>}
                 {bullets.map(bullet => (
                   <>
                       <Bullet position={bulletsPosition[0].position}/>
@@ -186,29 +195,19 @@ const Instructions = () => {
             {/* <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/> */}
             <OrbitControls />
             <PerspectiveCamera makeDefault position={[0.5, 5, -31]} />
-             {/* <Environment files={'brown_photostudio_02_1k-1.hdr'} background={false} /> */}
              <Environment files={'poly_haven_studio_1k.hdr'} background={false} />
-             {/* <pointLight position={[0, 8.5, 4]} intensity={40}/>
-             <pointLight position={[0, 7, -1]} intensity={50}/> */}
-             {/* <pointLight position={[1, 3, -12]} intensity={90}/>
-             <pointLight position={[11, 1, -3]} intensity={90}/>
-             <pointLight position={[-11, 1, -3]} intensity={90}/>
-             <pointLight position={[0, -5, 0]} intensity={90}/> */}
-      {/* <EffectComposer >
 
-        <ToneMapping 
-           blendFunction={BlendFunction.COLOR_DODGE} // blend mode
-           adaptive={true} // toggle adaptive luminance map usage
-           resolution={256} // texture resolution of the luminance map
-           middleGrey={0.6} // middle grey factor
-           maxLuminance={16.0} // maximum luminance
-           averageLuminance={1.0} // average luminance
-           adaptationRate={1.0} // luminance adaptation rate
-        />
-      </EffectComposer> */}
         </Canvas>
         </div>
   )
 }
 
 export default Instructions;
+
+
+             {/* <pointLight position={[0, 8.5, 4]} intensity={40}/>
+             <pointLight position={[0, 7, -1]} intensity={50}/> */}
+             {/* <pointLight position={[1, 3, -12]} intensity={90}/>
+             <pointLight position={[11, 1, -3]} intensity={90}/>
+             <pointLight position={[-11, 1, -3]} intensity={90}/>
+             <pointLight position={[0, -5, 0]} intensity={90}/> */}

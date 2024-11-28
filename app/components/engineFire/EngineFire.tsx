@@ -1,19 +1,20 @@
-import { InstancedMesh } from "three"
+import { InstancedMesh, MathUtils } from "three"
 import { easeIn, motionValue, useAnimation } from "framer-motion"
 import {motion} from 'framer-motion-3d'
 import { useEffect, useRef, useState } from "react"
 import { Torus } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 
-// type EngineFireType = {
-//     fireList: string[],
-//     setFireList(): void
-// }
+type EngineFireType = {
+    ringsPosition: [number, number, number],
+    conePosition: [number, number, number],
+}
 
 
-const EngineFire = () => {
+const EngineFire = ({ringsPosition, conePosition}: EngineFireType) => {
 
     const [fireList, setFireList] = useState<string[]>([])
+    const MAX_FIRE_ELEMENTS = 8;
 
     useEffect(() => {
 
@@ -23,9 +24,9 @@ const EngineFire = () => {
 
         const removeInterval = setTimeout(() => {
             setInterval(() => {
-              setFireList(prev => prev.slice(0, -1));
-            }, 8000);
-          }, 1400);
+              setFireList(prev => prev.slice(-7));
+            }, 2000);
+          }, 1000);
 
         return(() => {
             clearInterval(intervalAdd)
@@ -37,7 +38,7 @@ const EngineFire = () => {
   return (
     <>
     {fireList.map(element => (
-        <Model />
+        <Model conePosition={conePosition} ringsPosition={ringsPosition}/>
     ))}
     </>
   )
@@ -45,47 +46,39 @@ const EngineFire = () => {
 
 export default EngineFire
 
-const Model= () => {
+const Model= ({ringsPosition, conePosition}: EngineFireType) => {
 
-  const [color, setColor] = useState('red');
+  const [color, setColor] = useState('#039be5');
   const controls = useAnimation();
+  const colorControls = useAnimation();
 
   
   
   useEffect(() => {
-    // const updateColor = (latest) => {
-    //     if (latest.color) {
-    //       setColor(latest.color);
-    //     }
-    //   };
 
-    //   const externalColorSource = {
-    //     update: (newColor) => updateColor({ color: newColor })
-    //   };
-  
-    //   // Example of triggering color change
-    //   const colorChangeTimeout = setTimeout(() => {
-    //     externalColorSource.update('#00ff00');
-    //   }, 1000);
+    colorControls.start({
+        color:['#039be5', '#f4511e'],
+        opacity: [1, 1, 0],
+        transition: {
+            color: {
+                duration: 1,
+                times: [0, 1]
+            },
+            opacity: {
+                duration: 1,
+                times: [0, 0.4, 1]
+            }
+        }
+    })
 
 
     controls.start({
         z: 12,
         scale: [1, 0.2],
-        color: ['#FF5733', '#49dae1'],
         transition: {
-            scale: {
-                duration: 2,
+            duration: 2,
                 ease: easeIn,
                 times: [0, 0.75]
-            },
-            color: {
-                duration: 2,
-                ease: easeIn,
-                times: [0, 1]    
-            },
-            duration: 2,
-            ease: easeIn
         }
     }) 
 
@@ -94,12 +87,21 @@ const Model= () => {
 
 
   return (
-    <motion.group position={[6.35, 2.05, -3.5]} scale={1} animate={controls}>
-        <mesh >
-            <torusGeometry args={[0.6, 0.1, 12, 12]} />
-            <meshBasicMaterial transparent={true} opacity={1} color={color}/>
-        </mesh>
-    </motion.group>
+    <>
+            <mesh position={conePosition} rotation={[MathUtils.degToRad(90), 0, 0]}>
+                <coneGeometry args={[0.2, 9, 8]} />
+                <motion.meshBasicMaterial transparent={true} opacity={0.05} color={color} />
+            </mesh>
+        <motion.group position={ringsPosition} scale={1} animate={controls}>
+            <mesh >
+                <torusGeometry args={[0.6, 0.1, 8, 8]} />
+                <motion.meshBasicMaterial transparent={true} opacity={1} color={color} animate={colorControls}/>
+            </mesh>
+        </motion.group>
+    </>
   )
 }
+
+// rings position={[6.35, 2.05, -3.5]}
+// fire [6.35, 2.05, -0.7]
 
