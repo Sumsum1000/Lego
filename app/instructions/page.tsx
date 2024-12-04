@@ -1,9 +1,7 @@
 'use client'
-import { FaChevronLeft } from "react-icons/fa";
-import { FaChevronRight } from "react-icons/fa";
-import { Box, Environment, Html, OrbitControls, PerspectiveCamera, useGLTF, SoftShadows } from "@react-three/drei";
-import { Canvas, useLoader, useThree,  } from "@react-three/fiber";
-import { Suspense, useMemo, forwardRef, useState, useEffect } from 'react'
+import { Environment, Html, OrbitControls, PerspectiveCamera, useGLTF } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Suspense, useState} from 'react'
 import { level1 } from "../components/levelsData/level1";
 import { level2 } from "../components/levelsData/level2";
 import { level3 } from "../components/levelsData/level3";
@@ -20,22 +18,16 @@ import { level13 } from "../components/levelsData/level13";
 import { level14 } from "../components/levelsData/level14";
 import { level15 } from "../components/levelsData/level15";
 import { level16 } from "../components/levelsData/level16";
-import * as THREE from 'three';
 import { Perf } from "r3f-perf";
 import { useControls } from "leva";
 import { Euler } from "three";
-import { ModelGltf } from "../components/models3D/ModelGltf";
 import Pagination from "../components/pagination/Pagination";
 import { PaginagionType } from "../utils/Types";
 import { LevelAll } from "../components/levels/LevelsAll";
 import {useLevelStore} from "../components/store/Store";
 import { useClickStore } from "../components/store/Store";
-import { useDirectionFlowStore } from "../components/store/Store";
-import { Bloom, DepthOfField, EffectComposer, Noise, Vignette, ToneMapping } from '@react-three/postprocessing'
-import { BlendFunction } from "postprocessing";
 import Bullet from "../components/bullet/Bullet";
 import { MathUtils } from 'three'; 
-import { p } from "framer-motion/m";
 import { BulletType } from "../utils/Types";
 import EngineFire from "../components/engineFire/EngineFire";
 
@@ -80,25 +72,9 @@ const TestElement = ({model}: ModelType) => {
   )
 }
 
-
-//const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
-
-type BtnType = {
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  value: boolean
-};
-
-
-
-
 const Instructions = () => {
 
-  
-  //const [currentPage, setCurrentPage] = useState(1);
-
   const totalPages = 17;
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-  const [isLeftArrowClicked_, setIsLeftArrowClicked_] = useState(true);
   const [bullets, setBullets] = useState<string[]>([]);
   const [engine, setEngine] = useState(false);
 
@@ -165,24 +141,18 @@ const Instructions = () => {
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}
           >Tap to start Lego</button>}
-          {/* <h1 className="absolute text-6xl">{currentLevel}</h1> */}
           <div className="w-48  h-48 absolute right-1/3 top-12 z-10">
         <Pagination 
             currentPage={currentLevel}
             totalPages={totalPages}
             onPageChange={handlePageChange}
         />
-
           </div>
         <Canvas className="h-screen relative" shadows >
-            
-            
             <Perf className='top-left'/>
             <Suspense fallback={null}>
-              
-                {/* <LevelAll isLeftArrowClicked={isLeftArrowClicked_} shouldAnimate={true}/> */}
                 <LevelAll />
-               {engine && <EngineFire ringsPosition={[6.35, 2.05, -3.5]} conePosition={[6.35, 2.05, -0.7]}/>}
+               {engine && <EngineFire ringsPosition={[6.35, 2.05, -3.5]} conePosition={[6.35, 2.05, 1.2]}/>}
                {engine && <EngineFire ringsPosition={[-6.35, 2.05, -3.5]} conePosition={[-6.35, 2.05, -0.7]}/>}
                 {bullets.map(bullet => (
                   <>
