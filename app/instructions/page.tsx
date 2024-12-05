@@ -43,7 +43,7 @@ const TestElement = ({model}: ModelType) => {
       value: {x: 0, y: 0, z: 0}
     },
     rotation: {
-      value: {x: 0, y: 0, z: 0}
+      value: {x: 0, y: 0, z:  0}
     },
     scale: {
       value: {x:1, y: 1, z: 1}
@@ -160,7 +160,7 @@ const Instructions = () => {
                       <Bullet position={bulletsPosition[1].position}/>
                   </>
                 ))}
-              {/* <TestElement model="/3dModels/Level16/Cpockpit.glb"/> */}
+              <TestElement model="/3dModels/Level1/Lego_16L_4160390.glb"/>
             </Suspense>
             {/* <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/> */}
             <OrbitControls />
