@@ -160,7 +160,7 @@ const Instructions = () => {
                       <Bullet position={bulletsPosition[1].position}/>
                   </>
                 ))}
-              <TestElement model="/3dModels/Level1/Lego_16L_4160390.glb"/>
+              {/* <TestElement model="/3dModels/Level1/Lego_20R_6278445.glb"/> */}
             </Suspense>
             {/* <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/> */}
             <OrbitControls />

@@ -24,9 +24,9 @@ export const level16 = [
     url: '/3dModels/Level1/Cockpit.glb',
     name: '#5', //main body
     rotation: [0, 0, 0] as Vector3Type, 
-    scale: [1, 1, 1] as Vector3Type,
+    scale: [0.93, 0.93, 0.93] as Vector3Type,
     startPosition: [-3, startY, -6] as Vector3Type, 
-    targetPosition: [0, 2.8, -8.67] as Vector3Type, 
+    targetPosition: [0, 2.8, -8.62] as Vector3Type, 
     centerPosition: centerPosition as Vector3Type, 
     castShadow: true,
     receiveShadow: true,
