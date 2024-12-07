@@ -1,19 +1,20 @@
-import { PaginagionType } from '@/app/utils/Types';
+import { PaginationPropsType } from '@/app/utils/Types';
+
 import React, { useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useStore } from 'zustand';
 import {useClickStore, useLevelStore} from '../store/Store';
 import { useDirectionFlowStore } from '../store/Store';
 
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  nextPage: () => void;
-  previousPage: () => void;
-}
+// type  PaginationPropsType = {
+//   currentPage: number;
+//   totalPages: number;
+//   onPageChange: (page: number) => void;
+//   nextPage: () => void;
+//   previousPage: () => void;
+// }
 
-const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousPage}: PaginationProps) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousPage}: PaginationPropsType) => {
 
 
 

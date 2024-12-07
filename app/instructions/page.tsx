@@ -22,7 +22,7 @@ import { Perf } from "r3f-perf";
 import { useControls } from "leva";
 import { Euler } from "three";
 import Pagination from "../components/pagination/Pagination";
-import { PaginagionType } from "../utils/Types";
+import { PaginationPropsType } from "../utils/Types";
 import { LevelAll } from "../components/levels/LevelsAll";
 import {useLevelStore} from "../components/store/Store";
 import { useClickStore } from "../components/store/Store";
@@ -94,21 +94,27 @@ const Instructions = () => {
   const { currentLevel, tempLevel, isEndAnimation, } = level;
 
 
-  const clickStore = useClickStore();
-  const {isLeftButton, canClick ,setLeftClick, setRightClick, setCanClick} = clickStore
-
-  const handlePageChange: PaginagionType['onPageChange'] = (page) => {
-    console.log("Changing to page:", page);
+  const handlePageChange: PaginationPropsType['onPageChange'] = (page) => {
+    if(currentLevel > 0 && currentLevel < 16){
+      setAnimationStatus(false);
+      setCurrentLevel(page);
+    }
     setAnimationStatus(false);
     setCurrentLevel(page);
   };
 
   const handleNextPage = () => {
-    setNextLevel();
+    if(currentLevel < 16){
+      setNextLevel();
+    }
+    
   }
 
   const handlePreviousPage = () => {
-    setPreviousLevel();
+    if(currentLevel > 1){
+      setPreviousLevel();
+    }
+    
   }
 
   const startLegoHandler = () => {
@@ -180,11 +186,3 @@ const Instructions = () => {
 }
 
 export default Instructions;
-
-
-             {/* <pointLight position={[0, 8.5, 4]} intensity={40}/>
-             <pointLight position={[0, 7, -1]} intensity={50}/> */}
-             {/* <pointLight position={[1, 3, -12]} intensity={90}/>
-             <pointLight position={[11, 1, -3]} intensity={90}/>
-             <pointLight position={[-11, 1, -3]} intensity={90}/>
-             <pointLight position={[0, -5, 0]} intensity={90}/> */}

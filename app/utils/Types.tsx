@@ -97,11 +97,19 @@ export type LevelProps= {
   //shouldAnimate: boolean
 };
 
-export type PaginagionType = {
-  //newPage: number,
+// export type PaginagionType = {
+//   //newPage: number,
+//   currentPage: number;
+//   totalPages: number;
+//   onPageChange: (page: number) => void;
+// }
+
+export type  PaginationPropsType = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  nextPage: () => void;
+  previousPage: () => void;
 }
 
 
