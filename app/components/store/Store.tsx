@@ -6,7 +6,7 @@ interface LevelStore {
   setNextLevel: () => void; 
   setPreviousLevel: () => void;
   setAnimationStatus: (status: boolean) => void;
-  setModelLevel: (level: number) => void;
+  //setModelLevel: (level: number) => void;
 }
 
 type ClickStore = {

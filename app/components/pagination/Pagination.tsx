@@ -9,16 +9,18 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  nextPage: () => void;
+  previousPage: () => void;
 }
 
-const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousPage}: PaginationProps) => {
 
 
 
 
   const levelStore = useLevelStore()
-  const levelUp = levelStore.setNextLevel
-  const levelDown = levelStore.setPreviousLevel
+  const setNextLevel = levelStore.setNextLevel
+  const setPreviousLevel = levelStore.setPreviousLevel
 
   const clickStore = useClickStore()
   const {isLeftButton ,canClick, setCanClick, setLeftClick, setRightClick} = clickStore
@@ -34,7 +36,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) =
       setCanClick(false);
       setDirectionFlow('backward');
       setRightClick();
-      levelDown();           
+      //setPreviousLevel();  
+      previousPage();         
     }
     setTimeout(() => {
       setCanClick(true);
@@ -48,7 +51,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange}: PaginationProps) =
       setCanClick(false);
       setDirectionFlow('forward');
       setLeftClick()
-      levelUp();
+      //setNextLevel();
+      nextPage();
     }
     setTimeout(() => {
       setCanClick(true);

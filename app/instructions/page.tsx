@@ -1,7 +1,7 @@
 'use client'
 import { Environment, Html, OrbitControls, PerspectiveCamera, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useState} from 'react'
+import { Suspense, useEffect, useState} from 'react'
 import { level1 } from "../components/levelsData/level1";
 import { level2 } from "../components/levelsData/level2";
 import { level3 } from "../components/levelsData/level3";
@@ -90,7 +90,7 @@ const Instructions = () => {
   ];
 
   const levelStore = useLevelStore();
-  const {level, setCurrentLevel, setNextLevel, setAnimationStatus} = levelStore;
+  const {level, setCurrentLevel, setNextLevel, setPreviousLevel,setAnimationStatus} = levelStore;
   const { currentLevel, tempLevel, isEndAnimation, } = level;
 
 
@@ -101,16 +101,19 @@ const Instructions = () => {
     console.log("Changing to page:", page);
     setAnimationStatus(false);
     setCurrentLevel(page);
-    
   };
+
+  const handleNextPage = () => {
+    setNextLevel();
+  }
+
+  const handlePreviousPage = () => {
+    setPreviousLevel();
+  }
 
   const startLegoHandler = () => {
     //setCurrentLevel((state) => 1);
     setNextLevel();
-  }
-
-  const testClick = () => {
-    setCanClick(true)
   }
 
   const fireHandler= () => {
@@ -122,6 +125,8 @@ const Instructions = () => {
     console.log('engine on')
     setEngine(prev => !prev)
   }
+
+
 
 
   return (
@@ -146,6 +151,8 @@ const Instructions = () => {
             currentPage={currentLevel}
             totalPages={totalPages}
             onPageChange={handlePageChange}
+            nextPage={handleNextPage}
+            previousPage={handlePreviousPage}
         />
           </div>
         <Canvas className="h-screen relative" shadows >
@@ -162,8 +169,8 @@ const Instructions = () => {
                 ))}
               {/* <TestElement model="/3dModels/Level1/Lego_20R_6278445.glb"/> */}
             </Suspense>
-            {/* <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/> */}
-            <OrbitControls />
+            <OrbitControls maxDistance={30} minDistance={12} enablePan={false} target={[0, 0, 0]}/>
+            {/* <OrbitControls /> */}
             <PerspectiveCamera makeDefault position={[0.5, 5, -31]} />
              <Environment files={'poly_haven_studio_1k.hdr'} background={false} />
 
