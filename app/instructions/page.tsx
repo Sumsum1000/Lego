@@ -1,7 +1,7 @@
 'use client'
-import { Environment, Html, OrbitControls, PerspectiveCamera, useGLTF } from "@react-three/drei";
+import { Environment, OrbitControls, PerspectiveCamera, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useState} from 'react'
+import { Suspense, useState} from 'react'
 import { level1 } from "../components/levelsData/level1";
 import { level2 } from "../components/levelsData/level2";
 import { level3 } from "../components/levelsData/level3";
@@ -25,7 +25,6 @@ import Pagination from "../components/pagination/Pagination";
 import { PaginationPropsType } from "../utils/Types";
 import { LevelAll } from "../components/levels/LevelsAll";
 import {useLevelStore} from "../components/store/Store";
-import { useClickStore } from "../components/store/Store";
 import Bullet from "../components/bullet/Bullet";
 import { MathUtils } from 'three'; 
 import { BulletType } from "../utils/Types";
@@ -74,7 +73,7 @@ const TestElement = ({model}: ModelType) => {
 
 const Instructions = () => {
 
-  const totalPages = 17;
+  const totalPages = 16;
   const [bullets, setBullets] = useState<string[]>([]);
   const [engine, setEngine] = useState(false);
 
@@ -107,14 +106,12 @@ const Instructions = () => {
     if(currentLevel < 16){
       setNextLevel();
     }
-    
   }
 
   const handlePreviousPage = () => {
     if(currentLevel > 1){
       setPreviousLevel();
     }
-    
   }
 
   const startLegoHandler = () => {
@@ -131,9 +128,6 @@ const Instructions = () => {
     console.log('engine on')
     setEngine(prev => !prev)
   }
-
-
-
 
   return (
         <div className="h-screen  bg-gray-800">
@@ -179,7 +173,6 @@ const Instructions = () => {
             {/* <OrbitControls /> */}
             <PerspectiveCamera makeDefault position={[0.5, 5, -31]} />
              <Environment files={'poly_haven_studio_1k.hdr'} background={false} />
-
         </Canvas>
         </div>
   )

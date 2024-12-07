@@ -1,43 +1,18 @@
 import { PaginationPropsType } from '@/app/utils/Types';
-
-import React, { useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useStore } from 'zustand';
-import {useClickStore, useLevelStore} from '../store/Store';
-import { useDirectionFlowStore } from '../store/Store';
+import {useClickStore} from '../store/Store';
 
-// type  PaginationPropsType = {
-//   currentPage: number;
-//   totalPages: number;
-//   onPageChange: (page: number) => void;
-//   nextPage: () => void;
-//   previousPage: () => void;
-// }
 
 const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousPage}: PaginationPropsType) => {
-
-
-
-
-  const levelStore = useLevelStore()
-  const setNextLevel = levelStore.setNextLevel
-  const setPreviousLevel = levelStore.setPreviousLevel
-
   const clickStore = useClickStore()
   const {isLeftButton ,canClick, setCanClick, setLeftClick, setRightClick} = clickStore
-
-  const directionFlowStore = useDirectionFlowStore();
-  const directionFlow = directionFlowStore.directionFlow;
-  const {setDirectionFlow} = directionFlowStore;
 
   const handlePrevious = (): void => {
     // !isleftClicked
     //onPageChange(Math.max(currentPage - 1, 1));
     if(canClick){
       setCanClick(false);
-      setDirectionFlow('backward');
       setRightClick();
-      //setPreviousLevel();  
       previousPage();         
     }
     setTimeout(() => {
@@ -50,9 +25,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousP
     //onPageChange(Math.min(currentPage + 1, totalPages));
     if(canClick){
       setCanClick(false);
-      setDirectionFlow('forward');
       setLeftClick()
-      //setNextLevel();
       nextPage();
     }
     setTimeout(() => {

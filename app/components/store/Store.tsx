@@ -19,13 +19,8 @@ type ClickStore = {
   setIsStartButton: (state: boolean) => void;
 }
 
-type DirectionFlowStore = {
-  directionFlow: 'forward' | 'backward';
-  setDirectionFlow: (state: 'forward' | 'backward') => void;
-}
-
 export const useLevelStore = create<LevelStore>((set) => ({
-  level: { currentLevel: 1, tempLevel: 1, modelLevel: 1, isEndAnimation: false },
+  level: { currentLevel: 0, tempLevel: 1, modelLevel: 1, isEndAnimation: false },
 // Correctly updates currentLevel
   setNextLevel: () => set((state) => ({
     level: { 
@@ -60,7 +55,6 @@ export const useLevelStore = create<LevelStore>((set) => ({
   }))
 }));
 
-
 export const useClickStore = create<ClickStore>((set) => ({
   isLeftButton: true,
   canClick: false,
@@ -71,10 +65,6 @@ export const useClickStore = create<ClickStore>((set) => ({
   setIsStartButton: (state) => set({isStartButton: state})
 }))
 
-export const useDirectionFlowStore = create<DirectionFlowStore>((set) => ({
-  directionFlow: 'forward',
-  setDirectionFlow: (state: 'forward' | 'backward') => set({ directionFlow: state }),
-}));
 
 
 

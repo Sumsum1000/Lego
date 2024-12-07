@@ -94,15 +94,7 @@ export type LevelProps= {
   //isLeftArrowClicked:  boolean;
   level?: string
   startPosition?: Vector3Type
-  //shouldAnimate: boolean
 };
-
-// export type PaginagionType = {
-//   //newPage: number,
-//   currentPage: number;
-//   totalPages: number;
-//   onPageChange: (page: number) => void;
-// }
 
 export type  PaginationPropsType = {
   currentPage: number;
@@ -111,7 +103,6 @@ export type  PaginationPropsType = {
   nextPage: () => void;
   previousPage: () => void;
 }
-
 
 export type BulletType = {
   position: [number, number, number];
