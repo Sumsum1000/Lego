@@ -158,7 +158,9 @@ const Instructions = () => {
         <Canvas className="h-screen relative" shadows >
             <Perf className='top-left'/>
             <Suspense fallback={null}>
+              <group position={[0, 0, 4]}>
                 <LevelAll />
+                </group>
                {engine && <EngineFire ringsPosition={[6.35, 2.05, -3.5]} conePosition={[6.35, 2.05, 1.2]}/>}
                {engine && <EngineFire ringsPosition={[-6.35, 2.05, -3.5]} conePosition={[-6.35, 2.05, -0.7]}/>}
                 {bullets.map(bullet => (
