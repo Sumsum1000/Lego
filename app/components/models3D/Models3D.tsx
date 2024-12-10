@@ -25,9 +25,7 @@ const { scene, nodes, materials } = useGLTF(model.url, true);
 const clonedScene = useMemo(() => clone(scene), [scene]);
 const [onAnim, setOnAnim] = useState(false)
 
-const diffuseMap = useMemo(() => {
-  return model.map ? useTexture(model.map) : useTexture('/whiteMap.jpg');
-}, [model.map]);
+const diffuseMap = useTexture(model.map || '/whiteMap.jpg');
 
 const [isHover, setIsHover] = useState(false);
 const [isClicked, setIsClicked] = useState(false);
