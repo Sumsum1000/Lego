@@ -26,7 +26,7 @@ const clonedScene = useMemo(() => clone(scene), [scene]);
 const [onAnim, setOnAnim] = useState(false)
 
 const diffuseMap = useMemo(() => {
-  return model.map ? useTexture(model.map) : null;
+  return model.map ? useTexture(model.map) : useTexture('/whiteMap.jpg');
 }, [model.map]);
 
 const [isHover, setIsHover] = useState(false);
@@ -173,26 +173,6 @@ const handlePointerOut = (event: ThreeEvent<PointerEvent>) => {
   if (onPointerOut) onPointerOut(event);
   setIsHover(false);
 };
-
-// ------------------------------
-
-
-// useEffect(() => {
-//     controls.start({ scale: 1 });
-// }, [controls]);
-
-
-// useEffect(() => {
-//   setOnAnim(false)
-//   const timeOut = setTimeout(() => {
-//     setOnAnim(true)
-//   }, 100)
-
-//   return(() => {
-//     clearTimeout(timeOut)
-//   })
-// }, [])
-
 
 // for first level animation on start
 useEffect(() => {
