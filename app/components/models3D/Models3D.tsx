@@ -9,7 +9,6 @@ import {  ModelProps, } from '@/app/utils/Types';
 import * as THREE from 'three';
 import { useClickStore } from '../store/Store';
 import { useLevelStore } from '../store/Store';
-import { useDirectionFlowStore } from '../store/Store';
 // test
 
   // Type guard to check if an object is a Mesh
@@ -26,7 +25,9 @@ const { scene, nodes, materials } = useGLTF(model.url, true);
 const clonedScene = useMemo(() => clone(scene), [scene]);
 const [onAnim, setOnAnim] = useState(false)
 
-const diffuseMap = model.map ? useTexture(model.map) : null;
+const diffuseMap = useMemo(() => {
+  return model.map ? useTexture(model.map) : null;
+}, [model.map]);
 
 const [isHover, setIsHover] = useState(false);
 const [isClicked, setIsClicked] = useState(false);
