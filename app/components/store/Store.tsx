@@ -20,7 +20,7 @@ type ClickStore = {
 }
 
 export const useLevelStore = create<LevelStore>((set) => ({
-  level: { currentLevel: 0, tempLevel: 1, modelLevel: 1, isEndAnimation: false },
+  level: { currentLevel: 1, tempLevel: 1, modelLevel: 1, isEndAnimation: false },
 // Correctly updates currentLevel
   setNextLevel: () => set((state) => ({
     level: { 
