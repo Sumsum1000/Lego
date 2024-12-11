@@ -161,8 +161,8 @@ const Instructions = () => {
               <group position={[0, 0, 4]}>
                 <LevelAll />
                 </group>
-               {engine && <EngineFire ringsPosition={[6.35, 2.05, -3.5]} conePosition={[6.35, 2.05, 1.2]}/>}
-               {engine && <EngineFire ringsPosition={[-6.35, 2.05, -3.5]} conePosition={[-6.35, 2.05, -0.7]}/>}
+               {engine && <EngineFire ringsPosition={[6.35, 2.05, 0]} conePosition={[6.35, 2.05, 2]}/>}
+               {engine && <EngineFire ringsPosition={[-6.35, 2.05, 0]} conePosition={[-6.35, 2.05, 2]}/>}
                 {bullets.map(bullet => (
                   <>
                       <Bullet position={bulletsPosition[0].position}/>
