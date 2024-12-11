@@ -14,11 +14,18 @@ export default function Home() {
   return (
     <div className="h-screen w-screen bg-gray-800 flex justify-center">
        <Logo />
-       <Suspense fallback={<p>Wait for it... its falling</p>}>
+       <LoaderText />
+       <Suspense fallback={null}>
           <ParticlesIntro />
        </Suspense>
     </div>
   );
+}
+
+const LoaderText = () => {
+  return(
+    <p className="absolute top-[40%] text-5xl font-KirangHaerang">Wait for it... its falling</p>
+  )
 }
 
 

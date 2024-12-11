@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect, useState} from 'react'
+import React, {Suspense, useEffect, useState, useMemo} from 'react'
 import { Position, Rotation, Scale, MaterialType } from '@/app/utils/Types';
 import { LevelProps } from '@/app/utils/Types';
 import {useLevelStore} from '../store/Store';
@@ -20,6 +20,8 @@ import { level13 } from '../levelsData/level13';
 import { level14 } from '../levelsData/level14';
 import { level15 } from '../levelsData/level15';
 import { level16 } from '../levelsData/level16';
+import { useTexture, useGLTF, Box } from '@react-three/drei';
+import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 
 
 
@@ -40,35 +42,11 @@ export const LevelAll = () => {
   // Array of visibility states for each level block
   const [visibleLevels, setVisibleLevels] = useState<boolean[]>(Array(levels.length).fill(true));
 
-  //---------------------------------------------------------------------- disable visibility
-  // useEffect(() => {
-  //   // Create a new visibility array to manage individual level visibility
-  //   const newVisibleLevels = [...visibleLevels];
-
-  //   // Iterate over each level and set visibility based on currentLevel with delay
-  //   levels.forEach((_, i) => {
-  //     if (currentLevel >= i + 1) {
-  //       newVisibleLevels[i] = true; // Immediately set to true if currentLevel is high enough
-  //     } else {
-  //       setTimeout(() => {
-  //         newVisibleLevels[i] = false; // Delayed setting to false if currentLevel drops below
-  //         setVisibleLevels([...newVisibleLevels]);
-  //       }, 4000); // 200ms delay
-  //     }
-  //   });
-
-  //   // Update state with modified visibility array
-  //   setVisibleLevels(newVisibleLevels);
-
-  //   // Cleanup function to prevent memory leaks
-  //   return () => {
-  //     // Clear all timeouts on cleanup
-  //     newVisibleLevels.forEach((_, index) => clearTimeout(index));
-  //   };
-  // }, [currentLevel]);
+ 
 
   return (
     <>
+      <Base />
       {levels.map((level, i) => (
         <LevelBlock
           key={i} 
@@ -83,8 +61,17 @@ export const LevelAll = () => {
   );
 };
 
+const Base = () => {
+  const diffuseMap = useTexture('/Base.jpg');
+  const { scene } = useGLTF('/Base.glb');
+  
 
-
+  return (
+    <group scale={2.55} position={[0, 0, 0]}>
+      <primitive object={scene} />
+    </group>
+  );
+};
 
 
 
