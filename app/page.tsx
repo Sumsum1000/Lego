@@ -4,10 +4,10 @@ import Link from "next/link";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Logo from "./components/Logo/Logo";
-import ParticlesIntro from "./components/ParticlesIntro";
 import { Suspense } from "react";
 import {motion, useAnimation} from 'framer-motion';
 import Bullet from "./components/bullet/Bullet";
+import ParticlesIntro from "./components/ParticlesIntro";
 
 
 export default function Home() {
