@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import {motion, useAnimation} from 'framer-motion';
 import Bullet from "./components/bullet/Bullet";
 import ParticlesIntro from "./components/ParticlesIntro";
+import Deshboard from "./components/deshboard/Deshboard";
 
 
 export default function Home() {
@@ -15,8 +16,9 @@ export default function Home() {
     <div className="h-screen w-screen bg-gray-800 flex justify-center">
        <Logo />
        <LoaderText />
+       <Deshboard />
        <Suspense fallback={null}>
-          <ParticlesIntro />
+          {/* <ParticlesIntro /> */}
        </Suspense>
     </div>
   );
