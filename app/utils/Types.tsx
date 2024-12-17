@@ -108,9 +108,15 @@ export type BulletType = {
   position: [number, number, number];
 }
 
+export type DeshboardType = {
+  srcImg: string;
+  srcColor: string;
+  onClick: () => void;
+};
 
-
-
+export type DeshboardBtnType = {
+  onClickHandlers: (() => void)[];
+};
 
 
 

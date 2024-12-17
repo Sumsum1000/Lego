@@ -29,6 +29,9 @@ import Bullet from "../components/bullet/Bullet";
 import { MathUtils } from 'three'; 
 import { BulletType } from "../utils/Types";
 import EngineFire from "../components/engineFire/EngineFire";
+import Deshboard from "../components/deshboard/Deshboard";
+import BtnDeshboard from "../components/deshboard/BtnDeshboard";
+import {motion} from 'framer-motion'
 
 //--------------------------------------------------------
 
@@ -129,8 +132,15 @@ const Instructions = () => {
     setEngine(prev => !prev)
   }
 
+  const onClickHandlers = [
+    () => setEngine(prev => !prev),
+    () => setBullets(prevBullets => [...prevBullets, '*']),
+  ];
+
   return (
         <div className="h-screen  bg-gray-800">
+       {/* {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>} */}
+       <Deshboard onClickHandlers={onClickHandlers}/>
         <div className="z-10 absolute right-0 flex flex-col space-y-2">
           <button 
             className="right-0 top-0 p-6 bg-yellow-500" 

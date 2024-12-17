@@ -9,14 +9,17 @@ import {motion, useAnimation} from 'framer-motion';
 import Bullet from "./components/bullet/Bullet";
 import ParticlesIntro from "./components/ParticlesIntro";
 import Deshboard from "./components/deshboard/Deshboard";
+import { useLevelStore } from "./components/store/Store";
 
 
 export default function Home() {
+
+
+
   return (
     <div className="h-screen w-screen bg-gray-800 flex justify-center">
        <Logo />
        <LoaderText />
-       <Deshboard />
        <Suspense fallback={null}>
           {/* <ParticlesIntro /> */}
        </Suspense>
