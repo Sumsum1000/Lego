@@ -139,19 +139,8 @@ const Instructions = () => {
 
   return (
         <div className="h-screen  bg-gray-800">
-       {/* {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>} */}
-       <Deshboard onClickHandlers={onClickHandlers}/>
-        <div className="z-10 absolute right-0 flex flex-col space-y-2">
-          <button 
-            className="right-0 top-0 p-6 bg-yellow-500" 
-            onClick={fireHandler}
-          >Fire</button>
-          <button 
-            className="right-0 top-0 p-6 bg-yellow-500" 
-            onClick={engineHandler}
-          >Engine</button>
-        </div>
-
+       {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>}
+       {/* <Deshboard onClickHandlers={onClickHandlers}/> */}
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}

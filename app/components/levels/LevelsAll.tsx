@@ -46,7 +46,7 @@ export const LevelAll = () => {
 
   return (
     <>
-      <Base />
+      {/* <Base /> */}
       {levels.map((level, i) => (
         <LevelBlock
           key={i} 

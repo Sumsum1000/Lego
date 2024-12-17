@@ -5,21 +5,21 @@ const startY = 8;
 
 export const level1 = [
 
-    // {
-    //   id: crypto.randomUUID(),
-    //   url: '/3dModels/Level1/Lego_1_6469300.glb',
-    //   name: '#6469300&', //main body
-    //   rotation: [0, 0, 0] as Vector3Type, 
-    //   scale: [1, 1, 1] as Vector3Type, 
-    //   startPosition: [-6.8, startY, 0] as Vector3Type, 
-    //   targetPosition: [0, 0, 0] as Vector3Type, 
-    //   centerPosition: centerPosition as Vector3Type, 
-    //   castShadow: true,
-    //   receiveShadow: true,
-    //   //map:'',
-    //   color: 'white',
-    //   map: 'Part_1_VRayCompleteMap.jpg',
-    // },
+    {
+      id: crypto.randomUUID(),
+      url: '/3dModels/Level1/Lego_1_6469300.glb',
+      name: '#6469300&', //main body
+      rotation: [0, 0, 0] as Vector3Type, 
+      scale: [1, 1, 1] as Vector3Type, 
+      startPosition: [-6.8, startY, 0] as Vector3Type, 
+      targetPosition: [0, 0, 0] as Vector3Type, 
+      centerPosition: centerPosition as Vector3Type, 
+      castShadow: true,
+      receiveShadow: true,
+      //map:'',
+      color: 'white',
+      map: 'Part_1_VRayCompleteMap.jpg',
+    },
     {
       id: crypto.randomUUID(),
       url: '/3dModels/Level1/Lego_2_6265731.glb',
