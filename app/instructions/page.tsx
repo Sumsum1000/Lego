@@ -122,15 +122,6 @@ const Instructions = () => {
     setNextLevel();
   }
 
-  const fireHandler= () => {
-    console.log('Shoot')
-    setBullets(prevBullets => [...prevBullets, '*'])
-  }
-
-  const engineHandler = () => {
-    console.log('engine on')
-    setEngine(prev => !prev)
-  }
 
   const onClickHandlers = [
     () => setEngine(prev => !prev),
@@ -139,8 +130,8 @@ const Instructions = () => {
 
   return (
         <div className="h-screen  bg-gray-800">
-       {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>}
-       {/* <Deshboard onClickHandlers={onClickHandlers}/> */}
+       {/* {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>} */}
+       <Deshboard onClickHandlers={onClickHandlers}/>
           {currentLevel < 1 && <button 
               className={ "absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10" }
               onClick={startLegoHandler}
