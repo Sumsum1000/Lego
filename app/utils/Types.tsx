@@ -108,18 +108,26 @@ export type BulletType = {
   position: [number, number, number];
 }
 
-export type DeshboardType = {
-  // srcImg: string;
-  // srcColor: string;
-  isClicked: boolean,
-  btnTitle: string,
+export type ButtonState = {
+  isClicked: boolean;
+  className: string;
+};
 
-  onClick: () => void,
+export type DeshboardType = {
+  btnTitle: string;
+  isClicked: boolean;
+  onClick: () => void;
+  duration?: number;
+  onAnimationComplete?: () => void;
 };
 
 export type DeshboardBtnType = {
   onClickHandlers: (() => void)[],
 };
+
+
+
+
 
 
 
