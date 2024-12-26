@@ -13,6 +13,12 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      border: {
+        DEFAULT: '1px'  // This sets the default border width
+      },
+      borderColor: {
+        DEFAULT: '#28d6fc'  // This is the hex code for red-500
+      },
       fontFamily: {
         LuckiestGuy: ['Luckiest Guy', 'cursive'],
         KirangHaerang: ['Kirang Haerang', 'system-ui'],

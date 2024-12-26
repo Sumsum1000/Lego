@@ -151,7 +151,7 @@ const Instructions = () => {
   ];
 
   return (
-    <div className='w-full h-screen  bg-gray-400 flex'>
+    <div className='w-full h-screen  bg-gray-800 flex'>
       {/* {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>} */}
       <Deshboard onClickHandlers={onClickHandlers} />
       {currentLevel < 1 && (
@@ -162,7 +162,7 @@ const Instructions = () => {
           Tap to start Lego
         </button>
       )}
-      <div className='w-full top-12  absolute top-12 z-10 bg-green-400 flex justify-center'>
+      <div className='w-full top-12  absolute z-10  flex justify-center'>
         <Pagination
           currentPage={currentLevel}
           totalPages={totalPages}
