@@ -1,6 +1,7 @@
 import { PaginationPropsType } from '@/app/utils/Types';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useClickStore } from '../store/Store';
+import { motion } from 'framer-motion';
 
 const Pagination = ({
   currentPage,
@@ -8,6 +9,7 @@ const Pagination = ({
   onPageChange,
   nextPage,
   previousPage,
+  drag,
 }: PaginationPropsType) => {
   const clickStore = useClickStore();
   const { isLeftButton, canClick, setCanClick, setLeftClick, setRightClick } =
@@ -48,7 +50,6 @@ const Pagination = ({
     if (endPage === totalPages) {
       startPage = Math.max(endPage - 4, 1);
     }
-
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <a
@@ -57,7 +58,7 @@ const Pagination = ({
           aria-current={i === currentPage ? 'page' : undefined}
           className={`relative inline-flex items-center justify-center w-14 h-14 text-sm font-semibold border ${
             i === currentPage
-              ? 'z-10 bg-gray-400 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 border'
+              ? 'z-10 shadow-[inset_0_2px_10px_0_#28d6fc]  text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 border'
               : 'text-white  border hover:bg-gray-700 focus:z-20 focus:outline-offset-0 '
           }`}
           onClick={() => onPageChange(i)}
@@ -70,7 +71,7 @@ const Pagination = ({
   };
 
   return (
-    <div className='flex items-center justify-center'>
+    <motion.div className='flex items-center justify-center'>
       <nav
         className='isolate inline-flex -space-x-px rounded-md shadow-sm'
         aria-label='Pagination'
@@ -93,7 +94,7 @@ const Pagination = ({
           <FaChevronRight className='h-5 w-5' aria-hidden='true' />
         </a>
       </nav>
-    </div>
+    </motion.div>
   );
 };
 

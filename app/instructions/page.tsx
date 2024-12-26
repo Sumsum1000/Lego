@@ -162,10 +162,11 @@ const Instructions = () => {
           Tap to start Lego
         </button>
       )}
-      <div className='w-full top-12  absolute z-10  flex justify-center'>
+      <div className='w-full top-12  absolute z-50  flex justify-center'>
         <Pagination
           currentPage={currentLevel}
           totalPages={totalPages}
+          drag={true}
           onPageChange={handlePageChange}
           nextPage={handleNextPage}
           previousPage={handlePreviousPage}

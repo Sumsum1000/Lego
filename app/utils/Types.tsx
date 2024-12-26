@@ -1,7 +1,6 @@
 import { ThreeEvent } from '@react-three/fiber';
-import * as THREE from 'three'; 
+import * as THREE from 'three';
 import { MeshStandardMaterial } from 'three';
-
 
 export type Vector3Type = [number, number, number];
 
@@ -55,15 +54,16 @@ export type ModelProps = {
     material?: MeshStandardMaterial;
     shouldReset?: boolean;
     onAnimationComplete: () => void;
-  }
-} & EventHandlers & MaterialProps ;
+  };
+} & EventHandlers &
+  MaterialProps;
 
 export type LightType = {
-  position: Vector3Type,
-  intensity: number
-}
+  position: Vector3Type;
+  intensity: number;
+};
 
-const defaultLvevel = ''
+const defaultLvevel = '';
 
 export type LevelData = {
   levelData: {
@@ -83,30 +83,31 @@ export type LevelData = {
 };
 
 export type LevelBlockProps = {
-  isForwardAnim:  boolean;
+  isForwardAnim: boolean;
   level_: number;
   isActive: boolean;
   isVisible: boolean | (() => boolean) | undefined;
-  startPosition?: Vector3Type
+  startPosition?: Vector3Type;
 } & LevelData;
 
-export type LevelProps= {
+export type LevelProps = {
   //isLeftArrowClicked:  boolean;
-  level?: string
-  startPosition?: Vector3Type
+  level?: string;
+  startPosition?: Vector3Type;
 };
 
-export type  PaginationPropsType = {
+export type PaginationPropsType = {
   currentPage: number;
   totalPages: number;
+  drag: boolean;
   onPageChange: (page: number) => void;
   nextPage: () => void;
   previousPage: () => void;
-}
+};
 
 export type BulletType = {
   position: [number, number, number];
-}
+};
 
 export type ButtonState = {
   isClicked: boolean;
@@ -122,17 +123,8 @@ export type DeshboardType = {
 };
 
 export type DeshboardBtnType = {
-  onClickHandlers: (() => void)[],
+  onClickHandlers: (() => void)[];
 };
-
-
-
-
-
-
-
-
-
 
 // export type LevelProps = {
 //   isLeftArrowClicked: boolean;
@@ -154,8 +146,6 @@ export type DeshboardBtnType = {
 //   }[];
 
 // };
-
-
 
 // export type LevelProps = {
 //   isLeftArrowClicked: boolean;
