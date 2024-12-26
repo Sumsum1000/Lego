@@ -1,36 +1,42 @@
 import { PaginationPropsType } from '@/app/utils/Types';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import {useClickStore} from '../store/Store';
+import { useClickStore } from '../store/Store';
 
-
-const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousPage}: PaginationPropsType) => {
-  const clickStore = useClickStore()
-  const {isLeftButton ,canClick, setCanClick, setLeftClick, setRightClick} = clickStore
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  nextPage,
+  previousPage,
+}: PaginationPropsType) => {
+  const clickStore = useClickStore();
+  const { isLeftButton, canClick, setCanClick, setLeftClick, setRightClick } =
+    clickStore;
 
   const handlePrevious = (): void => {
     // !isleftClicked
     //onPageChange(Math.max(currentPage - 1, 1));
-    if(canClick){
+    if (canClick) {
       setCanClick(false);
       setRightClick();
-      previousPage();         
+      previousPage();
     }
     setTimeout(() => {
       setCanClick(true);
-    }, 1000)  
+    }, 1000);
   };
 
   const handleNext = (): void => {
     // isleftClicked
     //onPageChange(Math.min(currentPage + 1, totalPages));
-    if(canClick){
+    if (canClick) {
       setCanClick(false);
-      setLeftClick()
+      setLeftClick();
       nextPage();
     }
     setTimeout(() => {
       setCanClick(true);
-    }, 700)  
+    }, 700);
   };
 
   const renderPageNumbers = (): JSX.Element[] => {
@@ -47,7 +53,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousP
       pageNumbers.push(
         <a
           key={i}
-          href="#"
+          href='#'
           aria-current={i === currentPage ? 'page' : undefined}
           className={`relative inline-flex items-center justify-center w-10 h-10 text-sm font-semibold ${
             i === currentPage
@@ -64,24 +70,27 @@ const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousP
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center">
-      <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+    <div className='w-80 flex items-center justify-center border-4 border-yellow-500'>
+      <nav
+        className='isolate inline-flex -space-x-px rounded-md shadow-sm'
+        aria-label='Pagination'
+      >
         <a
-          href="#"
-          className="relative inline-flex items-center rounded-l-md w-10 h-10 justify-center text-white bg-gray-600 hover:bg-gray-700 focus:z-20 focus:outline-offset-0"
+          href='#'
+          className='relative inline-flex items-center rounded-l-md w-10 h-10 justify-center text-white bg-gray-600 hover:bg-gray-700 focus:z-20 focus:outline-offset-0'
           onClick={handlePrevious}
         >
-          <span className="sr-only">Previous</span>
-          <FaChevronLeft className="h-5 w-5" aria-hidden="true" />
+          <span className='sr-only'>Previous</span>
+          <FaChevronLeft className='h-5 w-5' aria-hidden='true' />
         </a>
         {renderPageNumbers()}
         <a
-          href="#"
-          className="relative inline-flex items-center rounded-r-md w-10 h-10 justify-center text-white bg-gray-600 hover:bg-gray-700 focus:z-20 focus:outline-offset-0"
+          href='#'
+          className='relative inline-flex items-center rounded-r-md w-10 h-10 justify-center text-white bg-gray-600 hover:bg-gray-700 focus:z-20 focus:outline-offset-0'
           onClick={handleNext}
         >
-          <span className="sr-only">Next</span>
-          <FaChevronRight className="h-5 w-5" aria-hidden="true" />
+          <span className='sr-only'>Next</span>
+          <FaChevronRight className='h-5 w-5' aria-hidden='true' />
         </a>
       </nav>
     </div>
@@ -89,14 +98,3 @@ const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, previousP
 };
 
 export default Pagination;
-
-
-
-
-
-
-
-
-
-
-
