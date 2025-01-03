@@ -17,6 +17,10 @@ const config: Config = {
         LuckiestGuy: ['Luckiest Guy', 'cursive'],
         KirangHaerang: ['Kirang Haerang', 'system-ui'],
        },
+      //  screens: {
+      //   portrait: { raw: '(orientation: portrait)' },
+      //   landscape: { raw: '(orientation: landscape)' },
+      // },
     },
   },
   plugins: [],
