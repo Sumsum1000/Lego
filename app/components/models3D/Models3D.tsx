@@ -204,17 +204,31 @@ useEffect(() => {
   // control visible timeout
   // ---------------------------------------------------------------------------------------------------
 
-  if (model.isActive && !isLeftButton) {
-      setVariantsAnim({
-        init: modelInitAnim,
-        anim: modelTargetAnim,
-      });
-  } 
+  // if (model.isActive && !isLeftButton) {
+  //     setVariantsAnim({
+  //       init: modelInitAnim,
+  //       anim: modelTargetAnim,
+  //     });
+  // } 
 
-  if (!model.isActive && model.level - 1 === currentLevel && isLeftButton) {
+  // if (!model.isActive && model.level - 1 === currentLevel && isLeftButton) {
+  //   setVariantsAnim({
+  //     init: modelTargetAnim,
+  //     anim: fadeOutAnim,
+  //   });
+  // }
+
+  if(model.level  > currentLevel){
     setVariantsAnim({
       init: modelTargetAnim,
       anim: fadeOutAnim,
+    });
+  }
+
+  if(model.level - 1  < currentLevel){
+    setVariantsAnim({
+      init: modelInitAnim,
+      anim: modelTargetAnim,
     });
   }
 

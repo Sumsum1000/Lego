@@ -29,14 +29,12 @@ import { Euler } from 'three';
 import Pagination from '../components/pagination/Pagination';
 import { PaginationPropsType } from '../utils/Types';
 import { LevelAll } from '../components/levels/LevelsAll';
-import { useLevelStore } from '../components/store/Store';
+import { useLevelStore, useClickStore } from '../components/store/Store';
 import Bullet from '../components/bullet/Bullet';
 import { MathUtils } from 'three';
 import { BulletType } from '../utils/Types';
 import EngineFire from '../components/engineFire/EngineFire';
 import Deshboard from '../components/deshboard/Deshboard';
-import BtnDeshboard from '../components/deshboard/BtnDeshboard';
-import { motion } from 'framer-motion';
 
 //--------------------------------------------------------
 
@@ -119,14 +117,33 @@ const Instructions = () => {
   } = levelStore;
   const { currentLevel, tempLevel, isEndAnimation } = level;
 
+  const clickStore = useClickStore();
+  const { isLeftButton, setRightClick, setLeftClick } = clickStore;
+
+  // const handlePageChange: PaginationPropsType['onPageChange'] = (page) => {
+  //   if (currentLevel > 0 && currentLevel < 16) {
+  //     setAnimationStatus(false);
+  //     setCurrentLevel(page);
+  //   }
+  //   setAnimationStatus(false);
+  //   setCurrentLevel(page);
+  // };
+
   const handlePageChange: PaginationPropsType['onPageChange'] = (page) => {
     if (currentLevel > 0 && currentLevel < 16) {
-      setAnimationStatus(false);
-      setCurrentLevel(page);
+      if(page > currentLevel){
+        setRightClick();
+        setAnimationStatus(false);
+        setCurrentLevel(page);
+      }
+      else{
+        setLeftClick();
+        setAnimationStatus(false);
+        setCurrentLevel(page);
+      }
     }
-    setAnimationStatus(false);
-    setCurrentLevel(page);
   };
+
 
   const handleNextPage = () => {
     if (currentLevel < 16) {
