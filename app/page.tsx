@@ -1,13 +1,10 @@
-'use client'
+'use client';
 
 import Logo from "./components/Logo/Logo";
 import { Suspense } from "react";
 
 
 export default function Home() {
-
-
-
   return (
     <div className="h-screen min-w-[768px] bg-gray-800 flex justify-center overflow-hidden">
        <Logo />
@@ -20,10 +17,9 @@ export default function Home() {
 }
 
 const LoaderText = () => {
-  return(
-    <p className="absolute top-[40%] text-5xl font-KirangHaerang">Wait for it... its falling</p>
-  )
-}
-
-
-
+  return (
+    <p className='absolute top-[40%] text-5xl font-KirangHaerang'>
+      Wait for it... its falling
+    </p>
+  );
+};
