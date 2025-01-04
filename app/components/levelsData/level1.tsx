@@ -7,7 +7,8 @@ export const level1 = [
 
     {
       id: crypto.randomUUID(),
-      url: '/3dModels/Level1/Lego_1_6469300.glb',
+      // url: '/3dModels/Level1/Lego_1_6469300.glb',
+      url: '/3dModels/Level1/Base_2.glb',
       name: '#6469300&', //main body
       rotation: [0, 0, 0] as Vector3Type, 
       scale: [1, 1, 1] as Vector3Type, 
@@ -18,7 +19,8 @@ export const level1 = [
       receiveShadow: true,
       //map:'',
       color: 'white',
-      map: 'Part_1_VRayCompleteMap.jpg',
+      // map: 'Part_1_VRayCompleteMap.jpg',
+      map: 'Base2.jpg',
     },
     {
       id: crypto.randomUUID(),

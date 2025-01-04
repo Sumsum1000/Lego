@@ -232,12 +232,12 @@ useEffect(() => {
     });
   }
 
-  if (!model.isActive && model.level <  currentLevel && !isLeftButton) {
-    setVariantsAnim({
-      init: modelTargetAnim,
-      anim: modelTargetAnim,
-    });
-  }
+  // if (!model.isActive && model.level <  currentLevel && !isLeftButton) {
+  //   setVariantsAnim({
+  //     init: modelTargetAnim,
+  //     anim: modelTargetAnim,
+  //   });
+  // }
 
 
   // Cleanup function to clear timeout on effect cleanup

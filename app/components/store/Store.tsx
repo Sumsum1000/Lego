@@ -57,7 +57,7 @@ export const useLevelStore = create<LevelStore>((set) => ({
 
 export const useClickStore = create<ClickStore>((set) => ({
   isLeftButton: true,
-  canClick: false,
+  canClick: true,
   isStartButton: false,
   setRightClick: () => set({ isLeftButton: true }),
   setLeftClick: () => set({ isLeftButton: false }),
