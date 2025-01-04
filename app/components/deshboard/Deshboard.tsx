@@ -45,11 +45,11 @@ const Deshboard = ({onClickHandlers}: DeshboardBtnType) => {
 
 
   return (
-    <motion.div drag dragMomentum={false} className="cursor-grabbing absolute bsolute w-[90%] sm:w-[80%] md:w-[13rem] h-[90vh] sm:h-[50vh] md:h-[26rem]  z-20 flex flex-row justify-center">
+    <motion.div drag dragMomentum={false} className="cursor-grabbing absolute w-[200px] h-[400px] xl:w-[200px] xl:h-[400px]  md:h-[300px] md:w-[150px]  z-20 flex flex-row justify-center">
        <div className="absolute w-full h-full flex justify-center">
             <img  src='/Deshboard.png' className="object-contain"/>
        </div>
-       <div className="relative flex flex-col space-y-7 top-10 ">
+       <div className="relative flex flex-col space-y-7 md:space-y-4 top-10 md:top-10">
             {buttons.map((btn, index) => (
             <BtnDeshboard
                 key={index}

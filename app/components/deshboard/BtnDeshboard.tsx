@@ -30,13 +30,12 @@ const BtnDeshboard = ({ btnTitle,
       animate={isClicked ? "anim" : "init"}
       whileHover={{ scale: 1.03 }}
       onAnimationComplete={onAnimationComplete} 
-      className='bg-sky-400 w-36 h-16 sm:w-[18] sm:h-[9] 
-      md:bg-yellow-500 md:w-36 md:h-16 
-      cursor-pointer rounded-lg flex justify-center'
+      className='bg-sky-400  relative flex justify-center
+      cursor-pointer rounded-lg  xl:w-[135px] xl:h-[60px] md:w-[100px] md:h-[45px]'
       onClick={onClick}
     >
-      <h3 className='absolute z-50 translate-y-1/2 text-2xl md:text-lg sm:text-sm font-bold text-black'>{btnTitle}</h3>
-      <div className='w-36 h-12 rounded-lg bg-white rounded-to opacity-30'/>
+      <h3 className='absolute z-50 xl:translate-y-1/3 md:translate-y-1/4 xl:text-2xl md:text-lg font-bold text-black'>{btnTitle}</h3>
+      <div className='w-[96%] h-3 absolute bottom-0 md: md: rounded-lg bg-white rounded-to opacity-30'/>
       <div />
     </motion.div>
 
