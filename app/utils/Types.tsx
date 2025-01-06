@@ -1,5 +1,4 @@
 import { ThreeEvent } from '@react-three/fiber';
-import * as THREE from 'three';
 import { MeshStandardMaterial } from 'three';
 
 export type Vector3Type = [number, number, number];
@@ -91,7 +90,6 @@ export type LevelBlockProps = {
 } & LevelData;
 
 export type LevelProps = {
-  //isLeftArrowClicked:  boolean;
   level?: string;
   startPosition?: Vector3Type;
 };
@@ -126,44 +124,4 @@ export type DeshboardBtnType = {
   onClickHandlers: (() => void)[];
 };
 
-// export type LevelProps = {
-//   isLeftArrowClicked: boolean;
-//   level?: string;
-//   isActive: boolean;
-//   levelData: {
-//     id: string;
-//     url: string;
-//     name: string;
-//     rotation: Vector3Type;
-//     scale: Vector3Type;
-//     startPosition: Vector3Type;
-//     targetPosition: Vector3Type;
-//     centerPosition: Vector3Type;
-//     castShadow: boolean;
-//     receiveShadow: boolean;
-//     color: string;
-//     map: string;
-//   }[];
 
-// };
-
-// export type LevelProps = {
-//   isLeftArrowClicked: boolean;
-//   level?: string;
-//   isActive: boolean;
-//   levelData: {
-//     id: string;
-//     url: string;
-//     name: string;
-//     rotation: Vector3Type;
-//     scale: Vector3Type;
-//     startPosition: Vector3Type;
-//     targetPosition: Vector3Type;
-//     centerPosition: Vector3Type;
-//     castShadow: boolean;
-//     receiveShadow: boolean;
-//     color: string;
-//     map: string;
-//   }[];
-
-// };

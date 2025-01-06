@@ -1,4 +1,4 @@
-import { PaginationPropsType } from '@/app/utils/Types';
+import { PaginationPropsType } from '../../utils/Types';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useClickStore } from '../store/Store';
 import { motion } from 'framer-motion';

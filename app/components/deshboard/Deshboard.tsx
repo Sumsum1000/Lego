@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {motion} from 'framer-motion'
 import BtnDeshboard from "./BtnDeshboard"
-import { DeshboardBtnType } from '@/app/utils/Types'
-
+import { DeshboardBtnType } from "../../utils/Types"
 
 const Deshboard = ({onClickHandlers}: DeshboardBtnType) => {
 

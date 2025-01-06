@@ -1,7 +1,7 @@
 'use client';
-
 import Logo from "./components/Logo/Logo";
 import { Suspense } from "react";
+import ParticlesIntro from "./components/ParticlesIntro";
 
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
        <Logo />
        <LoaderText />
        <Suspense fallback={null}>
-          {/* <ParticlesIntro /> */}
+          <ParticlesIntro />
        </Suspense>
     </div>
   );

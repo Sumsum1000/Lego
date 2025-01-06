@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import {motion} from 'framer-motion';
-import { DeshboardType } from "@/app/utils/Types"
+import { DeshboardType } from "../../utils/Types";
 
 const BtnDeshboard = ({ btnTitle, 
   isClicked, 

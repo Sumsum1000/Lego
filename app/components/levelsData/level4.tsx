@@ -1,4 +1,5 @@
-import { Vector3Type } from "@/app/utils/Types";
+import { Vector3Type } from "../../utils/Types";
+
 
 const centerPosition = [0, 0, 0];
 const startY = 7;

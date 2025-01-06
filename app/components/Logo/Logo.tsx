@@ -1,9 +1,7 @@
-import logo from './Logo.jpg'
-import { useFrame } from '@react-three/fiber'
+import React from 'react'
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link';
-import {animate, delay, easeIn, motion} from 'framer-motion';
-import { time } from 'console';
+import {motion} from 'framer-motion';
 import { useClickStore } from '../store/Store';
 
 

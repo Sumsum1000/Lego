@@ -36,7 +36,6 @@ import { BulletType } from '../utils/Types';
 import EngineFire from '../components/engineFire/EngineFire';
 import Deshboard from '../components/deshboard/Deshboard';
 
-//--------------------------------------------------------
 
 type ModelType = {
   model: string;
@@ -119,15 +118,6 @@ const Instructions = () => {
 
   const clickStore = useClickStore();
   const { isLeftButton, setRightClick, setLeftClick } = clickStore;
-
-  // const handlePageChange: PaginationPropsType['onPageChange'] = (page) => {
-  //   if (currentLevel > 0 && currentLevel < 16) {
-  //     setAnimationStatus(false);
-  //     setCurrentLevel(page);
-  //   }
-  //   setAnimationStatus(false);
-  //   setCurrentLevel(page);
-  // };
 
   const handlePageChange: PaginationPropsType['onPageChange'] = (page) => {
     if (currentLevel > 0 && currentLevel < 16) {

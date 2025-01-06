@@ -1,14 +1,11 @@
 'use client';
-import { InstancedRigidBodies, RapierRigidBody, Physics, RigidBody, CuboidCollider, BallCollider } from "@react-three/rapier";
+import {  RapierRigidBody, Physics, RigidBody, CuboidCollider, BallCollider } from "@react-three/rapier";
 import { useEffect, useRef, useMemo, Suspense, useState,  } from "react";
-
-import { Box, OrbitControls, Torus, useGLTF, Instances, Environment, PerspectiveCamera, useTexture, Sphere } from "@react-three/drei";
-import { Canvas, useLoader, useFrame, useThree } from "@react-three/fiber";
+import { Box, useGLTF, PerspectiveCamera, useTexture} from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
-//import { InstancedMesh } from "three";
 import * as THREE from 'three';
 import { Perf } from "r3f-perf";
-import { useClickStore } from "./store/Store";
 
 
 
@@ -193,14 +190,10 @@ function CursorFollower() {
       // Create a 3D vector for the mouse position in NDC
       const ndcPosition = new THREE.Vector3(ndcX, ndcY, 0.5);
 
-      // Unproject to get world coordinates at the desired Z
       ndcPosition.unproject(camera);
       const direction = ndcPosition.sub(camera.position).normalize();
       const distance = (desiredZ - camera.position.z) / direction.z;
       const worldPosition = camera.position.clone().add(direction.multiplyScalar(distance));
-
-      // Update the object's position
-      //objectRef.current.position.set(worldPosition.x, worldPosition.y, desiredZ);
 
       if (rigidBodyRef.current) { 
         rigidBodyRef.current.setTranslation({ 
