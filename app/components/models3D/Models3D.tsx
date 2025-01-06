@@ -187,36 +187,6 @@ useEffect(() => {
 
 
 useEffect(() => {
-  let timeoutDelay1: NodeJS.Timeout | undefined;
-
-  // if (model.isActive && !isLeftButton) {
-  //   // Set a delayed animation variant update
-  //   timeoutDelay1 = setTimeout(() => {
-  //     setVariantsAnim({
-  //       init: modelInitAnim,
-  //       anim: modelTargetAnim,
-  //     });
-  //   }, 2000);
-  // } 
-
-  // ---------------------------------------------------------------------------------------------------
-  // if jumping 2 levels or more: backward - init start, anim start, forward: init target, anim target, 
-  // control visible timeout
-  // ---------------------------------------------------------------------------------------------------
-
-  // if (model.isActive && !isLeftButton) {
-  //     setVariantsAnim({
-  //       init: modelInitAnim,
-  //       anim: modelTargetAnim,
-  //     });
-  // } 
-
-  // if (!model.isActive && model.level - 1 === currentLevel && isLeftButton) {
-  //   setVariantsAnim({
-  //     init: modelTargetAnim,
-  //     anim: fadeOutAnim,
-  //   });
-  // }
 
   if(model.level  > currentLevel){
     setVariantsAnim({
@@ -231,21 +201,7 @@ useEffect(() => {
       anim: modelTargetAnim,
     });
   }
-
-  // if (!model.isActive && model.level <  currentLevel && !isLeftButton) {
-  //   setVariantsAnim({
-  //     init: modelTargetAnim,
-  //     anim: modelTargetAnim,
-  //   });
-  // }
-
-
-  // Cleanup function to clear timeout on effect cleanup
-  return () => {
-    if (timeoutDelay1) clearTimeout(timeoutDelay1);
-  };
-
-}, [isLeftButton, model.isActive, currentLevel, canClick]);
+}, [isLeftButton, model.isActive, currentLevel]);
 
 
 
