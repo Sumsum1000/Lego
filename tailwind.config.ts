@@ -11,22 +11,18 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       border: {
-        DEFAULT: '1px'  // This sets the default border width
+        DEFAULT: '1px'  
       },
       borderColor: {
-        DEFAULT: '#28d6fc'  // This is the hex code for red-500
+        DEFAULT: '#28d6fc'  
       },
       fontFamily: {
         LuckiestGuy: ['Luckiest Guy', 'cursive'],
         KirangHaerang: ['Kirang Haerang', 'system-ui'],
        },
-      //  screens: {
-      //   portrait: { raw: '(orientation: portrait)' },
-      //   landscape: { raw: '(orientation: landscape)' },
-      // },
     },
   },
   plugins: [],

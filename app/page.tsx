@@ -6,7 +6,7 @@ import ParticlesIntro from "./components/ParticlesIntro";
 
 export default function Home() {
   return (
-    <div className="h-screen min-w-[768px] bg-gray-800 flex justify-center overflow-hidden">
+    <div className="h-screen bg-gray-800 flex justify-center overflow-hidden">
        <Logo />
        <LoaderText />
        <Suspense fallback={null}>

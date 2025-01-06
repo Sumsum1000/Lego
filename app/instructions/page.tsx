@@ -114,7 +114,7 @@ const Instructions = () => {
     setPreviousLevel,
     setAnimationStatus,
   } = levelStore;
-  const { currentLevel, tempLevel, isEndAnimation } = level;
+  const { currentLevel} = level;
 
   const clickStore = useClickStore();
   const { isLeftButton, setRightClick, setLeftClick } = clickStore;
@@ -180,7 +180,7 @@ const Instructions = () => {
         />
       </div>
       <Canvas className='h-screen relative' shadows>
-        <Perf className='top-left' />
+        {/* <Perf className='top-left' /> */} 
         <Suspense fallback={null}>
           <group position={[0, 0, 4]}>
             <LevelAll />
