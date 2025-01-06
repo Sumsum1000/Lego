@@ -71,7 +71,7 @@ const Pagination = ({
   };
 
   return (
-    <motion.div className='flex items-center justify-center'>
+    <div className='flex items-center justify-center z-[100]'>
       <nav
         className='isolate inline-flex -space-x-px rounded-md shadow-sm'
         aria-label='Pagination'
@@ -94,7 +94,7 @@ const Pagination = ({
           <FaChevronRight className='h-5 w-5' aria-hidden='true' />
         </a>
       </nav>
-    </motion.div>
+    </div>
   );
 };
 
