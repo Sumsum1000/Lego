@@ -2,8 +2,6 @@
 import { Model } from '../models3D/Models3D';
 import { Position, Rotation, Scale  } from '../../utils/Types';
 import { LevelBlockProps } from '../../utils/Types';
-import { useClickStore } from '../store/Store';
-import { useLevelStore } from '../store/Store';
 
 const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 

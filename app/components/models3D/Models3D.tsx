@@ -5,7 +5,7 @@ import { Object3D, Vector3, Euler, Mesh } from 'three';
 import { motion, } from 'framer-motion-3d';
 import { useAnimation } from 'framer-motion';
 import { ThreeEvent } from '@react-three/fiber';
-import {  ModelProps, } from '@/app/utils/Types';
+import {ModelProps} from '../../utils/Types';
 import * as THREE from 'three';
 import { useClickStore } from '../store/Store';
 import { useLevelStore } from '../store/Store';
