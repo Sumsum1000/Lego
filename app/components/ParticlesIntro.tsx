@@ -179,38 +179,45 @@ function CursorFollower() {
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (!objectRef.current) return;
-
-      // Convert screen position to normalized device coordinates (NDC)
+      
       const ndcX = (event.clientX / size.width) * 2 - 1;
       const ndcY = -(event.clientY / size.height) * 2 + 1;
-
-      // Define the desired z position of the object
+      updatePosition(ndcX, ndcY);
+    };
+  
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!objectRef.current || !event.touches[0]) return;
+      
+      const touch = event.touches[0];
+      const ndcX = (touch.clientX / size.width) * 2 - 1;
+      const ndcY = -(touch.clientY / size.height) * 2 + 1;
+      updatePosition(ndcX, ndcY);
+    };
+  
+    const updatePosition = (ndcX: number, ndcY: number) => {
       const desiredZ = -8;
-
-      // Create a 3D vector for the mouse position in NDC
       const ndcPosition = new THREE.Vector3(ndcX, ndcY, 0.5);
-
+      
       ndcPosition.unproject(camera);
       const direction = ndcPosition.sub(camera.position).normalize();
       const distance = (desiredZ - camera.position.z) / direction.z;
       const worldPosition = camera.position.clone().add(direction.multiplyScalar(distance));
-
-      if (rigidBodyRef.current) { 
-        rigidBodyRef.current.setTranslation({ 
-          x: worldPosition.x, 
-          y: worldPosition.y, 
-          z: desiredZ, 
-        }, true); 
+  
+      if (rigidBodyRef.current) {
+        rigidBodyRef.current.setTranslation({
+          x: worldPosition.x,
+          y: worldPosition.y,
+          z: desiredZ,
+        }, true);
       }
-      
     };
-
-    
-
+  
     window.addEventListener("mousemove", handleMouseMove);
-
+    window.addEventListener("touchmove", handleTouchMove);
+  
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
   }, [camera, size]);
 
