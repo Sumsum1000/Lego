@@ -10,7 +10,7 @@ import { Perf } from "r3f-perf";
 
 
 
-const COUNT = 500;
+const COUNT = 501;
 
 function degreesToRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
@@ -18,7 +18,7 @@ function degreesToRadians(degrees: number): number {
 
 const vectorsCreator = () => {
   const vectors = [];
-  for(let i=0; i<600; i++){
+  for(let i=0; i<COUNT; i++){
     const x = Math.random() * 10 -5;
     const y = Math.random() * 20 + 10;
     const z = Math.random() * -1 - 8;
