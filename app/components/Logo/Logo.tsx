@@ -44,7 +44,8 @@ const startVariant = {
 
 const startVariant2 = {
   init: {
-    opacity: 0
+    opacity: 0,
+    y: 120
   },
   anim: {
     opacity: 1,
@@ -81,8 +82,9 @@ const startVariant2 = {
         <div className="w-full h-full  flex flex-row ">
             <img className='h-full' src={logo}/>
             <div className='w-full h-full flex flex-col justify-between items-end ml-7'>
-                <img src='LegoBrick.jpg' className='h-1/2'/>  
-                <p  className="font-KirangHaerang text-[280%] text-yellow-100 font-bold p-0 m-0 mt-4 tracking-widest" >#75384</p>
+                {/* <img src='LegoBrick.jpg' className='h-1/2'/>   */}
+                <img src='LegoIntro.png' className='h-1/2'/>  
+                <p  className="font-KirangHaerang text-[290%] text-yellow-100 font-bold p-0 m-0 mt-4 tracking-widest" >#75384</p>
             </div>
         </div>
         {isStartButton && <Link href='instructions' >
@@ -98,6 +100,16 @@ const startVariant2 = {
           >Start</motion.p>
         </Link>}
     </div>
+    // <div className='h-[300px] w-[400px] z-10 absolute grid grid-cols-7  grid-rows-8'>
+    //      <div className='row-span-5 col-span-3'>
+    //         <img src={logo} className='object-cover w-[90%] h-[90%]'/> 
+    //      </div>
+    //      <div className='row-span-5 col-span-4 flex flex-col justify-between'>
+    //         <img src='LegoIntro.png' className='w-[90%]'/> 
+    //         <span className='text-[330%]'>#75384</span>
+    //      </div>
+    //      <div className='row-span-3 col-span-7 bg-lime-700'>Wait for it... its falling</div>
+    // </div>
   )
 }
 

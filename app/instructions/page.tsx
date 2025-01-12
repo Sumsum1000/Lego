@@ -180,7 +180,7 @@ const Instructions = () => {
         />
       </div>
       <Canvas className='h-screen relative' shadows>
-        {/* <Perf className='top-left' /> */} 
+        <Perf className='top-left' /> 
         <Suspense fallback={null}>
           <group position={[0, 0, 4]}>
             <LevelAll />
