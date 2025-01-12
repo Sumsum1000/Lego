@@ -159,8 +159,8 @@ const Instructions = () => {
 
   return (
     <div className='w-full h-screen  bg-gray-800 flex'>
-      {/* {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>} */}
-      <Deshboard onClickHandlers={onClickHandlers} />
+      {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>}
+      {/* <Deshboard onClickHandlers={onClickHandlers} /> */}
       {currentLevel < 1 && (
         <button
           className={'absolute left-1/2 -translate-x-1/2 top-1/3 text-6xl z-10'}
@@ -180,7 +180,7 @@ const Instructions = () => {
         />
       </div>
       <Canvas className='h-screen relative' shadows>
-        <Perf className='top-left' /> 
+        {/* <Perf className='top-left' />  */}
         <Suspense fallback={null}>
           <group position={[0, 0, 4]}>
             <LevelAll />

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link';
-import {motion} from 'framer-motion';
+import {delay, motion} from 'framer-motion';
 import { useClickStore } from '../store/Store';
 
 
@@ -45,12 +45,13 @@ const startVariant = {
 const startVariant2 = {
   init: {
     opacity: 0,
-    y: 120
+    y: 40
   },
   anim: {
     opacity: 1,
     transition: {
-      duration: 3
+      duration: 3,
+      delay: 5
     }
   },
   loop: {
@@ -84,7 +85,7 @@ const startVariant2 = {
             <div className='w-full h-full flex flex-col justify-between items-end ml-7'>
                 {/* <img src='LegoBrick.jpg' className='h-1/2'/>   */}
                 <img src='LegoIntro.png' className='h-1/2'/>  
-                <p  className="font-KirangHaerang text-[290%] text-yellow-100 font-bold p-0 m-0 mt-4 tracking-widest" >#75384</p>
+                <p  className="font-KirangHaerang text-[180%] md:text-[290%] text-yellow-100 font-bold p-0 m-0 mt-4 tracking-widest" >#75384</p>
             </div>
         </div>
         {isStartButton && <Link href='instructions' >
