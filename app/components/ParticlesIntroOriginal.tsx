@@ -10,7 +10,7 @@ import { Perf } from "r3f-perf";
 
 
 
-const COUNT = 300;
+const COUNT = 500;
 
 function degreesToRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
@@ -18,7 +18,7 @@ function degreesToRadians(degrees: number): number {
 
 const vectorsCreator = () => {
   const vectors = [];
-  for(let i=0; i<COUNT; i++){
+  for(let i=0; i<600; i++){
     const x = Math.random() * 10 -5;
     const y = Math.random() * 20 + 10;
     const z = Math.random() * -1 - 8;
@@ -31,7 +31,7 @@ const vectorsCreator = () => {
 const vectors = vectorsCreator();
 
 
-export function ParticlesIntro() {
+export function ParticlesIntroOriginal() {
 
   return (
     <main className="h-screen w-screen bg-gray-600 flex justify-center">
@@ -54,7 +54,7 @@ export function ParticlesIntro() {
                 ]} 
                 position={vector.toArray()}
              >
-                <instancedMesh  args={[undefined, undefined, 30]}>
+                <instancedMesh  args={[undefined, undefined, 600]}>
                     {/* <sphereGeometry args={[3, 24, 24]}/>
                     <meshBasicMaterial color='yellow'/> */}
                     {/* ------------------------------------------------------- */}
@@ -176,50 +176,50 @@ function CursorFollower() {
   const objectRef = useRef<THREE.Mesh>(null);
   const { camera, size } = useThree();
 
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!objectRef.current) return;
-      
-      const ndcX = (event.clientX / size.width) * 2 - 1;
-      const ndcY = -(event.clientY / size.height) * 2 + 1;
-      updatePosition(ndcX, ndcY);
-    };
-  
-    const handleTouchMove = (event: TouchEvent) => {
-      if (!objectRef.current || !event.touches[0]) return;
-      
-      const touch = event.touches[0];
-      const ndcX = (touch.clientX / size.width) * 2 - 1;
-      const ndcY = -(touch.clientY / size.height) * 2 + 1;
-      updatePosition(ndcX, ndcY);
-    };
-  
-    const updatePosition = (ndcX: number, ndcY: number) => {
-      const desiredZ = -8;
-      const ndcPosition = new THREE.Vector3(ndcX, ndcY, 0.5);
-      
-      ndcPosition.unproject(camera);
-      const direction = ndcPosition.sub(camera.position).normalize();
-      const distance = (desiredZ - camera.position.z) / direction.z;
-      const worldPosition = camera.position.clone().add(direction.multiplyScalar(distance));
-  
-      if (rigidBodyRef.current) {
-        rigidBodyRef.current.setTranslation({
-          x: worldPosition.x,
-          y: worldPosition.y,
-          z: desiredZ,
-        }, true);
-      }
-    };
-  
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleTouchMove);
-  
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [camera, size]);
+ useEffect(() => {
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!objectRef.current) return;
+    
+    const ndcX = (event.clientX / size.width) * 2 - 1;
+    const ndcY = -(event.clientY / size.height) * 2 + 1;
+    updatePosition(ndcX, ndcY);
+  };
+
+  const handleTouchMove = (event: TouchEvent) => {
+    if (!objectRef.current || !event.touches[0]) return;
+    
+    const touch = event.touches[0];
+    const ndcX = (touch.clientX / size.width) * 2 - 1;
+    const ndcY = -(touch.clientY / size.height) * 2 + 1;
+    updatePosition(ndcX, ndcY);
+  };
+
+  const updatePosition = (ndcX: number, ndcY: number) => {
+    const desiredZ = -8;
+    const ndcPosition = new THREE.Vector3(ndcX, ndcY, 0.5);
+    
+    ndcPosition.unproject(camera);
+    const direction = ndcPosition.sub(camera.position).normalize();
+    const distance = (desiredZ - camera.position.z) / direction.z;
+    const worldPosition = camera.position.clone().add(direction.multiplyScalar(distance));
+
+    if (rigidBodyRef.current) {
+      rigidBodyRef.current.setTranslation({
+        x: worldPosition.x,
+        y: worldPosition.y,
+        z: desiredZ,
+      }, true);
+    }
+  };
+
+  window.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("touchmove", handleTouchMove);
+
+  return () => {
+    window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("touchmove", handleTouchMove);
+  };
+}, [camera, size]);
 
   
 
@@ -241,4 +241,4 @@ function CursorFollower() {
   );
 }
 
-export default ParticlesIntro;
+export default ParticlesIntroOriginal;
