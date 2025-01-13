@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {Suspense, useState} from 'react'
 import {useLevelStore} from '../store/Store';
 import { useClickStore } from '../store/Store';
 import { LevelBlock } from '../level/LevelBlock';
@@ -18,7 +18,7 @@ import { level13 } from '../levelsData/level13';
 import { level14 } from '../levelsData/level14';
 import { level15 } from '../levelsData/level15';
 import { level16 } from '../levelsData/level16';
-import { useTexture, useGLTF, Box } from '@react-three/drei';
+import { useTexture, useGLTF, Box, Html } from '@react-three/drei';
 
 
 

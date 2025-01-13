@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { useGLTF, Html, useTexture } from '@react-three/drei';
 import { Object3D, Vector3, Euler, Mesh } from 'three';
@@ -9,7 +9,7 @@ import {ModelProps} from '../../utils/Types';
 import * as THREE from 'three';
 import { useClickStore } from '../store/Store';
 import { useLevelStore } from '../store/Store';
-// test
+
 
   // Type guard to check if an object is a Mesh
   const isMesh = (obj: Object3D): obj is Mesh => {
@@ -23,21 +23,19 @@ export const Model = ({
 }: ModelProps) => {
 const { scene, nodes, materials } = useGLTF(model.url, true);
 const clonedScene = useMemo(() => clone(scene), [scene]);
-const [onAnim, setOnAnim] = useState(false)
 
 const diffuseMap = useTexture(model.map || '/whiteMap.jpg');
 
 const [isHover, setIsHover] = useState(false);
 const [isClicked, setIsClicked] = useState(false);
-const [gltfPosition, setGltfPosition] = useState();
 
-const [animDirection, setAnimDirection] = useState<'forward' | 'backward'>('forward')
+const [animDirection] = useState<'forward' | 'backward'>('forward')
 const clickStore = useClickStore();
-const {isLeftButton, canClick, setRightClick, setLeftClick} = clickStore;
+const {isLeftButton, setRightClick, setLeftClick} = clickStore;
 
 const levelStore = useLevelStore();
 const {level} = levelStore;
-const { currentLevel, tempLevel, isEndAnimation} = level;
+const { currentLevel} = level;
 
 
 const modelInitAnim = {
@@ -85,8 +83,6 @@ const fadeOutAnim = {
     //time: [0, 0.5, 1]
   }
 }
-
-
 
 const [variantsAnim, setVariantsAnim] = useState({
   init: {
@@ -204,27 +200,13 @@ useEffect(() => {
 }, [isLeftButton, model.isActive, currentLevel]);
 
 
-
-const handleAnimationComplete = () => {
-  console.log("Animation finished!");
-  // You can run any function here
-};
-
-
-
 return (
   <>
-    {isClicked && <Html>
+    {/* {isClicked && <Html>
       <h4 onClick={backToStartPos} style={{ position: 'absolute', right: '260px', bottom: '200px'}}>x</h4>
-    </Html> }
+    </Html> } */}
             <motion.group
-                // position={
-                //             !model.isActive ? 
-                //             [model.targetPosition[0], model.targetPosition[1], model.targetPosition[2]] : 
-                //             [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
-                //          }
                 position={
-
                   [model.startPosition[0], model.startPosition[1], model.startPosition[2]]
               }
                 transition={{ duration: 1, ease: "easeInOut" }}
@@ -243,7 +225,7 @@ return (
                   onPointerEnter={handlePointerOver}
                   onPointerLeave={handlePointerOut}
             />
-              {isHover && <Html position={[0, -0.3, 0]}>{model.name}</Html>}
+              {/* {isHover && <Html position={[0, -0.3, 0]}>{model.name}</Html>} */}
             </motion.group>
   </>
 )};

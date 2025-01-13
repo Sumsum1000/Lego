@@ -35,6 +35,9 @@ import { MathUtils } from 'three';
 import { BulletType } from '../utils/Types';
 import EngineFire from '../components/engineFire/EngineFire';
 import Deshboard from '../components/deshboard/Deshboard';
+import { Html } from 'next/document';
+import { Model } from '../components/ParticlesIntro';
+
 
 
 type ModelType = {
@@ -158,6 +161,7 @@ const Instructions = () => {
   ];
 
   return (
+   
     <div className='w-full h-screen  bg-gray-800 flex'>
       {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>}
       {/* <Deshboard onClickHandlers={onClickHandlers} /> */}
@@ -179,11 +183,12 @@ const Instructions = () => {
           previousPage={handlePreviousPage}
         />
       </div>
+      <Suspense fallback={<h1>Wait...</h1>}>
       <Canvas className='h-screen relative' shadows>
         {/* <Perf className='top-left' />  */}
-        <Suspense fallback={null}>
+
           <group position={[0, 0, 4]}>
-            <LevelAll />
+              <LevelAll />
           </group>
           {engine && (
             <EngineFire
@@ -204,7 +209,6 @@ const Instructions = () => {
             </>
           ))}
           {/* <TestElement model="/3dModels/Level1/Lego_20R_6278445.glb"/> */}
-        </Suspense>
         <OrbitControls
           maxDistance={30}
           minDistance={12}
@@ -215,8 +219,14 @@ const Instructions = () => {
         <PerspectiveCamera makeDefault position={[0.5, 5, -31]} />
         <Environment files={'poly_haven_studio_1k.hdr'} background={false} />
       </Canvas>
+      </Suspense>
     </div>
+    
   );
 };
+
+const Loader = () => {
+  return <div className='absolute left-1/2 transform -translate-x-1/2 top-16'>Loading...</div>;
+}
 
 export default Instructions;
