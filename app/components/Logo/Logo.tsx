@@ -85,7 +85,8 @@ const startVariant2 = {
             <div className='w-full h-full flex flex-col justify-between items-end ml-7'>
                 {/* <img src='LegoBrick.jpg' className='h-1/2'/>   */}
                 <img src='LegoIntro.png' className='h-1/2'/>  
-                <p  className="font-KirangHaerang text-[180%] md:text-[290%] text-yellow-100 font-bold p-0 m-0 mt-4 tracking-widest" >#75384</p>
+                <p  className="font-KirangHaerang text-[200%] xl:text-[270%] lmd:text-[100%] text-yellow-100 font-bold p-0 m-0 mt-4 tracking-widest" >#75384</p>
+                {/* <p  className="font-KirangHaerang text-[180%] md:text-[290%] sm:text-[20%] text-yellow-100 font-bold p-0 m-0 mt-4 tracking-widest" >#75384</p> */}
             </div>
         </div>
         {isStartButton && <Link href='instructions' >
