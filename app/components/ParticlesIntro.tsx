@@ -1,6 +1,6 @@
 'use client';
 import {  RapierRigidBody, Physics, RigidBody, CuboidCollider, BallCollider } from "@react-three/rapier";
-import { useEffect, useRef, useMemo, Suspense, useState,  } from "react";
+import { useEffect, useRef, useMemo} from "react";
 import { Box, useGLTF, PerspectiveCamera, useTexture} from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
