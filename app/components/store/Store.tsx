@@ -1,3 +1,4 @@
+import { Controls } from 'three';
 import { create } from 'zustand';
 
 interface LevelStore {
@@ -63,6 +64,24 @@ export const useClickStore = create<ClickStore>((set) => ({
   setCanClick: (state) => set({canClick: state}),
   setIsStartButton: (state) => set({isStartButton: state})
 }))
+
+type SoundStoreType = {
+  sound: {
+    isSoundPlaying: boolean;
+    src: string;
+    volume: number & { min: 0; max: 1; };
+    setToggleSound: () => void;
+  }
+}
+
+export const useSoundStore = create((set) => ({
+  sound:{
+    isSoundPlaying: false,
+    src: '/LegoSoundtrek.mp3',
+    volume: 0.2,
+    setToggleSound: () => set((state) => ({sound: {isSoundPlaying: !state.sound.isSoundPlaying}})),
+  }
+}));
 
 
 

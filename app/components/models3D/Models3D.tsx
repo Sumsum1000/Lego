@@ -145,17 +145,10 @@ clonedScene.traverse((child) => {
   }
 });
 
-
-
 const onClick = () => {
   console.log('Clicked2')
   setIsClicked(true);
   setIsHover(false);
-}
-
-const backToStartPos = () => {
-  console.log('Clicked2')
-  setIsClicked(false);
 }
 
 const handlePointerOver = (event: ThreeEvent<PointerEvent>) => {

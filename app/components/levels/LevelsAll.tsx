@@ -1,4 +1,4 @@
-import React, {Suspense, useState} from 'react'
+import React, {useState} from 'react'
 import {useLevelStore} from '../store/Store';
 import { useClickStore } from '../store/Store';
 import { LevelBlock } from '../level/LevelBlock';

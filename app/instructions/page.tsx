@@ -105,8 +105,8 @@ const Instructions = () => {
   };
 
   const bulletsPosition: BulletType[] = [
-    { position: [1.2, 0.2, -14] },
-    { position: [-1.2, 0.2, -14] },
+    { position: [1.2, 0.2, -10.6] },
+    { position: [-1.2, 0.2, -10.6] },
   ];
 
   const levelStore = useLevelStore();
