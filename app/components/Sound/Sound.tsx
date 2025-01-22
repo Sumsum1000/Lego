@@ -6,10 +6,12 @@ const Sound = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const { sound } = useSoundStore();
   
+  
   useEffect(() => {
     const startAudio = async () => {
       if (audioRef.current) {
         try {
+          sound.setPlayingStart(true);
           audioRef.current.volume = sound.volume;
           await audioRef.current.play();
           console.log('Audio started successfully');

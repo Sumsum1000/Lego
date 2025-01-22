@@ -69,12 +69,13 @@ type SoundStoreType = {
   sound: {
     isSoundPlaying: boolean;
     src: string;
-    volume: number & { min: 0; max: 1; };
+    volume: number;
     setToggleSound: () => void;
+    setPlayingStart: (startPlay: boolean) => void;
   }
 }
 
-export const useSoundStore = create((set) => ({
+export const useSoundStore = create<SoundStoreType>((set) => ({
   sound:{
     isSoundPlaying: false,
     src: '/LegoSoundtrek.mp3',
@@ -84,7 +85,13 @@ export const useSoundStore = create((set) => ({
         ...state.sound,
         isSoundPlaying: !state.sound.isSoundPlaying,
       }
-    }))
+    })),
+    setPlayingStart: (startPlay) => set((state) => ({
+      sound: {
+        ...state.sound,
+        isSoundPlaying: startPlay
+      }
+    })),
   }
 }));
 

@@ -6,7 +6,7 @@ import {
   useGLTF,
 } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { level1 } from '../components/levelsData/level1';
 import { level2 } from '../components/levelsData/level2';
 import { level3 } from '../components/levelsData/level3';
@@ -160,6 +160,10 @@ const Instructions = () => {
     () => setBullets((prevBullets) => [...prevBullets, '*']),
   ];
 
+  useEffect(() => {
+    (currentLevel < 16) && setEngine((prev) => false)
+  }, [currentLevel])
+
   return (
    
     <div className='w-full h-screen  bg-gray-800 flex'>
@@ -190,13 +194,13 @@ const Instructions = () => {
           <group position={[0, 0, 4]}>
               <LevelAll />
           </group>
-          {engine && (
+          {(engine && currentLevel >= 16) && (
             <EngineFire
               ringsPosition={[6.35, 2.05, 0]}
               conePosition={[6.35, 2.05, 2]}
             />
           )}
-          {engine && (
+          {(engine && currentLevel >= 16) && (
             <EngineFire
               ringsPosition={[-6.35, 2.05, 0]}
               conePosition={[-6.35, 2.05, 2]}

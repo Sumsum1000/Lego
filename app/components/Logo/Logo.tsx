@@ -14,7 +14,7 @@ const clickStore = useClickStore();
 const {setIsStartButton, isStartButton} = clickStore;
 
 const hoverStyleOn = 'font-KirangHaerang inline-block text-5xl self-center mt-36 text-yellow-300';
-const hoverStyleOff = 'font-KirangHaerang inline-block text-5xl self-center mt-36 text-green-300';
+const hoverStyleOff = 'font-KirangHaerang inline-block text-5xl self-center mt-36 text-[#28d6fc]';
 
 const startVariant = {
   init: {
