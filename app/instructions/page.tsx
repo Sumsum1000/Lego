@@ -35,8 +35,6 @@ import { MathUtils } from 'three';
 import { BulletType } from '../utils/Types';
 import EngineFire from '../components/engineFire/EngineFire';
 import Deshboard from '../components/deshboard/Deshboard';
-import { Html } from 'next/document';
-import { Model } from '../components/ParticlesIntro';
 
 
 

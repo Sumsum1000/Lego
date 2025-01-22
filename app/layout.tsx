@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { useRef, useEffect } from "react";
 import Sound from "./components/Sound/Sound";
 import SoundButton from "./components/soundButton/SoundButton";
 
