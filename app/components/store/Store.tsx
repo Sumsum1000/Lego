@@ -79,7 +79,12 @@ export const useSoundStore = create((set) => ({
     isSoundPlaying: false,
     src: '/LegoSoundtrek.mp3',
     volume: 0.2,
-    setToggleSound: () => set((state) => ({sound: {isSoundPlaying: !state.sound.isSoundPlaying}})),
+    setToggleSound: () => set((state) => ({
+      sound: {
+        ...state.sound,
+        isSoundPlaying: !state.sound.isSoundPlaying,
+      }
+    }))
   }
 }));
 

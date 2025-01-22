@@ -56,7 +56,7 @@ const Pagination = ({
           key={i}
           href='#'
           aria-current={i === currentPage ? 'page' : undefined}
-          className={`relative inline-flex items-center justify-center w-14 h-14 text-sm font-semibold border ${
+          className={`relative inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 text-sm font-semibold border ${
             i === currentPage
               ? 'z-10 shadow-[inset_0_2px_10px_0_#28d6fc]  text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 border'
               : 'text-white  border hover:bg-gray-700 focus:z-20 focus:outline-offset-0 '
@@ -71,14 +71,14 @@ const Pagination = ({
   };
 
   return (
-    <div className='flex items-center justify-center z-[100]'>
+    <div className='flex items-center justify-center z-[100] relative right-10 md:right-10'>
       <nav
         className='isolate inline-flex -space-x-px rounded-md shadow-sm'
         aria-label='Pagination'
       >
         <a
           href='#'
-          className='relative inline-flex items-center rounded-l-md w-14 h-14 justify-center text-white bg-gray-700 hover:bg-gray-700 focus:z-20 focus:outline-offset-0 border'
+          className='relative inline-flex items-center rounded-l-md w-10 h-10 md:w-14 md:h-14 justify-center text-white bg-gray-700 hover:bg-gray-700 focus:z-20 focus:outline-offset-0 border'
           onClick={handlePrevious}
         >
           <span className='sr-only'>Previous</span>
@@ -87,7 +87,7 @@ const Pagination = ({
         {renderPageNumbers()}
         <a
           href='#'
-          className='relative inline-flex items-center rounded-r-md w-14 h-14 justify-center text-white bg-gray-600 hover:bg-gray-700 focus:z-20 focus:outline-offset-0 border'
+          className='relative inline-flex items-center rounded-r-md w-10 h-10 md:w-14 md:h-14 justify-center text-white bg-gray-600 hover:bg-gray-700 focus:z-20 focus:outline-offset-0 border'
           onClick={handleNext}
         >
           <span className='sr-only'>Next</span>

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { useRef, useEffect } from "react";
 import Sound from "./components/Sound/Sound";
+import SoundButton from "./components/soundButton/SoundButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +22,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Sound />
         {children}
-       
-        </body>
+        <SoundButton />
+      </body>
     </html>
   );
   
