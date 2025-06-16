@@ -38,6 +38,7 @@ import Deshboard from '../components/deshboard/Deshboard';
 
 
 
+
 type ModelType = {
   model: string;
 };
@@ -187,7 +188,7 @@ const Instructions = () => {
       </div>
       <Suspense fallback={<h1>Wait...</h1>}>
       <Canvas className='h-screen relative' shadows>
-        {/* <Perf className='top-left' />  */}
+        <Perf className='top-left' /> 
 
           <group position={[0, 0, 4]}>
               <LevelAll />

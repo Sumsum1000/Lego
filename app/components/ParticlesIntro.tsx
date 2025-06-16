@@ -37,7 +37,7 @@ export function ParticlesIntro() {
     <main className="h-screen w-screen bg-gray-600 flex justify-center">
      
       <Canvas className="h-full bg-gray-800"  shadows>
-      <Perf className='top-left'/>
+      {/* <Perf className='top-left'/> */}
         <Physics  gravity={[0, -9.1 , 0]} >
            {vectors.map((vector, i) => (
             <RigidBody 
