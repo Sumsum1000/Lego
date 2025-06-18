@@ -78,7 +78,7 @@ type SoundStoreType = {
 export const useSoundStore = create<SoundStoreType>((set) => ({
   sound:{
     isSoundPlaying: false,
-    src: '/LegoSoundtrek.mp3',
+    src: '/SoundBackground.mp3',
     volume: 0.2,
     setToggleSound: () => set((state) => ({
       sound: {
