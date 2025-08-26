@@ -42,7 +42,6 @@ export const LevelAll = () => {
  
   return (
     <>
-      {/* <Base /> */}
       {levels.map((level, i) => (
         <LevelBlock
           key={i} 
@@ -57,14 +56,4 @@ export const LevelAll = () => {
   );
 };
 
-const Base = () => {
-  const diffuseMap = useTexture('/Base.jpg');
-  const { scene } = useGLTF('/Base.glb');
-  
 
-  return (
-    <group scale={2.55} position={[0, 0, 0]}>
-      <primitive object={scene} />
-    </group>
-  );
-};

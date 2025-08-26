@@ -65,7 +65,6 @@ const modelTestAnim = {
   transition: {
     duration: 1.5, 
     delay: model.delayIn,
-    //time: [0, 0.5, 1]
   }
 }
 
@@ -116,20 +115,11 @@ useEffect(() => {
        }     
 }, [])
 
-// const newMaterial = new THREE.MeshBasicMaterial({
-//   toneMapped: false,
-//   color: model.color || 'white',
-//   map: diffuseMap,
-//   //metalness: 0
-// })
 
 const newMaterial = new THREE.MeshPhysicalMaterial({
-  //toneMapped: false,
   color: model.color || 'white',
   map: diffuseMap,
-  //metalness: 0,
   roughness: 0.3,
-  //emissiveMap: diffuseMap
 })
 
 

@@ -211,7 +211,6 @@ const Instructions = () => {
               <Bullet position={bulletsPosition[1].position} />
             </>
           ))}
-          {/* <TestElement model="/3dModels/Level1/Lego_20R_6278445.glb"/> */}
         <OrbitControls
           maxDistance={30}
           minDistance={12}

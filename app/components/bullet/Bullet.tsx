@@ -41,10 +41,6 @@ const Bullet = ({position}: BulletType) => {
 
   return (
     <>
-    {/* <mesh  position={[1.2, 0.2, -14]}>
-        <boxGeometry args={[0.64, 0.4, 0.1]}/>
-        <meshBasicMaterial color={'yellow'} />
-    </mesh> */}
     <motion.mesh
       ref={meshRef}
       position={position}
