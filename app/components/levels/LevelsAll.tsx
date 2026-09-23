@@ -28,6 +28,7 @@ const levels = [
   level13, level14, level15, level16,
 ];
 
+
 export const LevelAll = () => {
   const levelStore = useLevelStore();
   const { level } = levelStore;
@@ -37,7 +38,7 @@ export const LevelAll = () => {
   const { isLeftButton } = clickStore;
 
   // Array of visibility states for each level block
-  const [visibleLevels, setVisibleLevels] = useState<boolean[]>(Array(levels.length).fill(true));
+  const [visibleLevels] = useState<boolean[]>(Array(levels.length).fill(true));
 
  
   return (
@@ -49,7 +50,7 @@ export const LevelAll = () => {
           isForwardAnim={isLeftButton} 
           isActive={currentLevel === i + 1} 
           level_={i + 1} 
-          isVisible={visibleLevels[i]}
+          isVisible={visibleLevels[i]} // can be always true - visibility defined by scale from 0 to 1
         />
       ))}
     </>

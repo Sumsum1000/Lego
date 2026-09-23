@@ -43,41 +43,41 @@ type ModelType = {
   model: string;
 };
 
-const TestElement = ({ model }: ModelType) => {
-  const { position, rotation, scale } = useControls({
-    position: {
-      value: { x: 0, y: 0, z: 0 },
-    },
-    rotation: {
-      value: { x: 0, y: 0, z: 0 },
-    },
-    scale: {
-      value: { x: 1, y: 1, z: 1 },
-    },
-  });
+// const TestElement = ({ model }: ModelType) => {
+//   const { position, rotation, scale } = useControls({
+//     position: {
+//       value: { x: 0, y: 0, z: 0 },
+//     },
+//     rotation: {
+//       value: { x: 0, y: 0, z: 0 },
+//     },
+//     scale: {
+//       value: { x: 1, y: 1, z: 1 },
+//     },
+//   });
 
-  const gltf = useGLTF(model);
+//   const gltf = useGLTF(model);
 
-  return (
-    <group
-      position-x={position.x}
-      position-y={position.y}
-      position-z={position.z}
-      rotation={
-        new Euler(
-          MathUtils.degToRad(rotation.x),
-          MathUtils.degToRad(rotation.y),
-          MathUtils.degToRad(rotation.z)
-        )
-      }
-      scale-x={scale.x}
-      scale-y={scale.y}
-      scale-z={scale.z}
-    >
-      <primitive object={gltf.scene} />
-    </group>
-  );
-};
+//   return (
+//     <group
+//       position-x={position.x}
+//       position-y={position.y}
+//       position-z={position.z}
+//       rotation={
+//         new Euler(
+//           MathUtils.degToRad(rotation.x),
+//           MathUtils.degToRad(rotation.y),
+//           MathUtils.degToRad(rotation.z)
+//         )
+//       }
+//       scale-x={scale.x}
+//       scale-y={scale.y}
+//       scale-z={scale.z}
+//     >
+//       <primitive object={gltf.scene} />
+//     </group>
+//   );
+// };
 
 const Instructions = () => {
   const totalPages = 16;

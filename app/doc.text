@@ -1,0 +1,3 @@
+- Visibility is defined by scale , from zero to 1 animation, inside models3D.tsx.
+- visibility, there is no real use for it, all levels visibility is taken from an array I have created, 
+  equivilent to set visibility to fixed true, may be I will make use of visibility later.
