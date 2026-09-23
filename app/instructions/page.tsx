@@ -35,6 +35,7 @@ import { MathUtils } from 'three';
 import { BulletType } from '../utils/Types';
 import EngineFire from '../components/engineFire/EngineFire';
 import Deshboard from '../components/deshboard/Deshboard';
+import PerfToggle from '../components/perfToggle/PerfToggle';
 
 
 
@@ -83,6 +84,7 @@ const Instructions = () => {
   const totalPages = 16;
   const [bullets, setBullets] = useState<string[]>([]);
   const [engine, setEngine] = useState(false);
+  const [showPerf, setShowPerf] = useState(true);
 
   const levelData = {
     level1,
@@ -167,6 +169,7 @@ const Instructions = () => {
    
     <div className='w-full h-screen  bg-gray-800 flex'>
       {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>}
+      <PerfToggle isOn={showPerf} onClick={() => setShowPerf((prev) => !prev)} />
       {/* <Deshboard onClickHandlers={onClickHandlers} /> */}
       {currentLevel < 1 && (
         <button
@@ -188,7 +191,9 @@ const Instructions = () => {
       </div>
       <Suspense fallback={<h1>Wait...</h1>}>
       <Canvas className='h-screen relative' shadows>
-        <Perf className='top-left' /> 
+        {showPerf && (
+          <Perf position='top-right' style={{ top: '8rem', right: '0.5rem' }} />
+        )}
 
           <group position={[0, 0, 4]}>
               <LevelAll />
