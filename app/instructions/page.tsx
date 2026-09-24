@@ -3,6 +3,7 @@ import {
   Environment,
   OrbitControls,
   PerspectiveCamera,
+  Stars,
   useGLTF,
 } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
@@ -24,6 +25,7 @@ import { level14 } from '../components/levelsData/level14';
 import { level15 } from '../components/levelsData/level15';
 import { level16 } from '../components/levelsData/level16';
 import { Perf } from 'r3f-perf';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { useControls } from 'leva';
 import { Euler } from 'three';
 import Pagination from '../components/pagination/Pagination';
@@ -192,12 +194,26 @@ const Instructions = () => {
       <Suspense fallback={<h1>Wait...</h1>}>
       <Canvas className='h-screen relative' shadows>
         {showPerf && (
-          <Perf position='top-right' style={{ top: '8rem', right: '0.5rem' }} />
+          <Perf
+            position='top-right'
+            style={{
+              top: '8rem',
+              right: '0.5rem',
+              transform: 'scale(1.5)',
+              transformOrigin: 'top right',
+            }}
+          />
         )}
 
           <group position={[0, 0, 4]}>
               <LevelAll />
           </group>
+          {(engine && currentLevel >= 16) && (
+            <>
+              <color attach="background" args={['#02020a']} />
+              <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+            </>
+          )}
           {(engine && currentLevel >= 16) && (
             <EngineFire
               ringsPosition={[6.35, 2.05, 0]}
@@ -225,6 +241,16 @@ const Instructions = () => {
         {/* <OrbitControls /> */}
         <PerspectiveCamera makeDefault position={[0.5, 5, -31]} />
         <Environment files={'poly_haven_studio_1k.hdr'} background={false} />
+        {(engine && currentLevel >= 16) && (
+          <EffectComposer>
+            <Bloom
+              luminanceThreshold={0.6}
+              luminanceSmoothing={0.7}
+              intensity={0.5}
+              mipmapBlur
+            />
+          </EffectComposer>
+        )}
       </Canvas>
       </Suspense>
     </div>
