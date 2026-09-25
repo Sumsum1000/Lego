@@ -1,7 +1,7 @@
 import { MathUtils } from "three";
 import { motion } from "framer-motion-3d";
 import React, { useMemo } from "react";
-import Fire from "../fire/Fire";
+import Fire, { FireInstanceConfig } from "../fire/Fire";
 
 type EngineFireType = {
   ringsPosition: [number, number, number];
@@ -26,9 +26,24 @@ const APPEAR_TOTAL_DURATION = 0.2; // all meshes fully scaled in by this many se
 const APPEAR_STEP = APPEAR_TOTAL_DURATION / FIRE_COUNT;
 
 const EngineFire = ({ ringsPosition, conePosition }: EngineFireType) => {
-  // random fixed Z rotation per mesh, so they don't all look identical
-  const rotationsZ = useMemo(
-    () => Array.from({ length: FIRE_COUNT }, () => Math.random() * Math.PI * 2),
+  // one instanced draw call for all 6 fire meshes instead of 6 separate ones
+  const fireInstances = useMemo<FireInstanceConfig[]>(
+    () =>
+      Array.from({ length: FIRE_COUNT }, (_, index) => {
+        const xyScale = FIRE_SCALE * (XY_SCALE_MULT[index] ?? 1);
+        const zScale = FIRE_SCALE * FIRE_Z_SCALE_MULT;
+        return {
+          position: [
+            ringsPosition[0],
+            ringsPosition[1],
+            ringsPosition[2] + index * SPACING,
+          ],
+          rotationZ: Math.random() * Math.PI * 2,
+          targetScale: [xyScale, xyScale, zScale],
+          appearDelay: index * APPEAR_STEP,
+        };
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
@@ -38,36 +53,7 @@ const EngineFire = ({ ringsPosition, conePosition }: EngineFireType) => {
         <coneGeometry args={[0.2, 9, 8]} />
         <motion.meshBasicMaterial transparent={true} opacity={0.5} color={"#039be5"} />
       </mesh>
-      {rotationsZ.map((rotationZ, index) => {
-        const xyScale = FIRE_SCALE * (XY_SCALE_MULT[index] ?? 1);
-        const zScale = FIRE_SCALE * FIRE_Z_SCALE_MULT;
-        return (
-          <motion.group
-            key={index}
-            position={[
-              ringsPosition[0],
-              ringsPosition[1],
-              ringsPosition[2] + index * SPACING,
-            ]}
-            initial={{ scaleX: 0, scaleY: 0, scaleZ: 0 }}
-            animate={{
-              // cartoon squash-and-stretch: overshoot longer + pinch narrower
-              // at the peak, then rebound to the real size
-              scaleX: [0, xyScale * 0.7, xyScale],
-              scaleY: [0, xyScale * 0.7, xyScale],
-              scaleZ: [0, zScale * 1.35, zScale],
-            }}
-            transition={{
-              duration: APPEAR_STEP,
-              delay: index * APPEAR_STEP,
-              times: [0, 0.6, 1],
-              ease: 'easeOut',
-            }}
-          >
-            <Fire rotation={[0, 0, rotationZ]} />
-          </motion.group>
-        );
-      })}
+      <Fire instances={fireInstances} appearDuration={APPEAR_STEP} />
     </>
   );
 };

@@ -1,6 +1,7 @@
 'use client'
-import { useState } from 'react'
-import { useGLTF, Bounds, Center } from '@react-three/drei'
+import { useEffect, useState } from 'react'
+import * as THREE from 'three'
+import { useGLTF, useTexture, Bounds, Center } from '@react-three/drei'
 import { ThreeEvent } from '@react-three/fiber'
 
 type ControllerModelProps = {
@@ -11,6 +12,42 @@ type ControllerModelProps = {
 const ControllerModel = ({ onEngineClick, onFireClick }: ControllerModelProps) => {
   const { nodes } = useGLTF('/ControllerAll.glb')
   const [pressed, setPressed] = useState<'engine' | 'fire' | null>(null)
+
+  const diffuseMap = useTexture('/ControllerDiffUse.jpg')
+  diffuseMap.flipY = false
+  diffuseMap.colorSpace = THREE.SRGBColorSpace
+
+  useEffect(() => {
+    // each <primitive object={nodes.X}/> below reparents that node out of the
+    // GLTF's original scene graph and into ours, so `scene` ends up empty by
+    // the time this runs - traverse the actual node references instead
+    const controllerParts = [
+      nodes.ControllerBody,
+      nodes.ButtonBig,
+      nodes.ButtonSmall,
+      nodes.Object005Antena,
+    ]
+
+    controllerParts.forEach((part) => {
+      part.traverse((child) => {
+        if (!(child instanceof THREE.Mesh)) return
+        const materials = Array.isArray(child.material) ? child.material : [child.material]
+        materials.forEach((material) => {
+          if (
+            material instanceof THREE.MeshStandardMaterial ||
+            material instanceof THREE.MeshPhysicalMaterial
+          ) {
+            material.map = diffuseMap
+            // the original materials still carry their old flat baseColorFactor
+            // (e.g. a strong saturated red) - three.js multiplies color * map,
+            // so left as-is it tints/washes out the texture's own detail
+            material.color.set(0xffffff)
+            material.needsUpdate = true
+          }
+        })
+      })
+    })
+  }, [nodes, diffuseMap])
 
   const handlePointerOver = (event: ThreeEvent<PointerEvent>) => {
     event.stopPropagation()
@@ -77,5 +114,6 @@ const ControllerModel = ({ onEngineClick, onFireClick }: ControllerModelProps) =
 }
 
 useGLTF.preload('/ControllerAll.glb')
+useTexture.preload('/ControllerDiffUse.jpg')
 
 export default ControllerModel

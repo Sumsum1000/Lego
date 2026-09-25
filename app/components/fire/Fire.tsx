@@ -1,12 +1,18 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF, useTexture } from "@react-three/drei";
 
+export type FireInstanceConfig = {
+  position: [number, number, number];
+  rotationZ: number;
+  targetScale: [number, number, number]; // [scaleX, scaleY, scaleZ]
+  appearDelay: number;
+};
+
 interface FireProps {
-  position?: [number, number, number];
-  rotation?: [number, number, number];
-  scale?: [number, number, number] | number;
+  instances: FireInstanceConfig[];
+  appearDuration: number;
 }
 
 const PHASE_DURATION = 0.2;
@@ -14,7 +20,7 @@ const PHASE_DURATION = 0.2;
 const VERTEX_ANIMATION_CHUNK = `
   #include <begin_vertex>
   if (abs(aAnimate) > 0.5) {
-    float uCycle = mod(uTime * aSpeed + aPhase, ${(PHASE_DURATION * 2).toFixed(3)});
+    float uCycle = mod(uTime * aSpeed + aPhase + aInstancePhaseOffset, ${(PHASE_DURATION * 2).toFixed(3)});
     float uT = uCycle < ${PHASE_DURATION.toFixed(3)}
       ? (uCycle / ${PHASE_DURATION.toFixed(3)})
       : (1.0 - (uCycle - ${PHASE_DURATION.toFixed(3)}) / ${PHASE_DURATION.toFixed(3)});
@@ -30,6 +36,29 @@ const NEG_SCALE_MIN = 0.05 * 1.2;
 const NEG_SCALE_MAX = 0.15 * 1.2;
 const SPEED_MIN = 0.25 * 1.2;
 const SPEED_MAX = 0.75 * 1.2;
+
+// squash-and-stretch pop-in keyframes, mirroring the old framer-motion
+// [0, peak, target] keyframes but driven manually per-instance
+const APPEAR_PEAK_T = 0.6;
+const APPEAR_XY_PEAK_MULT = 0.7;
+const APPEAR_Z_PEAK_MULT = 1.35;
+
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function appearKeyframe(t: number, peak: number, target: number) {
+  if (t <= 0) return 0;
+  if (t >= 1) return target;
+  if (t < APPEAR_PEAK_T) {
+    return THREE.MathUtils.lerp(0, peak, easeOutCubic(t / APPEAR_PEAK_T));
+  }
+  return THREE.MathUtils.lerp(
+    peak,
+    target,
+    easeOutCubic((t - APPEAR_PEAK_T) / (1 - APPEAR_PEAK_T)),
+  );
+}
 
 function walkLoop(
   start: number,
@@ -216,12 +245,8 @@ function buildAnimateAttribute(geometry: THREE.BufferGeometry) {
   return { axisLength: coneLength };
 }
 
-const Fire = ({
-  position = [0, 0, 0],
-  rotation = [0, 0, 0],
-  scale = [1, 1, 1],
-}: FireProps) => {
-  const { scene } = useGLTF("/Fire_glb.glb");
+const Fire = ({ instances, appearDuration }: FireProps) => {
+  const { nodes } = useGLTF("/Fire_glb.glb");
   const diffuseMap = useTexture("/FireDiffuseDiffuse.png");
   diffuseMap.flipY = false;
   diffuseMap.colorSpace = THREE.SRGBColorSpace;
@@ -230,66 +255,128 @@ const Fire = ({
   emissiveMap.flipY = false;
   emissiveMap.colorSpace = THREE.SRGBColorSpace;
 
-  const instanceScene = useMemo(() => scene.clone(true), [scene]);
-  const shaders = useRef<THREE.WebGLProgramParametersWithUniforms[]>([]);
+  const shaderRef = useRef<THREE.WebGLProgramParametersWithUniforms | null>(null);
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const mountTimeRef = useRef<number | null>(null);
+  const doneRef = useRef(false);
 
-  useEffect(() => {
-    shaders.current = [];
+  // built once and shared by every instance - only the per-instance transform
+  // (position/rotation/scale, via the instance matrix) and a per-instance
+  // phase offset (below) differ between copies
+  const geometry = useMemo(() => {
+    const sourceMesh = nodes.Cylinder001 as THREE.Mesh;
+    const geo = sourceMesh.geometry.clone();
+    // bake the node's own baked transform (translation/rotation/the 0.01
+    // scale from the source GLB) into the geometry itself, since grabbing
+    // just the geometry (for instancing) skips the node hierarchy that
+    // used to apply it automatically
+    sourceMesh.updateMatrix();
+    geo.applyMatrix4(sourceMesh.matrix);
+    buildAnimateAttribute(geo);
 
-    instanceScene.traverse((child) => {
-      if (!(child instanceof THREE.Mesh)) return;
+    const phaseOffsets = new Float32Array(
+      instances.map(() => Math.random() * PHASE_DURATION * 2),
+    );
+    geo.setAttribute(
+      "aInstancePhaseOffset",
+      new THREE.InstancedBufferAttribute(phaseOffsets, 1),
+    );
 
-      child.geometry = child.geometry.clone();
-      const { axisLength } = buildAnimateAttribute(child.geometry);
+    return geo;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodes, instances.length]);
 
-      const material = new THREE.MeshStandardMaterial({
-        map: diffuseMap,
-        emissiveMap: emissiveMap,
-        emissive: new THREE.Color(0xffffff),
-        emissiveIntensity: 1.5, // strength of the FireEmission.jpg self-lit glow
-        transparent: true,
-        opacity: 0.7,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        side: THREE.DoubleSide,
-      });
-      material.onBeforeCompile = (shader) => {
-        shader.uniforms.uTime = { value: 0 };
-        shader.uniforms.uAmplitude = { value: axisLength };
+  const material = useMemo(() => {
+    geometry.computeBoundingBox();
+    const box = geometry.boundingBox!;
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const axisLength = size.length();
 
-        shader.vertexShader = shader.vertexShader
-          .replace(
-            "#include <common>",
-            `#include <common>
-            attribute float aAnimate;
-            attribute float aScale;
-            attribute float aSpeed;
-            attribute float aPhase;
-            attribute vec3 aDirection;
-            uniform float uTime;
-            uniform float uAmplitude;`,
-          )
-          .replace("#include <begin_vertex>", VERTEX_ANIMATION_CHUNK);
-
-        shaders.current.push(shader);
-      };
-
-      child.material = material;
+    const mat = new THREE.MeshStandardMaterial({
+      map: diffuseMap,
+      emissiveMap: emissiveMap,
+      emissive: new THREE.Color(0xffffff),
+      emissiveIntensity: 1.5,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      side: THREE.DoubleSide,
     });
-  }, [instanceScene, diffuseMap, emissiveMap]);
+    mat.onBeforeCompile = (shader) => {
+      shader.uniforms.uTime = { value: 0 };
+      shader.uniforms.uAmplitude = { value: axisLength };
+
+      shader.vertexShader = shader.vertexShader
+        .replace(
+          "#include <common>",
+          `#include <common>
+          attribute float aAnimate;
+          attribute float aScale;
+          attribute float aSpeed;
+          attribute float aPhase;
+          attribute float aInstancePhaseOffset;
+          attribute vec3 aDirection;
+          uniform float uTime;
+          uniform float uAmplitude;`,
+        )
+        .replace("#include <begin_vertex>", VERTEX_ANIMATION_CHUNK);
+
+      shaderRef.current = shader;
+    };
+    return mat;
+  }, [geometry, diffuseMap, emissiveMap]);
+
+  const matrix = useMemo(() => new THREE.Matrix4(), []);
+  const positionVec = useMemo(() => new THREE.Vector3(), []);
+  const quaternion = useMemo(() => new THREE.Quaternion(), []);
+  const euler = useMemo(() => new THREE.Euler(), []);
+  const scaleVec = useMemo(() => new THREE.Vector3(), []);
 
   useFrame((state) => {
-    for (const shader of shaders.current) {
-      shader.uniforms.uTime.value = state.clock.elapsedTime;
+    if (shaderRef.current) {
+      shaderRef.current.uniforms.uTime.value = state.clock.elapsedTime;
     }
+
+    if (doneRef.current || !meshRef.current) return;
+
+    if (mountTimeRef.current === null) {
+      mountTimeRef.current = state.clock.elapsedTime;
+    }
+    const elapsed = state.clock.elapsedTime - mountTimeRef.current;
+
+    let allDone = true;
+    instances.forEach((instance, i) => {
+      const t = THREE.MathUtils.clamp(
+        (elapsed - instance.appearDelay) / appearDuration,
+        0,
+        1,
+      );
+      if (t < 1) allDone = false;
+
+      const [targetX, targetY, targetZ] = instance.targetScale;
+      scaleVec.set(
+        appearKeyframe(t, targetX * APPEAR_XY_PEAK_MULT, targetX),
+        appearKeyframe(t, targetY * APPEAR_XY_PEAK_MULT, targetY),
+        appearKeyframe(t, targetZ * APPEAR_Z_PEAK_MULT, targetZ),
+      );
+
+      positionVec.set(...instance.position);
+      euler.set(0, 0, instance.rotationZ);
+      quaternion.setFromEuler(euler);
+      matrix.compose(positionVec, quaternion, scaleVec);
+      meshRef.current!.setMatrixAt(i, matrix);
+    });
+    meshRef.current.instanceMatrix.needsUpdate = true;
+    if (allDone) doneRef.current = true;
   });
 
   return (
-    <primitive
-      object={instanceScene}
-      position={position}
-      rotation={rotation}
-      scale={scale}
+    <instancedMesh
+      ref={meshRef}
+      args={[geometry, material, instances.length]}
+      frustumCulled={false}
     />
   );
 };
