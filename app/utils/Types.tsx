@@ -114,6 +114,7 @@ export type ButtonState = {
 
 export type DeshboardBtnType = {
   onClickHandlers: (() => void)[];
+  showHint?: boolean;
 };
 
 

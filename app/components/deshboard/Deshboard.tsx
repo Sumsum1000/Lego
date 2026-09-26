@@ -1,16 +1,20 @@
+import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import ControllerModel from './ControllerModel'
 import { DeshboardBtnType } from "../../utils/Types"
 
-const Deshboard = ({onClickHandlers}: DeshboardBtnType) => {
+const Deshboard = ({onClickHandlers, showHint}: DeshboardBtnType) => {
+  const [hintDismissed, setHintDismissed] = useState(false);
 
   const handleEngineClick = () => {
     onClickHandlers[0] && onClickHandlers[0]();
+    setHintDismissed(true);
   };
 
   const handleFireClick = () => {
     onClickHandlers[1] && onClickHandlers[1]();
+    setHintDismissed(true);
   };
 
   return (
@@ -25,6 +29,26 @@ const Deshboard = ({onClickHandlers}: DeshboardBtnType) => {
         <directionalLight position={[-2, -1, -3]} intensity={0.3} />
         <ControllerModel onEngineClick={handleEngineClick} onFireClick={handleFireClick} />
       </Canvas>
+      <AnimatePresence>
+        {showHint && !hintDismissed && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, transition: { delay: 0.5, duration: 1 } }}
+            transition={{ duration: 0.5 }}
+            className="absolute top-3/4 -mt-[92px] w-full flex flex-col items-center"
+          >
+            <img
+              src="/GrabIcon.png"
+              alt=""
+              className="w-[5.1rem] h-[5.1rem] md:w-[6.375rem] md:h-[6.375rem] mb-1 [filter:drop-shadow(0_0_4px_rgba(56,189,248,1))_drop-shadow(0_0_18px_rgba(56,189,248,0.9))_drop-shadow(0_0_32px_rgba(56,189,248,0.6))]"
+            />
+            <p className="text-center text-sky-400 font-bold text-lg md:text-xl drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]">
+              Turn on the engine and fire!
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }

@@ -8,6 +8,7 @@ import {
 } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useState } from 'react';
+import { FaRocket } from 'react-icons/fa';
 import { level1 } from '../components/levelsData/level1';
 import { level2 } from '../components/levelsData/level2';
 import { level3 } from '../components/levelsData/level3';
@@ -86,7 +87,9 @@ const Instructions = () => {
   const totalPages = 16;
   const [bullets, setBullets] = useState<string[]>([]);
   const [engine, setEngine] = useState(false);
-  const [showPerf, setShowPerf] = useState(true);
+  const [showPerf, setShowPerf] = useState(false);
+  const [hasShownControllerHint, setHasShownControllerHint] = useState(false);
+  const [showControllerHint, setShowControllerHint] = useState(false);
 
   const levelData = {
     level1,
@@ -167,10 +170,21 @@ const Instructions = () => {
     (currentLevel < 16) && setEngine((prev) => false)
   }, [currentLevel])
 
+  useEffect(() => {
+    if (currentLevel >= 16) {
+      if (!hasShownControllerHint) {
+        setShowControllerHint(true);
+        setHasShownControllerHint(true);
+      }
+    } else {
+      setShowControllerHint(false);
+    }
+  }, [currentLevel, hasShownControllerHint])
+
   return (
    
     <div className='w-full h-screen  bg-gray-800 flex'>
-      {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers}/>}
+      {currentLevel >= 16 && <Deshboard onClickHandlers={onClickHandlers} showHint={showControllerHint}/>}
       <PerfToggle isOn={showPerf} onClick={() => setShowPerf((prev) => !prev)} />
       {/* <Deshboard onClickHandlers={onClickHandlers} /> */}
       {currentLevel < 1 && (
@@ -190,6 +204,16 @@ const Instructions = () => {
           nextPage={handleNextPage}
           previousPage={handlePreviousPage}
         />
+        <button
+          onClick={() => {
+            handlePageChange(totalPages);
+            setEngine(true);
+          }}
+          className='ml-3 flex items-center gap-2 rounded-md h-10 md:h-14 px-4 md:px-5 bg-sky-400 hover:bg-sky-300 text-gray-900 font-bold text-sm md:text-base border border-sky-300 shadow-[0_0_14px_2px_rgba(56,189,248,0.55)] transition-colors'
+        >
+          <FaRocket className='h-4 w-4 md:h-5 md:w-5' aria-hidden='true' />
+          Skip to Launch
+        </button>
       </div>
       <Suspense fallback={<h1>Wait...</h1>}>
       <Canvas className='h-screen relative' shadows>
