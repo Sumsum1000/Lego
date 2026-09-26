@@ -128,19 +128,39 @@ const Instructions = () => {
   const clickStore = useClickStore();
   const { isLeftButton, setRightClick, setLeftClick } = clickStore;
 
-  const handlePageChange: PaginationPropsType['onPageChange'] = (page) => {
+  const jumpToLevel = (page: number, onComplete?: () => void) => {
     if (currentLevel > 0 && currentLevel < 16) {
-      if(page > currentLevel){
-        setRightClick();
+      // step through every intermediate level (one per animation frame)
+      // instead of jumping straight to the target - the per-level animation
+      // state elsewhere assumes ±1 changes, and a big jump (e.g. from 1
+      // straight to 16) leaves it desynced, breaking further prev/next clicks
+      const direction = page > currentLevel ? 1 : -1;
+      let step = currentLevel;
+
+      const advance = () => {
+        step += direction;
+        if (direction > 0) {
+          setRightClick();
+        } else {
+          setLeftClick();
+        }
         setAnimationStatus(false);
-        setCurrentLevel(page);
-      }
-      else{
-        setLeftClick();
-        setAnimationStatus(false);
-        setCurrentLevel(page);
-      }
+        setCurrentLevel(step);
+        if (step !== page) {
+          requestAnimationFrame(advance);
+        } else {
+          onComplete?.();
+        }
+      };
+
+      requestAnimationFrame(advance);
+    } else {
+      onComplete?.();
     }
+  };
+
+  const handlePageChange: PaginationPropsType['onPageChange'] = (page) => {
+    jumpToLevel(page);
   };
 
 
@@ -205,10 +225,7 @@ const Instructions = () => {
           previousPage={handlePreviousPage}
         />
         <button
-          onClick={() => {
-            handlePageChange(totalPages);
-            setEngine(true);
-          }}
+          onClick={() => jumpToLevel(totalPages, () => setEngine(true))}
           className='ml-3 flex items-center gap-2 rounded-md h-10 md:h-14 px-4 md:px-5 bg-sky-400 hover:bg-sky-300 text-gray-900 font-bold text-sm md:text-base border border-sky-300 shadow-[0_0_14px_2px_rgba(56,189,248,0.55)] transition-colors'
         >
           <FaRocket className='h-4 w-4 md:h-5 md:w-5' aria-hidden='true' />
